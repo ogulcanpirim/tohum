@@ -7,12 +7,10 @@
  */
 
 import React from 'react';
-import RegisterScreen from './src/screens/Register';
+import NavigatorComponent from './src/components/NavigatorComponent';
 const App = () => {
   return (
-    <RegisterScreen>
-
-    </RegisterScreen>
+    <NavigatorComponent></NavigatorComponent>
   );
 }
 export default App;
