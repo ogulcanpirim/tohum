@@ -1,14 +1,13 @@
 
-import React, {useState} from 'react'
+import React from 'react'
 import { SafeAreaView, StyleSheet, TextInput, Text, TouchableOpacity} from 'react-native';
-import {firebase} from '../Firebase/firebase'
+
 
 
 const styles = StyleSheet.create({
-    //const [fullname, seFullname]
+
     textStyle: {
         fontSize: 36,
-        fontFamily: 'Comfortaa-Regular',
         marginTop: 107,
         marginLeft: 15,
         marginBottom: 33,
@@ -46,8 +45,6 @@ const styles = StyleSheet.create({
      registerButtonText: {
         textAlign: 'center',
         color: 'white',
-        fontFamily: 'Roboto',
-        fontWeight: 'bold',
      }
 })
 
