@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
 
     textStyle: {
         fontSize: 36,
-        fontFamily: 'Comfortaa-Regular',
         marginTop: 107,
         marginLeft: 15,
         marginBottom: 33,
@@ -46,8 +45,6 @@ const styles = StyleSheet.create({
      registerButtonText: {
         textAlign: 'center',
         color: 'white',
-        fontFamily: 'Roboto',
-        fontWeight: 'bold',
      }
 })
 
