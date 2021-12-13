@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import RegisterScreen from './screens/Register';
+import RegisterScreen from './src/screens/Register';
 const App = () => {
   return (
     <RegisterScreen>
