@@ -5,25 +5,33 @@ import {firebase} from '../Firebase/firebase';
 import styles from './styles'
 
 const RegisterScreen = () => {
-    const [name, setName] = useState('salam');
-
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    function createUser(){
+       //firebase.auth().createUserWithEmailAndPassword(email, password).then(()=>{
+           
+       //})
+    }
     return(
         <SafeAreaView>
             <Text style = {styles.textStyle}>Hesap Oluştur</Text>
             <TextInput style={styles.inputFirst} value={name} onChangeText={setName} placeholder={'Ad'}>
             </TextInput>
-            <TextInput style={styles.inputs} placeholder='Soyad'>
+            <TextInput style={styles.inputs} value={surname} onChangeText={setSurname} placeholder='Soyad'>
             </TextInput>
-            <TextInput style={styles.inputs} placeholder='Kullanıcı Adı'>
+            <TextInput style={styles.inputs} value={username} onChangeText={setUsername} placeholder='Kullanıcı Adı'>
             </TextInput>
-            <TextInput style={styles.inputs} placeholder='E-mail'>
+            <TextInput style={styles.inputs} value={email} onChangeText={setEmail} placeholder='E-mail'>
             </TextInput>
-            <TextInput style={styles.inputs} placeholder='Şifre'>
+            <TextInput style={styles.inputs} value={password} onChangeText={setPassword} placeholder='Şifre'>
             </TextInput>
             <TextInput style={styles.inputs} placeholder='Şifre'>
             </TextInput>
             <Text style={styles.accountInfoText}>Hesap oluşturarak, Kullanıcı Sözleşmesini ve Gizlilik Sözleşmesini kabul etmiş olursunuz.</Text>
-            <TouchableOpacity style = {styles.registerButton}>
+            <TouchableOpacity onPress={createUser} style = {styles.registerButton}>
                 <Text style = {styles.registerButtonText}>OLUŞTUR</Text>
             </TouchableOpacity>
         </SafeAreaView>

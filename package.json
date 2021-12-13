@@ -10,8 +10,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-firebase/app": "^13.1.0",
     "@reduxjs/toolkit": "^1.7.0",
-    "firebase": "^9.6.1",
     "react": "17.0.2",
     "react-native": "0.66.0",
     "redux": "^4.1.2"
