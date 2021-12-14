@@ -3,6 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 import WelcomeScreen from '../screens/Welcome';
 import RegisterScreen from '../screens/Register';
 import SignInScreen from '../screens/SignIn';
@@ -13,6 +15,7 @@ import MarketScreen from '../screens/Market';
 import VideoScreen from '../screens/Video';
 import ProfileScreen from '../screens/Profile';
 
+
 const Stack = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
@@ -22,7 +25,28 @@ function BottomNavigator() {
         <Tab.Navigator initialRouteName="Home"
             screenOptions={({ route }) => ({
                 headerShown: false,
-                
+                tabBarIcon: ({ focused, color, size, padding }) => {
+                    let iconName;
+                    if (route.name == 'Ev') {
+                        iconName = 'home';
+                    } else if (route.name == 'Kirala') {
+                        iconName = 'truck';
+                    } else if (route.name == 'Forum') {
+                        iconName = 'users';
+                    } else if (route.name == 'Market') {
+                        iconName = 'shopping-basket';
+                    } else if (route.name == 'İzle') {
+                        iconName = 'video';
+                    } else if (route.name == 'Profil') {
+                        iconName = 'user-alt';
+                    }
+                    
+
+                    return (
+                        <FontAwesome5 name={iconName} size={size} color={color} style={{ paddingBottom: padding }}></FontAwesome5>
+
+                    );
+                },
             })}>
             <Tab.Screen name="Ev" component={HomeScreen} />
             <Tab.Screen name="Kirala" component={RentScreen} />

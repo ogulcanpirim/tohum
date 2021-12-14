@@ -11,7 +11,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		19CFD4235BA7415E9E0F3B30 /* Comfortaa-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD7C5AA0370498A9BFE1B3C /* Comfortaa-Bold.ttf */; };
+		3B8AB3EDCFAC4C98ADFEE9C9 /* Comfortaa-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 407C16F8285A4B3BB4BA32F1 /* Comfortaa-Light.ttf */; };
 		4DDFA150056BCD1CADCD912B /* libPods-tohum-tohumTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5C1C574775DD507AE89A953 /* libPods-tohum-tohumTests.a */; };
+		655E05BD475E4AC1909984F3 /* Comfortaa-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B67B909E12D4D3791BC574B /* Comfortaa-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D04291659DFC10E5A99C40CB /* libPods-tohum.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FCF153E664AF06CF3E425D4 /* libPods-tohum.a */; };
 /* End PBXBuildFile section */
@@ -37,7 +40,10 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = tohum/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = tohum/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = tohum/main.m; sourceTree = "<group>"; };
+		1B67B909E12D4D3791BC574B /* Comfortaa-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Comfortaa-Regular.ttf"; path = "../src/assets/fonts/comfortaa/Comfortaa-Regular.ttf"; sourceTree = "<group>"; };
+		407C16F8285A4B3BB4BA32F1 /* Comfortaa-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Comfortaa-Light.ttf"; path = "../src/assets/fonts/comfortaa/Comfortaa-Light.ttf"; sourceTree = "<group>"; };
 		4FCF153E664AF06CF3E425D4 /* libPods-tohum.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-tohum.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FD7C5AA0370498A9BFE1B3C /* Comfortaa-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Comfortaa-Bold.ttf"; path = "../src/assets/fonts/comfortaa/Comfortaa-Bold.ttf"; sourceTree = "<group>"; };
 		668CF7C58E598F78B9FFD6F3 /* Pods-tohum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tohum.release.xcconfig"; path = "Target Support Files/Pods-tohum/Pods-tohum.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = tohum/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9A00E26BA845B1CEBD4664B9 /* Pods-tohum.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tohum.debug.xcconfig"; path = "Target Support Files/Pods-tohum/Pods-tohum.debug.xcconfig"; sourceTree = "<group>"; };
@@ -122,6 +128,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				C44746DF18CAE7FEDD34C251 /* Pods */,
+				B6826C302D3C4CE498B4A62C /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -135,6 +142,17 @@
 				00E356EE1AD99517003FC87E /* tohumTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B6826C302D3C4CE498B4A62C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5FD7C5AA0370498A9BFE1B3C /* Comfortaa-Bold.ttf */,
+				407C16F8285A4B3BB4BA32F1 /* Comfortaa-Light.ttf */,
+				1B67B909E12D4D3791BC574B /* Comfortaa-Regular.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		C44746DF18CAE7FEDD34C251 /* Pods */ = {
@@ -246,6 +264,9 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				19CFD4235BA7415E9E0F3B30 /* Comfortaa-Bold.ttf in Resources */,
+				3B8AB3EDCFAC4C98ADFEE9C9 /* Comfortaa-Light.ttf in Resources */,
+				655E05BD475E4AC1909984F3 /* Comfortaa-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,7 +5,7 @@ const HomeScreen = (props) => {
 
     return(
         <SafeAreaView>
-            <Text style={styles.textStyle}>Ana Sayfa</Text>
+            <Text style={styles.screenHeader}>Ana Sayfa</Text>
         </SafeAreaView>
     );
 

@@ -1,11 +1,20 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+
+   screenHeader: {
+      fontSize: 36,
+      marginLeft: 15,
+      marginTop: 15,
+      fontFamily: 'Comfortaa',
+   },
+
    textStyle: {
       fontSize: 36,
       marginTop: 107,
       marginLeft: 15,
       marginBottom: 33,
+      fontFamily: 'Comfortaa',
    },
 
    accountInfoText: {

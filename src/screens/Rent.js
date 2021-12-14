@@ -5,7 +5,7 @@ const RentScreen = (props) => {
 
     return(
         <SafeAreaView>
-             <Text style={styles.textStyle}>Kirala</Text>
+             <Text style={styles.screenHeader}>Kirala</Text>
         </SafeAreaView>
     );
 

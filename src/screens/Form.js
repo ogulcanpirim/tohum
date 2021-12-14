@@ -5,7 +5,7 @@ const FormScreen = (props) => {
 
     return(
         <SafeAreaView>
-             <Text style={styles.textStyle}>Forum</Text>
+             <Text style={styles.screenHeader}>Forum</Text>
         </SafeAreaView>
     );
 

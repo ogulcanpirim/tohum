@@ -6,7 +6,7 @@ const VideoScreen = (props) => {
 
     return(
         <SafeAreaView>
-             <Text style={styles.textStyle}>İzle</Text>
+             <Text style={styles.screenHeader}>İzle</Text>
         </SafeAreaView>
     );
 

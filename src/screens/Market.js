@@ -5,7 +5,7 @@ const MarketScreen = (props) => {
 
     return(
         <SafeAreaView>
-             <Text style={styles.textStyle}>Market</Text>
+             <Text style={styles.screenHeader}>Market</Text>
         </SafeAreaView>
     );
 
