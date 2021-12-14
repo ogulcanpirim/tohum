@@ -47,6 +47,16 @@ export default StyleSheet.create({
       marginRight: 15,
       marginTop: 16,
    },
+   exitButton: {
+      height: 52,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 8,
+      backgroundColor: '#FF0000',
+      marginLeft: 15,
+      marginRight: 15,
+      marginTop: 16,
+   },
    registerButtonText: {
       textAlign: 'center',
       color: 'white',

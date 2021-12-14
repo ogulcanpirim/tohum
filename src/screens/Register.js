@@ -16,9 +16,13 @@ const RegisterScreen = (props) => {
         props.navigation.goBack();
     }
     function createUser() {
+        
         //firebase.auth().createUserWithEmailAndPassword(email, password).then(()=>{
 
         //})
+
+        //if login succesfull
+        props.navigation.navigate("AppScreens");
     }
     return (
         <SafeAreaView>
