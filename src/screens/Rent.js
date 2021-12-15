@@ -6,6 +6,8 @@ const RentScreen = (props) => {
     return(
         <SafeAreaView>
              <Text style={styles.screenHeader}>Kirala</Text>
+             <TextInput style = {styles.searchBar} placeholder='Arama yapmak için tıklayınız.'>
+             </TextInput>
         </SafeAreaView>
     );
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, TouchableOpacity, Text } from 'react-native';
+import { SafeAreaView, TouchableOpacity, Text, View } from 'react-native';
 import styles from './styles';
 
 const WelcomeScreen = (props) => {
@@ -11,13 +11,22 @@ const WelcomeScreen = (props) => {
         props.navigation.navigate("SignIn");
     }
     return (
+
         <SafeAreaView>
-            <TouchableOpacity style = {styles.registerButton} onPress={navigateToRegister}>
-                <Text style = {styles.registerButtonText}>KAYIT OL</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style = {styles.signinButton} onPress={navigateToSignIn}>
-                <Text style = {styles.registerButtonText}>GİRİŞ YAP</Text>
-            </TouchableOpacity>
+            <View style={styles.welcomeScreenView}>
+                <Text style={styles.welcomeLogoTitle}>
+                    tohum
+                </Text>
+            </View>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                <TouchableOpacity style={styles.welcomeSignInButton} onPress={navigateToSignIn}>
+                    <Text style={styles.buttonText}>GİRİŞ YAP</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.welcomeRegisterButton} onPress={navigateToRegister}>
+                    <Text style={styles.buttonText}>KAYIT OL</Text>
+                </TouchableOpacity>
+
+            </View>
         </SafeAreaView>
     );
 }

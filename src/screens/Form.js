@@ -6,6 +6,8 @@ const FormScreen = (props) => {
     return(
         <SafeAreaView>
              <Text style={styles.screenHeader}>Forum</Text>
+             <TextInput style = {styles.searchBar} placeholder='Arama yapmak için tıklayınız.'>
+             </TextInput>
         </SafeAreaView>
     );
 

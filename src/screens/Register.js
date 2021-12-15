@@ -1,9 +1,10 @@
 
 import React, { useState } from 'react'
-import { SafeAreaView, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { firebase } from '../Firebase/firebase';
 import styles from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import LogoComponent from '../components/LogoComponent';
 
 const RegisterScreen = (props) => {
     const [name, setName] = useState('');
@@ -16,7 +17,7 @@ const RegisterScreen = (props) => {
         props.navigation.goBack();
     }
     function createUser() {
-        
+
         //firebase.auth().createUserWithEmailAndPassword(email, password).then(()=>{
 
         //})
@@ -24,15 +25,18 @@ const RegisterScreen = (props) => {
         //if login succesfull
         props.navigation.navigate("AppScreens");
     }
+    
     return (
         <SafeAreaView>
-            <TouchableOpacity onPress={goBack}>
-                <AntDesign
-                    name={"back"}
-                    size={32}>
-                </AntDesign>
-            </TouchableOpacity>
-            <Text style={styles.textStyle}>Hesap Oluştur</Text>
+            <View>
+                <TouchableOpacity style = {styles.returnButton} onPress={goBack}>
+                    <AntDesign
+                        name={"back"}
+                        size={35}>
+                    </AntDesign>
+                </TouchableOpacity>
+            </View>
+            <Text style={styles.screenHeaderWithLogo}>Hesap Oluştur</Text>
             <TextInput style={styles.inputFirst} value={name} onChangeText={setName} placeholder={'Ad'}>
             </TextInput>
             <TextInput style={styles.inputs} value={surname} onChangeText={setSurname} placeholder='Soyad'>
@@ -47,7 +51,7 @@ const RegisterScreen = (props) => {
             </TextInput>
             <Text style={styles.accountInfoText}>Hesap oluşturarak, Kullanıcı Sözleşmesini ve Gizlilik Sözleşmesini kabul etmiş olursunuz.</Text>
             <TouchableOpacity onPress={createUser} style={styles.registerButton}>
-                <Text style={styles.registerButtonText}>OLUŞTUR</Text>
+                <Text style={styles.buttonText}>OLUŞTUR</Text>
             </TouchableOpacity>
         </SafeAreaView>
     );

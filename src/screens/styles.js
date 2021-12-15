@@ -1,12 +1,68 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
 
 export default StyleSheet.create({
 
+   welcomeRegisterButton:{
+      height: screenHeight / 15,
+      justifyContent: 'center',
+      borderRadius: 8,
+      backgroundColor: '#39be37',
+      width: screenWidth / 2.3
+   },
+
+   welcomeSignInButton: {
+      height: screenHeight / 15,
+      justifyContent: 'center',
+      borderRadius: 8,
+      backgroundColor: '#4a4b4a',
+      width: screenWidth / 2.3
+   },
+
+   welcomeScreenView: {
+      height: screenHeight * (Platform.OS == "ios" ? 0.83 : 0.90),
+      backgroundColor: '#c2edda',
+      marginBottom: screenHeight / 100,
+      justifyContent: 'center',
+   },
+
+   welcomeLogoTitle: {
+      fontSize: 48,
+      fontFamily: 'Comfortaa-Regular',
+      fontWeight: '400',
+      textAlign: 'center',
+      justifyContent: 'center',
+   },
+
    screenHeader: {
       fontSize: 36,
-      marginLeft: 15,
-      marginTop: 15,
-      fontFamily: 'Comfortaa',
+      marginLeft: screenWidth / 20,
+      marginTop: screenHeight / 100,
+      fontFamily: 'Comfortaa-Regular',
+   },
+
+   screenHeaderWithLogo: {
+      fontFamily: 'Comfortaa-Regular',
+      fontSize: 36,
+      padding: screenWidth / 20,
+   },
+
+   logoTitle: {
+      fontFamily: 'Comfortaa-Regular',
+   },
+
+
+   searchBar: {
+      marginTop: screenHeight / 100,
+      marginRight: screenWidth / 20,
+      marginLeft: screenWidth / 20,
+      height: screenHeight / 18,
+      borderColor: '#cad1d7',
+      borderWidth: 2,
+      borderRadius: 8,
    },
 
    textStyle: {
@@ -14,46 +70,45 @@ export default StyleSheet.create({
       marginTop: 107,
       marginLeft: 15,
       marginBottom: 33,
-      fontFamily: 'Comfortaa',
+      fontFamily: 'Comfortaa-Regular',
    },
 
    accountInfoText: {
-      margin: 15,
+      padding: screenWidth / 20,
+      fontSize: 14,
    },
 
    inputFirst: {
-      marginLeft: 15,
-      marginRight: 15,
-      height: 52,
+      marginRight: screenWidth / 25,
+      marginLeft: screenWidth / 25,
+      height: screenHeight / 15,
       borderColor: '#000000',
       borderWidth: 2,
    },
    inputs: {
-      marginLeft: 15,
-      marginRight: 15,
-      height: 52,
+      marginRight: screenWidth / 25,
+      marginLeft: screenWidth / 25,
+      height: screenHeight / 15,
       borderColor: '#000000',
       borderWidth: 2,
-      marginTop: 16
+      marginTop: screenHeight / 50
    },
    registerButton: {
-      height: 52,
-      alignItems: 'center',
+      height: screenHeight / 15,
       justifyContent: 'center',
       borderRadius: 8,
       backgroundColor: '#39be37',
-      marginLeft: 15,
-      marginRight: 15,
-      marginTop: 16,
+      marginRight: screenWidth / 25,
+      marginLeft: screenWidth / 25,
+      
    },
    signinButton: {
-      height: 52,
-      alignItems: 'center',
+      height: screenHeight / 15,
       justifyContent: 'center',
       borderRadius: 8,
-      backgroundColor: '#445566',
-      marginLeft: 15,
-      marginRight: 15,
+      backgroundColor: '#4a4b4a',
+      marginRight: screenWidth / 25,
+      marginLeft: screenWidth / 25,
       marginTop: 16,
    },
    exitButton: {
@@ -66,13 +121,15 @@ export default StyleSheet.create({
       marginRight: 15,
       marginTop: 16,
    },
-   registerButtonText: {
+   buttonText: {
       textAlign: 'center',
       color: 'white',
+      fontWeight: 'bold',
    },
 
    returnButton:{
-      
+      marginLeft: screenWidth / 20,
+      marginTop: screenHeight / 100,
    }
 
 })

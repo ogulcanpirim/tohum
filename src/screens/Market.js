@@ -6,6 +6,8 @@ const MarketScreen = (props) => {
     return(
         <SafeAreaView>
              <Text style={styles.screenHeader}>Market</Text>
+             <TextInput style = {styles.searchBar} placeholder='Arama yapmak için tıklayınız.'>
+             </TextInput>
         </SafeAreaView>
     );
 

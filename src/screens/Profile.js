@@ -17,7 +17,7 @@ const ProfileScreen = (props) => {
         <SafeAreaView>
              <Text style={styles.screenHeader}>Profil</Text>
              <TouchableOpacity style = {styles.exitButton} onPress={logOut}>
-                 <Text styles>ÇIKIŞ YAP</Text>
+                 <Text style = {styles.buttonText}> ÇIKIŞ YAP</Text>
              </TouchableOpacity>
         </SafeAreaView>
     );

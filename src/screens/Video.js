@@ -7,6 +7,8 @@ const VideoScreen = (props) => {
     return(
         <SafeAreaView>
              <Text style={styles.screenHeader}>İzle</Text>
+             <TextInput style = {styles.searchBar} placeholder='Arama yapmak için tıklayınız.'>
+             </TextInput>
         </SafeAreaView>
     );
 
