@@ -130,6 +130,35 @@ export default StyleSheet.create({
    returnButton:{
       marginLeft: screenWidth / 20,
       marginTop: screenHeight / 100,
+   },
+   passwordButton: {
+      height: 52,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 8,
+      backgroundColor: '#4a4b4a',
+      marginLeft: 15,
+      marginRight: 15,
+      marginTop: 16,
+   },
+   createFormButton: {
+      height: screenHeight / 15,
+      justifyContent: 'center',
+      borderRadius: 8,
+      backgroundColor: '#39be37',
+      marginRight: screenWidth / 25,
+      marginLeft: screenWidth / 25,
+      marginTop: 16,
+   },
+   createFormInput:{
+      marginRight: screenWidth / 25,
+      marginLeft: screenWidth / 25,
+      height: screenHeight / 5,
+      borderColor: '#000000',
+      borderWidth: 2,
+      marginTop: screenHeight / 50,
+      paddingTop: screenHeight / 50,
+      textAlignVertical: 'top',
    }
 
 })

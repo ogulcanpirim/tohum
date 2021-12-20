@@ -14,7 +14,8 @@ import FormScreen from '../screens/Form';
 import MarketScreen from '../screens/Market';
 import VideoScreen from '../screens/Video';
 import ProfileScreen from '../screens/Profile';
-
+import ChangePasswordScreen from '../screens/ChangePassword';
+import CreateFormScreen from '../screens/CreateForm';
 
 const Stack = createStackNavigator();
 
@@ -50,12 +51,38 @@ function BottomNavigator() {
             })}>
             <Tab.Screen name="Ev" component={HomeScreen} />
             <Tab.Screen name="Kirala" component={RentScreen} />
-            <Tab.Screen name="Forum" component={FormScreen} />
+            <Tab.Screen name="Forum" component={FormScreens} />
             <Tab.Screen name="Market" component={MarketScreen} />
             <Tab.Screen name="İzle" component={VideoScreen} />
-            <Tab.Screen name="Profil" component={ProfileScreen} />
+            <Tab.Screen name="Profil" component={ProfileScreens} />
             
         </Tab.Navigator>
+    );
+}
+
+const ProfileStack = createStackNavigator();
+
+function ProfileScreens(){
+    return(
+        <ProfileStack.Navigator initialRouteName="Profil_Entrance" screenOptions={{
+            headerShown: false
+        }}>
+            <ProfileStack.Screen name="Profil_Entrance" component={ProfileScreen}/>
+            <ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen}/>
+        </ProfileStack.Navigator>
+    );
+}
+
+const FormStack = createStackNavigator();
+
+function FormScreens(){
+    return(
+        <FormStack.Navigator initialRouteName="Form_Entrance" screenOptions={{
+            headerShown: false
+        }}>
+            <FormStack.Screen name="Form_Entrance" component={FormScreen}/>
+            <FormStack.Screen name="CreateForm" component={CreateFormScreen}/>
+        </FormStack.Navigator>
     );
 }
 
