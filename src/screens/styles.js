@@ -64,7 +64,6 @@ export default StyleSheet.create({
       borderWidth: 2,
       borderRadius: 8,
    },
-
    textStyle: {
       fontSize: 36,
       marginTop: 107,
@@ -122,7 +121,7 @@ export default StyleSheet.create({
       marginTop: 16,
    },
    buttonText: {
-      textAlign: 'center',
+      alignSelf: 'center',
       color: 'white',
       fontWeight: 'bold',
    },
@@ -132,11 +131,11 @@ export default StyleSheet.create({
       marginTop: screenHeight / 100,
    },
    passwordButton: {
+      justifyContent: 'flex-start',
+      flexDirection: 'row',
       height: 52,
-      alignItems: 'center',
-      justifyContent: 'center',
       borderRadius: 8,
-      backgroundColor: '#4a4b4a',
+      backgroundColor: '#5e72e4',
       marginLeft: 15,
       marginRight: 15,
       marginTop: 16,
@@ -176,6 +175,35 @@ export default StyleSheet.create({
       marginRight: screenWidth / 20,
       marginTop: screenHeight / 75,
    },
+   profileContent: {
+      justifyContent: 'flex-start',
+      flexDirection: 'row',
+      height: 52,
+      borderRadius: 8,
+      borderWidth: 1,
+      marginLeft: 15,
+      marginRight: 15,
+      marginTop: 16,
+   },
+   profileText: {
+      alignSelf: 'center',
+   },
+   profileTextVariable: {
+      marginTop: screenHeight / 100,
+      marginBottom: screenHeight / 100,
+      fontSize: screenHeight / 40,
+      fontWeight: 'bold',
+   },
+   profileButtonText: {
+      alignSelf: 'center',
+      color: '#ffffff'
+   },
+   iconButtonStyle: {
+      alignSelf: 'center',
+      justifyContent: 'flex-start',
+      marginRight: 15,
+      marginLeft: 15,
+   },
    badge: {
       position: 'absolute',
       top: -5,
@@ -186,9 +214,23 @@ export default StyleSheet.create({
       paddingVertical: 2,
       zIndex: 2,
    },
-   badgeText:{
+   badgeText: {
       color: 'white',
       fontSize: 12,
       fontWeight: '600',
-   }
+   },
+
+   profileName: {
+      fontSize: 30,
+      textAlign: 'center',
+      marginTop: screenHeight / 50,
+   },
+
+   profileLine: {
+      width: screenWidth / 1.5,
+      borderWidth: 1,
+      alignSelf: 'center',
+      borderColor: '#000000',
+      marginTop: screenHeight / 100,
+   },
 })
