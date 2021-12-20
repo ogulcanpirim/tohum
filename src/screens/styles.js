@@ -6,7 +6,7 @@ const screenHeight = Dimensions.get('window').height;
 
 export default StyleSheet.create({
 
-   welcomeRegisterButton:{
+   welcomeRegisterButton: {
       height: screenHeight / 15,
       justifyContent: 'center',
       borderRadius: 8,
@@ -100,7 +100,7 @@ export default StyleSheet.create({
       backgroundColor: '#39be37',
       marginRight: screenWidth / 25,
       marginLeft: screenWidth / 25,
-      
+
    },
    signinButton: {
       height: screenHeight / 15,
@@ -127,7 +127,7 @@ export default StyleSheet.create({
       fontWeight: 'bold',
    },
 
-   returnButton:{
+   returnButton: {
       marginLeft: screenWidth / 20,
       marginTop: screenHeight / 100,
    },
@@ -150,7 +150,7 @@ export default StyleSheet.create({
       marginLeft: screenWidth / 25,
       marginTop: 16,
    },
-   createFormInput:{
+   createFormInput: {
       marginRight: screenWidth / 25,
       marginLeft: screenWidth / 25,
       height: screenHeight / 5,
@@ -159,6 +159,36 @@ export default StyleSheet.create({
       marginTop: screenHeight / 50,
       paddingTop: screenHeight / 50,
       textAlignVertical: 'top',
+   },
+   addFormButton: {
+      marginRight: screenWidth / 20,
+      marginTop: screenHeight / 75,
+   },
+   signOutButton: {
+      marginRight: screenWidth / 25,
+      marginTop: screenHeight / 100,
+   },
+   inboxButton: {
+      marginTop: screenHeight / 100,
+      marginLeft: screenWidth / 3,
+   },
+   shoppingButton: {
+      marginRight: screenWidth / 20,
+      marginTop: screenHeight / 75,
+   },
+   badge: {
+      position: 'absolute',
+      top: -5,
+      right: -10,
+      backgroundColor: '#ff2222',
+      borderRadius: 16,
+      paddingHorizontal: 6,
+      paddingVertical: 2,
+      zIndex: 2,
+   },
+   badgeText:{
+      color: 'white',
+      fontSize: 12,
+      fontWeight: '600',
    }
-
 })

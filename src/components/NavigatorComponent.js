@@ -16,6 +16,8 @@ import VideoScreen from '../screens/Video';
 import ProfileScreen from '../screens/Profile';
 import ChangePasswordScreen from '../screens/ChangePassword';
 import CreateFormScreen from '../screens/CreateForm';
+import InboxScreen from '../screens/Inbox';
+import ShoppingCartScreen from '../screens/ShoppingCart';
 
 const Stack = createStackNavigator();
 
@@ -52,7 +54,7 @@ function BottomNavigator() {
             <Tab.Screen name="Ev" component={HomeScreen} />
             <Tab.Screen name="Kirala" component={RentScreen} />
             <Tab.Screen name="Forum" component={FormScreens} />
-            <Tab.Screen name="Market" component={MarketScreen} />
+            <Tab.Screen name="Market" component={MarketScreens} />
             <Tab.Screen name="İzle" component={VideoScreen} />
             <Tab.Screen name="Profil" component={ProfileScreens} />
             
@@ -69,6 +71,7 @@ function ProfileScreens(){
         }}>
             <ProfileStack.Screen name="Profil_Entrance" component={ProfileScreen}/>
             <ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen}/>
+            <ProfileStack.Screen name="Inbox" component={InboxScreen}/>
         </ProfileStack.Navigator>
     );
 }
@@ -85,6 +88,19 @@ function FormScreens(){
         </FormStack.Navigator>
     );
 }
+
+const MarketStack = createStackNavigator();
+function MarketScreens(){
+    return(
+        <MarketStack.Navigator initialRouteName="Market_Entrance" screenOptions={{
+            headerShown: false
+        }}>
+            <MarketStack.Screen name="Market_Entrance" component={MarketScreen}/>
+            <MarketStack.Screen name="ShoppingCart" component={ShoppingCartScreen}/>
+        </MarketStack.Navigator>
+    );
+}
+
 
 export default function NavigatorComponent(props) {
     return (
