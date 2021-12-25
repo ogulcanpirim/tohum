@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { SafeAreaView, TouchableOpacity, Text, View } from 'react-native';
 import styles from './styles';
+import { auth } from '../../Firebase/firebase';
 
 const WelcomeScreen = (props) => {
 
@@ -10,6 +11,19 @@ const WelcomeScreen = (props) => {
     const navigateToSignIn = () => {
         props.navigation.navigate("SignIn");
     }
+
+    useEffect(() => {
+        
+        
+        
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user){
+                props.navigation.navigate("AppScreens");
+            }
+        })
+        return unsubscribe;
+    }, []) 
+
     return (
 
         <SafeAreaView>

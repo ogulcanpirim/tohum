@@ -76,6 +76,10 @@ export default StyleSheet.create({
       padding: screenWidth / 20,
       fontSize: 14,
    },
+   agreementText: {
+      fontWeight: 'bold',
+      textDecorationLine: 'underline',
+   },
 
    inputFirst: {
       marginRight: screenWidth / 25,
@@ -109,6 +113,14 @@ export default StyleSheet.create({
       marginRight: screenWidth / 25,
       marginLeft: screenWidth / 25,
       marginTop: 16,
+   },
+
+   forgotPasswordText:{
+      marginTop: 16,
+      marginLeft: screenWidth / 25,
+      fontSize: 14,
+      fontWeight: 'bold',
+      textDecorationLine: 'underline',
    },
    exitButton: {
       height: 52,

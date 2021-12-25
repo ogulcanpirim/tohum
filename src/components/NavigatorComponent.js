@@ -18,6 +18,7 @@ import ChangePasswordScreen from '../screens/ChangePassword';
 import CreateFormScreen from '../screens/CreateForm';
 import InboxScreen from '../screens/Inbox';
 import ShoppingCartScreen from '../screens/ShoppingCart';
+import ForgotPasswordScreen from '../screens/ForgotPassword';
 
 const Stack = createStackNavigator();
 
@@ -111,6 +112,9 @@ export default function NavigatorComponent(props) {
                 <Stack.Screen name="Welcome" component={WelcomeScreen} />
                 <Stack.Screen name="Register" component={RegisterScreen} />
                 <Stack.Screen name="SignIn" component={SignInScreen} />
+                <Stack.Screen name="UserAgreement" component={BottomNavigator} />
+                <Stack.Screen name="PolicyAgreement" component={BottomNavigator} />
+                <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen}/>
                 <Stack.Screen name="AppScreens" component={BottomNavigator} />
             </Stack.Navigator>
         </NavigationContainer>

@@ -4,13 +4,18 @@ import styles from './styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Avatar } from 'react-native-elements';
 import { Dimensions } from 'react-native';
+import { auth} from '../../Firebase/firebase';
 
 const ProfileScreen = (props) => {
 
     const avatarURL = "https://randomuser.me/api/portraits/men/36.jpg";
 
-    const logOut = () => {
-        props.navigation.navigate("Welcome");
+    const handleSignOut = () => {
+        auth
+        .signOut()
+        .then(() => {
+            props.navigation.navigate("Welcome");
+        })
     }
 
     const navigateChangePassword = () => {
@@ -20,7 +25,6 @@ const ProfileScreen = (props) => {
     const navigateInbox = () => {
         props.navigation.navigate("Inbox");
     }
-
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -32,10 +36,10 @@ const ProfileScreen = (props) => {
                         size={35}>
                     </FontAwesome5>
                     <View style={styles.badge}>
-                        <Text style={styles.badgeText}>13</Text>
+                        <Text style={styles.badgeText}>3</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.signOutButton} onPress={logOut}>
+                <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
                     <FontAwesome5
                         name={"sign-out-alt"}
                         size={35}>
@@ -54,7 +58,7 @@ const ProfileScreen = (props) => {
                     color="#000000"
                     size={32} />
             </Avatar>
-            <Text style={styles.profileName}>Baha Akyol</Text>
+            <Text style={styles.profileName}>{}</Text>
             <View style={styles.profileLine} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', padding: Dimensions.get('window').height / 50 }}>
@@ -68,11 +72,11 @@ const ProfileScreen = (props) => {
             </View>
             <TouchableOpacity style={styles.profileContent} disabled>
                 <FontAwesome5 name={"user-circle"} style={styles.iconButtonStyle} size={30} />
-                <Text style={styles.profileText}>bahaakyoll</Text>
+                <Text style={styles.profileText}>{auth.currentUser?.displayName}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.profileContent} disabled>
                 <FontAwesome5 name={"envelope"} style={styles.iconButtonStyle} size={30} />
-                <Text style={styles.profileText}> example@example.com</Text>
+                <Text style={styles.profileText}>{auth.currentUser?.email}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.passwordButton} onPress={navigateChangePassword}>
                 <FontAwesome5 name={"unlock-alt"} style={styles.iconButtonStyle} size={25} color={"#ffffff"} />

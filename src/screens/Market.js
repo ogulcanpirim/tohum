@@ -20,7 +20,7 @@ const MarketScreen = (props) => {
                         size={30}>
                     </FontAwesome5>
                     <View style = {styles.badge}>
-                        <Text style = {styles.badgeText}>3</Text>
+                        <Text style = {styles.badgeText}>28</Text>
                     </View>
                 </TouchableOpacity>
             </View>
