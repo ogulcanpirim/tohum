@@ -20,7 +20,7 @@ const ProfileScreen = (props) => {
                 setUser(user);
                 setLoading(false);
             })
-            
+            return response;
         }
         getUser();
     }, [])
