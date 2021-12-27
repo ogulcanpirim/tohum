@@ -1,21 +1,39 @@
-import React from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { SafeAreaView, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Avatar } from 'react-native-elements';
 import { Dimensions } from 'react-native';
-import { auth} from '../../Firebase/firebase';
+import { auth, db } from '../../Firebase/firebase';
+import { doc } from "firebase/firestore";
 
 const ProfileScreen = (props) => {
+
+    const [user, setUser] = useState({});
+    const [loading, setLoading] = useState(true);
+
+
+    useEffect(() => {
+        const getUser = async () => {
+            const response = await db.collection("users").doc(auth.currentUser?.uid).onSnapshot(doc => {
+                const user = doc.data();
+                setUser(user);
+                setLoading(false);
+            })
+            
+        }
+        getUser();
+    }, [])
+    
 
     const avatarURL = "https://randomuser.me/api/portraits/men/36.jpg";
 
     const handleSignOut = () => {
         auth
-        .signOut()
-        .then(() => {
-            props.navigation.navigate("Welcome");
-        })
+            .signOut()
+            .then(() => {
+                props.navigation.navigate("Welcome");
+            })
     }
 
     const navigateChangePassword = () => {
@@ -24,6 +42,14 @@ const ProfileScreen = (props) => {
 
     const navigateInbox = () => {
         props.navigation.navigate("Inbox");
+    }
+
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" color="#000000"></ActivityIndicator>
+            </View>
+        );
     }
 
     return (
@@ -58,7 +84,7 @@ const ProfileScreen = (props) => {
                     color="#000000"
                     size={32} />
             </Avatar>
-            <Text style={styles.profileName}>{}</Text>
+            <Text style={styles.profileName}>{user.name + ' ' + user.surname}</Text>
             <View style={styles.profileLine} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', padding: Dimensions.get('window').height / 50 }}>

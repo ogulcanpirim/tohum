@@ -5,6 +5,7 @@ import { auth, db } from '../../Firebase/firebase';
 import styles from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import LogoComponent from '../components/LogoComponent';
+import { doc } from 'firebase/firestore';
 
 const RegisterScreen = (props) => {
 
@@ -32,14 +33,13 @@ const RegisterScreen = (props) => {
     }
 
     const navigateUserAgreement = () => {
-        console.log("girdi ??");
+        //TODO
         props.navigation.goBack();
-        //props.navigation.navigate("UserAgreement");
     }
 
     const navigatePolicyAgreement = () => {
+        //TODO
         props.navigation.goBack();
-        //props.navigation.navigate("PolicyAgreement");
     }
 
     function handleRegister() {
@@ -92,7 +92,7 @@ const RegisterScreen = (props) => {
             .then(userCredentials => {
                 const user = userCredentials.user;
                 user.updateProfile({ displayName: username });
-                console.log("user created !");
+                storeUser(user);
             })
             .catch(error => {
                 const errorCode = error.code;
@@ -102,6 +102,10 @@ const RegisterScreen = (props) => {
                 }
                 setLoading(false);
             })
+    }
+
+    const storeUser = async(user) => {
+        await db.collection("users").doc(user.uid).set({name: name, surname: surname});
     }
 
     if (loading) {
