@@ -62,7 +62,6 @@ const ChangePasswordScreen = (props) => {
             }).catch((error) => {
                 const errorCode = error.code;
                 setLoading(false);
-                alert(errorCode);
                 if (errorCode.includes("wrong-password")) {
                     alert("Şifreyi yanlış girdiniz.");
                 }

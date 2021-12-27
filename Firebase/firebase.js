@@ -51,3 +51,4 @@ const auth = firebase.auth();
 const firebaseAuth = firebase.auth;
 
 export { db, auth , firebaseAuth};
+firebase.firestore().settings({experimentalForceLongPolling: true, merge: true}); // android 10 seconds connection timeout

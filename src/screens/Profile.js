@@ -84,7 +84,7 @@ const ProfileScreen = (props) => {
                     color="#000000"
                     size={32} />
             </Avatar>
-            <Text style={styles.profileName}>{user.name + ' ' + user.surname}</Text>
+            <Text style={styles.profileName}>{user?.name + ' ' + user?.surname}</Text>
             <View style={styles.profileLine} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', padding: Dimensions.get('window').height / 50 }}>
