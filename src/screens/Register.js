@@ -100,6 +100,10 @@ const RegisterScreen = (props) => {
                 if (errorCode.includes("invalid-email")) {
                     alert("Hatalı e-mail formatı girdiniz.");
                 }
+                else if (errorCode.includes("email-already-in-use")){
+                    alert("Bu email adresi kullanılmaktadır.")
+                }
+                
                 setLoading(false);
             })
     }

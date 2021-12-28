@@ -59,7 +59,11 @@ const SignInScreen = (props) => {
             .catch(error => {
                 const errorCode = error.code;
 
-                if (errorCode.includes("invalid-email")){
+                if (errorCode.includes("user-not-found")){
+                    alert("Kullanıcı bulunamadı.");
+                }
+
+                else if (errorCode.includes("invalid-email")){
                     alert("Hatalı e-mail formatı girdiniz.");
                 }
                 else if (errorCode.includes("wrong-password")){
