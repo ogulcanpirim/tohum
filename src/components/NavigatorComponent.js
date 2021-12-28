@@ -26,10 +26,12 @@ const Tab = createBottomTabNavigator();
 
 function BottomNavigator() {
     return (
-        <Tab.Navigator initialRouteName="Home"
+        <Tab.Navigator initialRouteName="Home" 
             screenOptions={({ route }) => ({
-                headerShown: false,
+                headerShown: false, 
+                tabBarActiveTintColor: '#26931e',
                 tabBarIcon: ({ focused, color, size, padding }) => {
+
                     let iconName;
                     if (route.name == 'Ev') {
                         iconName = 'home';
@@ -44,7 +46,7 @@ function BottomNavigator() {
                     } else if (route.name == 'Profil') {
                         iconName = 'user-alt';
                     }
-                    
+
 
                     return (
                         <FontAwesome5 name={iconName} size={size} color={color} style={{ paddingBottom: padding }}></FontAwesome5>
@@ -58,46 +60,46 @@ function BottomNavigator() {
             <Tab.Screen name="Market" component={MarketScreens} />
             <Tab.Screen name="İzle" component={VideoScreen} />
             <Tab.Screen name="Profil" component={ProfileScreens} />
-            
+
         </Tab.Navigator>
     );
 }
 
 const ProfileStack = createStackNavigator();
 
-function ProfileScreens(){
-    return(
+function ProfileScreens() {
+    return (
         <ProfileStack.Navigator initialRouteName="Profil_Entrance" screenOptions={{
             headerShown: false
         }}>
-            <ProfileStack.Screen name="Profil_Entrance" component={ProfileScreen}/>
-            <ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen}/>
-            <ProfileStack.Screen name="Inbox" component={InboxScreen}/>
+            <ProfileStack.Screen name="Profil_Entrance" component={ProfileScreen} />
+            <ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+            <ProfileStack.Screen name="Inbox" component={InboxScreen} />
         </ProfileStack.Navigator>
     );
 }
 
 const FormStack = createStackNavigator();
 
-function FormScreens(){
-    return(
+function FormScreens() {
+    return (
         <FormStack.Navigator initialRouteName="Form_Entrance" screenOptions={{
             headerShown: false
         }}>
-            <FormStack.Screen name="Form_Entrance" component={FormScreen}/>
-            <FormStack.Screen name="CreateForm" component={CreateFormScreen}/>
+            <FormStack.Screen name="Form_Entrance" component={FormScreen} />
+            <FormStack.Screen name="CreateForm" component={CreateFormScreen} />
         </FormStack.Navigator>
     );
 }
 
 const MarketStack = createStackNavigator();
-function MarketScreens(){
-    return(
+function MarketScreens() {
+    return (
         <MarketStack.Navigator initialRouteName="Market_Entrance" screenOptions={{
             headerShown: false
         }}>
-            <MarketStack.Screen name="Market_Entrance" component={MarketScreen}/>
-            <MarketStack.Screen name="ShoppingCart" component={ShoppingCartScreen}/>
+            <MarketStack.Screen name="Market_Entrance" component={MarketScreen} />
+            <MarketStack.Screen name="ShoppingCart" component={ShoppingCartScreen} />
         </MarketStack.Navigator>
     );
 }
@@ -114,7 +116,7 @@ export default function NavigatorComponent(props) {
                 <Stack.Screen name="SignIn" component={SignInScreen} />
                 <Stack.Screen name="UserAgreement" component={BottomNavigator} />
                 <Stack.Screen name="PolicyAgreement" component={BottomNavigator} />
-                <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen}/>
+                <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
                 <Stack.Screen name="AppScreens" component={BottomNavigator} />
             </Stack.Navigator>
         </NavigationContainer>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, TextInput } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, TextInput , View, ActivityIndicator} from 'react-native';
 import styles from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { auth } from '../../Firebase/firebase';
@@ -54,6 +54,14 @@ const ForgotPasswordScreen = (props) => {
         
 
     }
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" color="#26931e"></ActivityIndicator>
+            </View>
+        );
+    }
+
     return (
         <SafeAreaView>
             <TouchableOpacity style={styles.returnButton} onPress={goBack}>

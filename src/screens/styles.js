@@ -10,7 +10,7 @@ export default StyleSheet.create({
       height: screenHeight / 15,
       justifyContent: 'center',
       borderRadius: 8,
-      backgroundColor: '#39be37',
+      backgroundColor: '#26931e',
       width: screenWidth / 2.3
    },
 
@@ -100,7 +100,7 @@ export default StyleSheet.create({
       height: screenHeight / 15,
       justifyContent: 'center',
       borderRadius: 8,
-      backgroundColor: '#39be37',
+      backgroundColor: '#26931e',
       marginRight: screenWidth / 25,
       marginLeft: screenWidth / 25,
 
@@ -147,7 +147,7 @@ export default StyleSheet.create({
       flexDirection: 'row',
       height: 52,
       borderRadius: 8,
-      backgroundColor: '#5e72e4',
+      backgroundColor: '#1d6d17',
       marginLeft: 15,
       marginRight: 15,
       marginTop: 16,

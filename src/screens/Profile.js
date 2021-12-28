@@ -47,7 +47,7 @@ const ProfileScreen = (props) => {
     if (loading) {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size="large" color="#000000"></ActivityIndicator>
+                <ActivityIndicator size="large" color="#26931e"></ActivityIndicator>
             </View>
         );
     }
