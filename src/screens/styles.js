@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, Platform } from "react-native";
+import { StyleSheet, Dimensions, Platform, ColorPropType } from "react-native";
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -54,15 +54,26 @@ export default StyleSheet.create({
       fontFamily: 'Comfortaa-Regular',
    },
 
-
-   searchBar: {
+   searchBarContainer: {
       marginTop: screenHeight / 100,
-      marginRight: screenWidth / 20,
-      marginLeft: screenWidth / 20,
+      marginLeft: 15,
+      marginRight: 15,
       height: screenHeight / 18,
+      justifyContent: 'center',
+      marginBottom: 15
+   },
+
+   searchBarText: {
+      flex: 1,
       borderColor: '#cad1d7',
       borderWidth: 2,
       borderRadius: 8,
+      padding: 10,
+   },
+
+   searchBarIcon: {
+      position: 'absolute',
+      right: '5%',
    },
    textStyle: {
       fontSize: 36,
@@ -87,6 +98,7 @@ export default StyleSheet.create({
       height: screenHeight / 15,
       borderColor: '#000000',
       borderWidth: 2,
+      padding: 10,
    },
    inputs: {
       marginRight: screenWidth / 25,
@@ -94,7 +106,8 @@ export default StyleSheet.create({
       height: screenHeight / 15,
       borderColor: '#000000',
       borderWidth: 2,
-      marginTop: screenHeight / 50
+      marginTop: screenHeight / 50,
+      padding: 10,
    },
    registerButton: {
       height: screenHeight / 15,
@@ -115,7 +128,7 @@ export default StyleSheet.create({
       marginTop: 16,
    },
 
-   forgotPasswordText:{
+   forgotPasswordText: {
       marginTop: 16,
       marginLeft: screenWidth / 25,
       fontSize: 14,
@@ -244,5 +257,80 @@ export default StyleSheet.create({
       alignSelf: 'center',
       borderColor: '#000000',
       marginTop: screenHeight / 100,
+   },
+
+   videoViewStyle: {
+      flex: 1,
+      //backgroundColor: '#321542',
+      marginLeft: 15,
+      marginRight: 15,
+   },
+
+   videoBoxStyle: {
+      flex: 1,
+      height: screenHeight / 4,
+      borderRadius: 10,
+
+   },
+
+   videoImageStyle: {
+      flex: 1,
+      borderRadius: 10,
+      width: '100%',
+      height: '100%',
+      resizeMode: 'cover'
+
+   },
+
+   videoAvatar: {
+      left: 0,
+   },
+
+   videoLine: {
+      height: 1,
+      borderWidth: 1,
+      marginBottom: 15,
+      opacity: 0.1,
+   },
+   videoInfoStyle: {
+      flex: 1,
+      flexDirection: 'row',
+      marginTop: 15,
+      marginBottom: 15,
+   },
+
+   videoTextContainer: {
+      left: 10
+   },
+
+   videoHeader: {
+      fontSize: 17,
+      fontWeight: '800'
+   },
+
+   videoPublisher: {
+      color: '#2f2f2f',
+      fontWeight: '200',
+      textAlign: 'left'
+   },
+
+   videoLengthContainer: {
+      right: 10,
+      bottom: 10,
+      position: 'absolute',
+      height: '10%',
+      width: '10%',
+      backgroundColor: '#00000099',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 3,
+
+
+   },
+
+   videoLengthStyle: {
+      fontSize: 15,
+      color: '#fff',
+
    },
 })

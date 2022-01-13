@@ -2,6 +2,7 @@ import React from 'react'
 import { SafeAreaView, TextInput, Text, TouchableOpacity, View} from 'react-native';
 import styles from './styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import SearchBarComponent from '../components/SearchBarComponent';
 const FormScreen = (props) => {
 
     const createForm = () => {
@@ -18,7 +19,7 @@ const FormScreen = (props) => {
                     </FontAwesome5>
                 </TouchableOpacity>
             </View>
-            <TextInput style={styles.searchBar} placeholder='Arama yapmak için tıklayınız.'/>
+            <SearchBarComponent/>
         </SafeAreaView>
     );
 

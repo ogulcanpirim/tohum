@@ -2,6 +2,7 @@ import React from 'react'
 import { SafeAreaView, View, Text, TouchableOpacity, TextInput} from 'react-native';
 import styles from './styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import SearchBarComponent from '../components/SearchBarComponent';
 
 const MarketScreen = (props) => {
 
@@ -24,7 +25,7 @@ const MarketScreen = (props) => {
                     </View>
                 </TouchableOpacity>
             </View>
-            <TextInput style={styles.searchBar} placeholder='Arama yapmak için tıklayınız.' />
+            <SearchBarComponent/>
         </SafeAreaView>
     );
 
