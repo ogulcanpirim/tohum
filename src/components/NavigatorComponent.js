@@ -19,6 +19,7 @@ import CreateFormScreen from '../screens/CreateForm';
 import InboxScreen from '../screens/Inbox';
 import ShoppingCartScreen from '../screens/ShoppingCart';
 import ForgotPasswordScreen from '../screens/ForgotPassword';
+import ChatScreen from '../screens/ChatScreen';
 
 const Stack = createStackNavigator();
 
@@ -26,9 +27,9 @@ const Tab = createBottomTabNavigator();
 
 function BottomNavigator() {
     return (
-        <Tab.Navigator initialRouteName="Home" 
+        <Tab.Navigator initialRouteName="Home"
             screenOptions={({ route }) => ({
-                headerShown: false, 
+                headerShown: false,
                 tabBarActiveTintColor: '#26931e',
                 tabBarIcon: ({ focused, color, size, padding }) => {
 
@@ -74,8 +75,21 @@ function ProfileScreens() {
         }}>
             <ProfileStack.Screen name="Profil_Entrance" component={ProfileScreen} />
             <ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen} />
-            <ProfileStack.Screen name="Inbox" component={InboxScreen} />
+            <ProfileStack.Screen name="ChatScreens" component={ChatScreens} />
         </ProfileStack.Navigator>
+    );
+}
+
+const ChatStack = createStackNavigator();
+
+function ChatScreens(){
+    return (
+        <ChatStack.Navigator initialRouteName="Inbox" screenOptions={{
+            headerShown: false
+        }}>
+            <ChatStack.Screen name="Inbox" component={InboxScreen} />
+            <ChatStack.Screen name="ChatScreen" component={ChatScreen} />
+        </ChatStack.Navigator>
     );
 }
 

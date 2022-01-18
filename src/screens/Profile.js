@@ -41,7 +41,7 @@ const ProfileScreen = (props) => {
     }
 
     const navigateInbox = () => {
-        props.navigation.navigate("Inbox");
+        props.navigation.navigate("ChatScreens");
     }
 
     if (loading) {

@@ -29,7 +29,7 @@ const VideoScreen = (props) => {
                 </TouchableOpacity>
             </View>
             <SearchBarComponent/>
-            <ScrollView style={styles.videoViewStyle}>
+            <ScrollView style={styles.listViewStyle}>
                 {data.map((video) => {
                     
                     return (

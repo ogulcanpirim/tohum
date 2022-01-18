@@ -259,44 +259,39 @@ export default StyleSheet.create({
       marginTop: screenHeight / 100,
    },
 
-   videoViewStyle: {
-      flex: 1,
-      //backgroundColor: '#321542',
-      marginLeft: 15,
-      marginRight: 15,
+   listViewStyle: {
+      padding: 15,
    },
 
    videoBoxStyle: {
-      flex: 1,
       height: screenHeight / 4,
       borderRadius: 10,
-
    },
 
    videoImageStyle: {
-      flex: 1,
-      borderRadius: 10,
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
       width: '100%',
       height: '100%',
-      resizeMode: 'cover'
+      resizeMode: 'cover',
 
-   },
-
-   videoAvatar: {
-      left: 0,
-   },
-
-   videoLine: {
-      height: 1,
-      borderWidth: 1,
-      marginBottom: 15,
-      opacity: 0.1,
    },
    videoInfoStyle: {
       flex: 1,
+      padding: '1%',
       flexDirection: 'row',
-      marginTop: 15,
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
       marginBottom: 15,
+      shadowColor: '#000',
+      shadowOpacity: .2,
+      backgroundColor: '#fff',
+      shadowOffset: {
+         width: 10,
+         height: 10,
+      },
+      alignItems: 'center'
+      
    },
 
    videoTextContainer: {
@@ -305,13 +300,14 @@ export default StyleSheet.create({
 
    videoHeader: {
       fontSize: 17,
-      fontWeight: '800'
+      fontWeight: '500'
    },
 
    videoPublisher: {
-      color: '#2f2f2f',
-      fontWeight: '200',
-      textAlign: 'left'
+      fontSize: 12,
+      color: '#5E72E4',
+      fontWeight: '600',
+      textAlign: 'left',
    },
 
    videoLengthContainer: {
@@ -324,13 +320,10 @@ export default StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 3,
-
-
    },
 
    videoLengthStyle: {
       fontSize: 15,
       color: '#fff',
-
    },
 })
