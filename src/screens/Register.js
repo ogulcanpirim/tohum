@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, View, TextInput, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { SafeAreaView, View, TextInput, Text, TouchableOpacity, ActivityIndicator ,Alert} from 'react-native';
 import { auth, db } from '../../Firebase/firebase';
 import styles from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -46,43 +46,43 @@ const RegisterScreen = (props) => {
         setLoading(true);
 
         if (name.length == 0) {
-            alert("Ad alanı boş olamaz.");
+            Alert.alert("Hata", "Ad alanı boş olamaz.");
             setLoading(false);
             return;
         }
 
         else if (surname.length == 0) {
-            alert("Soyad alanı boş olamaz.");
+            Alert.alert("Hata","Soyad alanı boş olamaz.");
             setLoading(false);
             return;
         }
 
         else if (username.length == 0) {
-            alert("Kullanıcı adı alanı boş olamaz.");
+            Alert.alert("Hata","Kullanıcı adı alanı boş olamaz.");
             setLoading(false);
             return;
         }
 
         else if (email.length == 0) {
-            alert("E-mail alanı boş olamaz.");
+            Alert.alert("Hata","E-mail alanı boş olamaz.");
             setLoading(false);
             return;
         }
 
         else if (password.length == 0) {
-            alert("Şifre alanı boş olamaz.");
+            Alert.alert("Hata","Şifre alanı boş olamaz.");
             setLoading(false);
             return;
         }
 
         else if (password !== secondPassword) {
-            alert("Girilen şifreler uyuşmuyor.");
+            Alert.alert("Hata","Girilen şifreler uyuşmuyor.");
             setLoading(false);
             return;
         }
 
         else if (password.length < 6) {
-            alert("Şifre en az 6 karakter olmalıdır.")
+            Alert.alert("Hata","Şifre en az 6 karakter olmalıdır.")
             setLoading(false);
             return;
         }
@@ -98,10 +98,10 @@ const RegisterScreen = (props) => {
                 const errorCode = error.code;
 
                 if (errorCode.includes("invalid-email")) {
-                    alert("Hatalı e-mail formatı girdiniz.");
+                    Alert.alert("Hata","Hatalı e-mail formatı girdiniz.");
                 }
                 else if (errorCode.includes("email-already-in-use")){
-                    alert("Bu email adresi kullanılmaktadır.")
+                    Alert.alert("Hata","Bu email adresi kullanılmaktadır.")
                 }
                 
                 setLoading(false);
