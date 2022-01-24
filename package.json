@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@react-native-firebase/app": "^13.1.0",
@@ -16,6 +17,8 @@
     "@react-navigation/stack": "^6.0.11",
     "@reduxjs/toolkit": "^1.7.0",
     "firebase": "^9.6.1",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0",
     "react": "17.0.2",
     "react-native": "0.66.0",
     "react-native-elements": "^3.4.2",
