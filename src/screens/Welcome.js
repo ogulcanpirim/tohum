@@ -1,9 +1,15 @@
-import React, {useEffect} from 'react'
-import { SafeAreaView, TouchableOpacity, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { SafeAreaView, TouchableOpacity, Text, View, ActivityIndicator} from 'react-native';
 import styles from './styles';
-import { auth } from '../../Firebase/firebase';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import { auth, firebaseAuth } from '../../Firebase/firebase';
+import { reauthenticateWithCredential } from 'firebase/auth';
 
 const WelcomeScreen = (props) => {
+
+
+    const [loading, setLoading] = useState(true);
+
 
     const navigateToRegister = () => {
         props.navigation.navigate("Register");
@@ -13,16 +19,47 @@ const WelcomeScreen = (props) => {
     }
 
     useEffect(() => {
-        
-        
-        
-        const unsubscribe = auth.onAuthStateChanged(user => {
-            if (user){
-                props.navigation.navigate("AppScreens");
+
+        const checkUser = async () => {
+
+            const userCredentialsStorage = await EncryptedStorage.getItem("USER_CREDENTIALS");
+
+            if (userCredentialsStorage) {
+                
+                const userCredentials = JSON.parse(userCredentialsStorage);
+                const user = userCredentials.user;
+                const password = userCredentials.password;
+
+                auth
+                    .signInWithEmailAndPassword(user.email, password)
+                    .then(() => {
+                        console.log("giris yapti !");
+                        props.navigation.navigate("AppScreens");
+                    }
+                    )
+                    .catch(error => {
+                        console.log("giris yapamadi !");
+                        console.log(error);
+                        setLoading(false);                
+                    })
             }
-        })
-        return unsubscribe;
-    }, []) 
+            setLoading(false);
+        }
+        checkUser();
+        
+
+    }, [])
+
+    
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" color="#26931e"></ActivityIndicator>
+            </View>
+        );
+    }
+    
+
 
     return (
 

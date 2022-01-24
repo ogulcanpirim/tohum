@@ -3,9 +3,10 @@ import { View, SafeAreaView, TouchableOpacity, Text, TextInput, ActivityIndicato
 import styles from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { auth } from '../../Firebase/firebase';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 const SignInScreen = (props) => {
-
+    
 
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
@@ -51,10 +52,11 @@ const SignInScreen = (props) => {
 
         auth
             .signInWithEmailAndPassword(email, password)
-            .then(userCredentials  => {
-                //store User
-                const user = userCredentials.user;
+            .then(userCredentials => {
 
+                const user = userCredentials.user;
+                const userData = {user, password};
+                EncryptedStorage.setItem("USER_CREDENTIALS", JSON.stringify(userData));
             })
             .catch(error => {
                 const errorCode = error.code;

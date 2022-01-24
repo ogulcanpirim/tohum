@@ -6,6 +6,7 @@ import { Avatar } from 'react-native-elements';
 import { Dimensions } from 'react-native';
 import { auth, db } from '../../Firebase/firebase';
 import { doc } from "firebase/firestore";
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 const ProfileScreen = (props) => {
 
@@ -23,16 +24,25 @@ const ProfileScreen = (props) => {
             return response;
         }
         getUser();
+
     }, [])
-    
+
 
     const avatarURL = "https://randomuser.me/api/portraits/men/36.jpg";
 
-    const handleSignOut = () => {
+    const handleSignOut = async() => {
+
+
+        //delete storage
+        await EncryptedStorage.removeItem("USER_CREDENTIALS");
+
         auth
             .signOut()
             .then(() => {
-                props.navigation.navigate("Welcome");
+                props.navigation.reset({
+                    index: 0,
+                    routes: [{ name: 'Welcome' }],
+                })
             })
     }
 

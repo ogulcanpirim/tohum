@@ -48,7 +48,10 @@ const ChangePasswordScreen = (props) => {
         const user = auth.currentUser;
         const credential = firebaseAuth.EmailAuthProvider.credential(user.email, OldPassword);
         //Reauthenticate user
-
+        console.log("changing user: " + JSON.stringify(user));
+        console.log("old password: " + OldPassword);
+        console.log("user.email: " + user.email);
+        console.log("credential created: " + JSON.stringify(credential));
         reauthenticateWithCredential(user, credential).then(() => {
 
             //reauthenticate succesfull
