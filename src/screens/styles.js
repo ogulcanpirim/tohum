@@ -326,4 +326,9 @@ export default StyleSheet.create({
       fontSize: 15,
       color: '#fff',
    },
+
+   marketItemStyle: {
+      //may change idk
+      backgroundColor: '#26931e33',
+   }
 })

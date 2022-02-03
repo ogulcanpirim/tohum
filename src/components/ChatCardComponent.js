@@ -20,10 +20,10 @@ const ChatCard = (props) => {
                 </Avatar>
                 <View style={styles.textContainer}>
                     <Text style={styles.usernameStyle}>
-                        Oğulcan Pirim
+                        {props.name + ' ' + props.surname}
                     </Text>
                     <Text style={styles.lastTextStyle}>
-                        Dün akşam çok güzeldi.
+                        {props.lastMessage}
                     </Text>
                 </View>
             </View>

@@ -5,7 +5,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SearchBarComponent from '../components/SearchBarComponent';
 import FormCardComponent from '../components/FormCardComponent';
 import { ScrollView } from 'react-native-gesture-handler';
-import VideoComponent from '../components/VideoComponent';
 
 const FormScreen = (props) => {
 
