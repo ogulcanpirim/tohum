@@ -5,6 +5,8 @@ import styles from './styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { ScrollView } from 'react-native-gesture-handler';
 import RentCardComponent from '../components/RentCardComponent';
+
+
 const RentScreen = (props) => {
 
     return (

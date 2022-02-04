@@ -291,7 +291,7 @@ export default StyleSheet.create({
          height: 10,
       },
       alignItems: 'center'
-      
+
    },
 
    videoTextContainer: {
@@ -330,5 +330,24 @@ export default StyleSheet.create({
    marketItemStyle: {
       //may change idk
       backgroundColor: '#26931e33',
+   },
+   centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+   },
+   modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+         width: 0,
+         height: 2
+      },
    }
+
 })

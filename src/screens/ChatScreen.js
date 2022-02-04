@@ -91,18 +91,13 @@ const ChatScreen = (props) => {
 
 
   function handleSend(message) {
-    console.log("route.params.id: " + route.params.id);
-    console.log("messages old: " + messages);
-    console.log("new message: " + JSON.stringify(message));
     const newMessages = [...messages, ...message];
-    console.log("new messages after added: " + JSON.stringify(newMessages));
-    //db.collection("chats").doc(route.params.id).update({deneme: 3});
+    //aqil => date firebase timestamp to date && update function same key error
+    //db.collection("chats").doc(route.params.id).update({messages: newMessages});
     appendMessages(message);
-    console.log("yeni mesaj ekledim...");
   }
 
   const appendMessages = useCallback((messages) => {
-    console.log("yeni mesaj ekliyorum...");
     setMessages((previousMessages) => GiftedChat.append(previousMessages, messages));
   }, [messages]);
 

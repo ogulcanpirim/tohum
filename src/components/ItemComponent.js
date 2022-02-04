@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, Dimensions, Image, TouchableOpacity } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import LogComponent from './LogComponent';
 
 const styles = StyleSheet.create({
     container: {
@@ -61,15 +62,25 @@ const ItemComponent = (props) => {
 
     const [count, setCount] = useState(1);
     const [add, setAdd] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalText, setModalText] = useState("");
+
+    useEffect(() => {
+        if (modalVisible) {
+            setTimeout(() => setModalVisible(false), 5000);
+        }
+    }, [modalVisible])
 
 
     const addItem = () => {
 
         if (!add) {
-            alert("ürün eklendi !");
+            setModalText("Katı gübre sepetinize eklendi");
+            setModalVisible(true);
         }
         else {
-            alert("ürün silindi !");
+            setModalText("Katı gübre sepetinizden çıkarıldı");
+            setModalVisible(true);
         }
         setAdd(!add);
     }
@@ -105,6 +116,8 @@ const ItemComponent = (props) => {
                     </FontAwesome5>
                 </TouchableOpacity>
             </View>
+            {modalVisible ? <LogComponent success={add} text={modalText} modalVisible={modalVisible} setModalVisible={setModalVisible} /> : undefined}
+
         </View>
     )
 }
