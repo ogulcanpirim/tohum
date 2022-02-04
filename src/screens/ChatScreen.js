@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
-import { ActivityIndicator, View, StyleSheet, Platform, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Text, Dimensions } from 'react-native';
+import { View, StyleSheet, Platform, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Text} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { db, auth } from '../../Firebase/firebase';
 import { useRoute } from '@react-navigation/native';
+import tr from 'dayjs/locale/tr'
 
 const styles = StyleSheet.create({
 
@@ -142,6 +143,7 @@ const ChatScreen = (props) => {
         scrollToBottom
         isAnimated
         showUserAvatar
+        locale={tr.name}
         renderBubble={props => {
           return (
             <Bubble
