@@ -182,7 +182,7 @@ export default StyleSheet.create({
       borderWidth: 2,
       marginTop: screenHeight / 50,
       paddingTop: screenHeight / 50,
-      textAlignVertical: 'top',
+      padding: 10,
    },
    addFormButton: {
       marginRight: screenWidth / 20,
