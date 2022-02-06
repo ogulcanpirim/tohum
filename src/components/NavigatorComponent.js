@@ -20,6 +20,7 @@ import InboxScreen from '../screens/Inbox';
 import ShoppingCartScreen from '../screens/ShoppingCart';
 import ForgotPasswordScreen from '../screens/ForgotPassword';
 import ChatScreen from '../screens/ChatScreen';
+import UploadVideoScreen from '../screens/UploadVideo';
 
 const Stack = createStackNavigator();
 
@@ -59,7 +60,7 @@ function BottomNavigator() {
             <Tab.Screen name="Kirala" component={RentScreen} />
             <Tab.Screen name="Forum" component={FormScreens} />
             <Tab.Screen name="Market" component={MarketScreens} />
-            <Tab.Screen name="İzle" component={VideoScreen} />
+            <Tab.Screen name="İzle" component={VideoScreens} />
             <Tab.Screen name="Profil" component={ProfileScreens} />
 
         </Tab.Navigator>
@@ -118,6 +119,17 @@ function MarketScreens() {
     );
 }
 
+const VideoStack = createStackNavigator();
+function VideoScreens(){
+    return (
+        <VideoStack.Navigator initialRouteName="Video_Entrance" screenOptions={{
+            headerShown: false
+        }}>
+            <VideoStack.Screen name="Video_Entrance" component={VideoScreen} />
+            <VideoStack.Screen name="UploadVideo" component={UploadVideoScreen} />
+        </VideoStack.Navigator>
+    );
+}
 
 export default function NavigatorComponent(props) {
     return (

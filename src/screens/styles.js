@@ -348,6 +348,17 @@ export default StyleSheet.create({
          width: 0,
          height: 2
       },
-   }
+   },
+   uploadVideoButton: {
+      height: screenHeight / 15,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 8,
+      backgroundColor: '#39be37',
+      marginRight: screenWidth / 25,
+      marginLeft: screenWidth / 25,
+      marginTop: 16,
+   },
 
 })

@@ -12,8 +12,8 @@ import SearchBarComponent from '../components/SearchBarComponent';
 
 const VideoScreen = (props) => {
 
-    const createVideo = () => {
-        //props.navigation();
+    const goToUploadVideo = () => {
+        props.navigation.navigate("UploadVideo");
     }
 
     return (
@@ -21,7 +21,7 @@ const VideoScreen = (props) => {
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.screenHeader}>İzle</Text>
-                <TouchableOpacity style={styles.addFormButton} onPress={createVideo}>
+                <TouchableOpacity style={styles.addFormButton} onPress={goToUploadVideo}>
                     <FontAwesome5
                         name={"plus-circle"}
                         size={30}>
