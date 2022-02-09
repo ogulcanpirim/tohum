@@ -355,10 +355,43 @@ export default StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: 8,
-      backgroundColor: '#39be37',
       marginRight: screenWidth / 25,
       marginLeft: screenWidth / 25,
+      backgroundColor: '#39be37',
       marginTop: 16,
    },
+
+   uploadContainer: {
+      backgroundColor: '#e3e3e3',
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderRadius: 8,
+      borderWidth: 2,
+      marginTop: 16,
+      marginRight: screenWidth / 25,
+      marginLeft: screenWidth / 25,
+      height: screenHeight / 15,
+   },
+
+   uploadDivider: {
+      position: 'absolute',
+      justifyContent: 'center',
+      borderLeftWidth: 0,
+      borderWidth: 2,
+      width: '20%',
+      left: 0,
+      borderBottomLeftRadius: 8,
+      borderTopLeftRadius: 8,
+      height: screenHeight / 15,
+   },
+
+   uploadIcon: {
+      alignSelf: 'center',
+   },
+
+   uploadText: {
+     position: 'absolute',
+     left: '25%' 
+   }
 
 })
