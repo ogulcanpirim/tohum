@@ -21,6 +21,7 @@ import ShoppingCartScreen from '../screens/ShoppingCart';
 import ForgotPasswordScreen from '../screens/ForgotPassword';
 import ChatScreen from '../screens/ChatScreen';
 import UploadVideoScreen from '../screens/UploadVideo';
+import VideoComponentScreen from '../screens/VideoScreen';
 
 const Stack = createStackNavigator();
 
@@ -127,6 +128,7 @@ function VideoScreens(){
         }}>
             <VideoStack.Screen name="Video_Entrance" component={VideoScreen} />
             <VideoStack.Screen name="UploadVideo" component={UploadVideoScreen} />
+            <VideoStack.Screen name="VideoComponent" component={VideoComponentScreen}/>
         </VideoStack.Navigator>
     );
 }

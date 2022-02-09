@@ -8,9 +8,11 @@ const VideoComponent = (props) => {
 
     const avatarURL = "https://randomuser.me/api/portraits/men/36.jpg";
 
+
+
     return (
         <View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={props.goVideo}>
                 <View style={styles.videoBoxStyle}>
                     <Image style={styles.videoImageStyle} source={{ uri: props.uri }} />
                     <View style={styles.videoLengthContainer}>
@@ -24,7 +26,6 @@ const VideoComponent = (props) => {
                         size={Dimensions.get('window').width / 10}
                         rounded
                         source={{ uri: avatarURL }}
-
                     >
                     </Avatar>
                 </TouchableOpacity>

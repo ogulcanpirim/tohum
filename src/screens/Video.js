@@ -39,6 +39,7 @@ const VideoScreen = (props) => {
                             publisher={video.videoPublisher}
                             length={video.videoLength}
                             uri={video.videoUri}
+                            goVideo={() => props.navigation.navigate("VideoComponent", { ...video })}
                         />
                     );
                 })}
