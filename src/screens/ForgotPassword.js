@@ -48,6 +48,7 @@ const ForgotPasswordScreen = (props) => {
                 else if (errorCode.includes("user-not-found")) {
                     alert("E-mail ile kullanıcı bulunamadı.");
                 }
+                setLoading(false);
             })
         
         setLoading(!loading);
