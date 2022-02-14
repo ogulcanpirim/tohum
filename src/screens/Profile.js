@@ -85,7 +85,7 @@ const ProfileScreen = (props) => {
             <Avatar
                 size={Dimensions.get('window').width / 3}
                 rounded
-                source={{ uri: avatarURL }}
+                source={require('../assets/images/farmer_pp.png')}
                 containerStyle={{ alignSelf: 'center' }}
             >
                 <Avatar.Accessory
