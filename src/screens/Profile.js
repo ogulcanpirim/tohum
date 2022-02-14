@@ -7,17 +7,19 @@ import { Dimensions } from 'react-native';
 import { auth, db } from '../../Firebase/firebase';
 import { doc } from "firebase/firestore";
 import EncryptedStorage from 'react-native-encrypted-storage';
+import ProfilePictureComponent from '../components/ProfilePictureComponent';
 
 const ProfileScreen = (props) => {
 
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
-
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
         const getUser = async () => {
             const response = await db.collection("users").doc(auth.currentUser?.uid).onSnapshot(doc => {
                 const user = doc.data();
+                console.log("user: " + JSON.stringify(user));
                 setUser(user);
                 setLoading(false);
             })
@@ -28,7 +30,7 @@ const ProfileScreen = (props) => {
     }, [])
 
 
-    const avatarURL = "https://randomuser.me/api/portraits/men/36.jpg";
+    const defaultAvatar = require('../assets/images/farmer_pp.png')
 
     const handleSignOut = async() => {
 
@@ -85,13 +87,14 @@ const ProfileScreen = (props) => {
             <Avatar
                 size={Dimensions.get('window').width / 3}
                 rounded
-                source={require('../assets/images/farmer_pp.png')}
+                source={auth.currentUser?.photoURL ? { uri: auth.currentUser?.photoURL} : require('../assets/images/farmer_pp.png')}
                 containerStyle={{ alignSelf: 'center' }}
             >
                 <Avatar.Accessory
                     name="plus-circle"
                     type="font-awesome-5"
                     color="#000000"
+                    onPress={() => setModalVisible(true)}
                     size={32} />
             </Avatar>
             <Text style={styles.profileName}>{user?.name + ' ' + user?.surname}</Text>
@@ -118,6 +121,7 @@ const ProfileScreen = (props) => {
                 <FontAwesome5 name={"unlock-alt"} style={styles.iconButtonStyle} size={25} color={"#ffffff"} />
                 <Text style={styles.profileButtonText}>Şifre değiştir</Text>
             </TouchableOpacity>
+            {modalVisible ? <ProfilePictureComponent modalVisible={modalVisible} setModalVisible={setModalVisible}/> : undefined}
         </SafeAreaView >
     );
 

@@ -18,6 +18,8 @@ target 'tohum' do
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'tohumTests' do
     inherit! :complete
     # Pods for testing
