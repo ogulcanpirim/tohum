@@ -2,7 +2,6 @@ import React,{useState} from 'react';
 import { Modal, View, TouchableOpacity, ActivityIndicator, Dimensions, Text, StyleSheet, Pressable } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import * as ImagePicker from "react-native-image-picker"
 import { db, auth } from '../../Firebase/firebase';
 import { getDownloadURL,getStorage, uploadBytes, ref } from 'firebase/storage';
 
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
     },
 
     touchOutside: {
-        flex: 1,
+        flex: 1,    
     },
 
     modalContainer: {
@@ -152,7 +151,7 @@ const ProfilePictureComponent = (props) => {
                                     style={{ marginLeft: 15 }}
                                 >
                                 </FontAwesome5>
-                                <Text style={{ marginLeft: 15 }}>Galeri</Text>
+                                <Text style={{ position: 'absolute', left: '20%' }}>Galeri</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ flex: 1 }} onPress={camera}>
@@ -163,7 +162,7 @@ const ProfilePictureComponent = (props) => {
                                     style={{ marginLeft: 15 }}
                                 >
                                 </FontAwesome5>
-                                <Text style={{ marginLeft: 15 }}>Fotoğraf çek</Text>
+                                <Text style={{ position: 'absolute', left: '20%' }}>Fotoğraf çek</Text>
                             </View>
                         </TouchableOpacity>
                     </View>

@@ -1,13 +1,35 @@
 import React from 'react';
 import styles from '../screens/styles';
-import { View, SafeAreaView, TouchableOpacity, Text, TextInput } from 'react-native';
+import { View, SafeAreaView, Dimensions, TouchableOpacity, Text, TextInput } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const UploadVideoScreen = (props) => {
 
     const goBack = () => {
         props.navigation.goBack();
+    }
+
+    const gallery = () => {
+        launchImageLibrary(
+            {
+                mediaType: 'video',
+                includeBase64: false,
+                maxHeight: Dimensions.get('window').height,
+                maxWidth: Dimensions.get('window').width,
+                quality: 1,
+            },
+            async (response) => {
+                if (!response.hasOwnProperty("didCancel")) {
+                    setLoading(true);
+                    await uriToBlob(response.assets[0].uri)
+                    setLoading(false);
+                    alert("Profil fotoğrafı güncellendi");
+                    setModalVisible(false);
+                }
+            },
+        )
     }
 
     return (
@@ -21,7 +43,7 @@ const UploadVideoScreen = (props) => {
             <Text style={styles.screenHeaderWithLogo}>Video Yükle</Text>
             <TextInput style={styles.inputFirst} placeholder='Video Başlığı' />
             <TextInput style={styles.createFormInput} placeholder='Video açıklaması yazın...' multiline={true} />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={gallery}>
                 <View style={styles.uploadContainer}>
                     <View style={styles.uploadDivider}>
                         <FontAwesome5

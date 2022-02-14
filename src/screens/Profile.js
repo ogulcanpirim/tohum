@@ -17,13 +17,11 @@ const ProfileScreen = (props) => {
 
     useEffect(() => {
         const getUser = async () => {
-            const response = await db.collection("users").doc(auth.currentUser?.uid).onSnapshot(doc => {
+            return db.collection("users").doc(auth.currentUser?.uid).onSnapshot(doc => {
                 const user = doc.data();
-                console.log("user: " + JSON.stringify(user));
                 setUser(user);
                 setLoading(false);
             })
-            return response;
         }
         getUser();
 
@@ -65,7 +63,7 @@ const ProfileScreen = (props) => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={modalVisible ? {opacity: 0.1} : {}}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.screenHeader}>Profil</Text>
                 <TouchableOpacity style={styles.inboxButton} onPress={navigateInbox}>
