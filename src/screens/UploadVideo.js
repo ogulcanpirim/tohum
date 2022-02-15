@@ -1,11 +1,33 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styles from '../screens/styles';
-import { View, SafeAreaView, Dimensions, TouchableOpacity, Text, TextInput } from 'react-native';
+import { View, SafeAreaView, Dimensions, TouchableOpacity, Text, TextInput, Alert} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 const UploadVideoScreen = (props) => {
+
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [video, setVideo] = useState(undefined);
+
+    const uploadVideoFirebase = () => {
+
+        if (title.length < 5){
+            Alert.alert("Hata", "Video ismi en az 5 karakter olmalıdır!")
+        }
+        else if (!description.length){
+            Alert.alert("Hata", "Video açıklaması boş olamaz!");
+        }
+        else if (!video){
+            Alert.alert("Hata", "Lütfen yüklemek için bir video seçin");
+        }
+        else{
+            //todo upload video
+            Alert.alert("Hata", "Lütfen yüklemek için bir video seçin");
+        }
+    }
+
 
     const goBack = () => {
         props.navigation.goBack();
@@ -41,8 +63,8 @@ const UploadVideoScreen = (props) => {
                 </AntDesign>
             </TouchableOpacity>
             <Text style={styles.screenHeaderWithLogo}>Video Yükle</Text>
-            <TextInput style={styles.inputFirst} placeholder='Video Başlığı' />
-            <TextInput style={styles.createFormInput} placeholder='Video açıklaması yazın...' multiline={true} />
+            <TextInput value={title} onChangeText={setTitle} style={styles.inputFirst} placeholder='Video Başlığı' />
+            <TextInput value={description} onChangeText={setDescription} style={styles.createFormInput} placeholder='Video açıklaması yazın...' multiline={true} />
             <TouchableOpacity onPress={gallery}>
                 <View style={styles.uploadContainer}>
                     <View style={styles.uploadDivider}>
@@ -56,7 +78,7 @@ const UploadVideoScreen = (props) => {
                     <Text style={styles.uploadText}>Bir video yüklemek için dokunun.</Text>
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.uploadVideoButton}>
+            <TouchableOpacity style={styles.uploadVideoButton} onPress={uploadVideoFirebase}>
                 <FontAwesome5
                     style={{marginRight: 10}}
                     name={"video"}
