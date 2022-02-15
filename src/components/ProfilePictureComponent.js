@@ -1,8 +1,8 @@
 import React,{useState} from 'react';
-import { Modal, View, TouchableOpacity, ActivityIndicator, Dimensions, Text, StyleSheet, Pressable } from 'react-native';
+import { Modal, View, TouchableOpacity, ActivityIndicator, Dimensions, Text, StyleSheet, Alert } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { db, auth } from '../../Firebase/firebase';
+import { auth } from '../../Firebase/firebase';
 import { getDownloadURL,getStorage, uploadBytes, ref } from 'firebase/storage';
 
 const styles = StyleSheet.create({
@@ -114,7 +114,7 @@ const ProfilePictureComponent = (props) => {
                     setLoading(true);
                     await uriToBlob(response.assets[0].uri)
                     setLoading(false);
-                    alert("Profil fotoğrafı güncellendi");
+                    Alert.alert("Mesaj", "Profil fotoğrafı güncellendi");
                     setModalVisible(false);
                 }
             },
