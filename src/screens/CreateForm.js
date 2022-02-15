@@ -1,12 +1,29 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styles from '../screens/styles';
-import { SafeAreaView, TouchableOpacity, Text, TextInput } from 'react-native';
+import { SafeAreaView, TouchableOpacity, Text, TextInput, Alert} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const CreateFormScreen = (props) => {
 
+    const [title, setTitle] = useState('');
+    const [message, setMessage] = useState('');
+
     const goBack = () => {
         props.navigation.goBack();
+    }
+
+    const createForm = () => {
+        if (title.length < 5){
+            Alert.alert("Hata", "Video ismi en az 5 karakter olmalıdır!")
+        }
+        else if (!message){
+            Alert.alert("Hata", "Forum mesajı boş olamaz!");
+        }
+        else {
+            //TODO: check whether given entry exists with the same form name
+            //TODO: create new document in firebase/forums.
+            Alert.alert("Success", "Forum başarıyla oluşturuldu.");
+        }
     }
 
     return (
@@ -18,12 +35,12 @@ const CreateFormScreen = (props) => {
                 </AntDesign>
             </TouchableOpacity>
             <Text style={styles.screenHeaderWithLogo}>Forum Oluştur</Text>
-            <TextInput style={styles.inputFirst} placeholder='Forum Başlığı'>
+            <TextInput value={title} onChangeText={setTitle} style={styles.inputFirst} placeholder='Forum Başlığı'>
             </TextInput>
-            <TextInput style={styles.createFormInput} placeholder='Forum için ilk mesajı yazın...' multiline={true}>
+            <TextInput value={message} onChangeText={setMessage} style={styles.createFormInput} placeholder='Forum için ilk mesajı yazın...' multiline={true}>
             </TextInput>
             
-            <TouchableOpacity style={styles.createFormButton}>
+            <TouchableOpacity style={styles.createFormButton} onPress={createForm}>
                 <Text style={styles.buttonText}>OLUŞTUR</Text>
             </TouchableOpacity>
         </SafeAreaView>
