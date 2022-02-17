@@ -1,30 +1,91 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import styles from '../screens/styles';
-import { View, SafeAreaView, Dimensions, TouchableOpacity, Text, TextInput, Alert} from 'react-native';
+import { View, SafeAreaView, Dimensions, TouchableOpacity, Text, TextInput, Alert } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { getStorage, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { auth } from '../../Firebase/firebase';
 
 const UploadVideoScreen = (props) => {
 
+    const storage = getStorage();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [video, setVideo] = useState(undefined);
+    const [progress, setProgress] = useState("0");
+    const [videoBlob, setVideoBlob] = useState(undefined);
+
+    const uriToBlob = async (uri) => {
+
+        const blob = await new Promise((resolve, reject) => {
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.onload = function () {
+                // return the blob
+                resolve(xhr.response);
+            };
+
+            xhr.onerror = function () {
+                // something went wrong
+                reject(new Error('uriToBlob failed'));
+            };
+
+            // this helps us get a blob
+            xhr.responseType = 'blob';
+
+            xhr.open('GET', uri, true);
+            xhr.send(null);
+
+        });
+
+        setVideoBlob(blob);
+
+    }
 
     const uploadVideoFirebase = () => {
 
-        if (title.length < 5){
+        if (title.length < 5) {
             Alert.alert("Hata", "Video ismi en az 5 karakter olmalıdır!")
         }
-        else if (!description.length){
+        else if (!description.length) {
             Alert.alert("Hata", "Video açıklaması boş olamaz!");
         }
-        else if (!video){
-            Alert.alert("Hata", "Lütfen yüklemek için bir video seçin");
-        }
-        else{
-            //todo upload video
-            Alert.alert("Hata", "Lütfen yüklemek için bir video seçin");
+        else {
+            const metadata = {
+                customMetadata: {
+                  'description': description                
+                }
+              };
+            console.log("metadata: " + JSON.stringify(metadata));
+
+            const fileRef = ref(storage, auth.currentUser?.uid + '/videos/' + title + '.mp4');
+
+            const uploadTask = uploadBytesResumable(fileRef, videoBlob, metadata);
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    setProgress(progress.toString());
+                    switch (snapshot.state) {
+                        case 'paused':
+                            console.log('Upload is paused');
+                            break;
+                        case 'running':
+                            console.log('Upload is running');
+                            break;
+                    }
+                },
+                (error) => {
+                    Alert.alert("Hata", "Video yüklenirken bir sorun oluştu");
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        console.log('File available at', downloadURL);
+                    });
+                    Alert.alert("Mesaj", "Yükleme tamamlandı!");
+                    goBack();
+                }
+            );
         }
     }
 
@@ -44,11 +105,7 @@ const UploadVideoScreen = (props) => {
             },
             async (response) => {
                 if (!response.hasOwnProperty("didCancel")) {
-                    setLoading(true);
-                    await uriToBlob(response.assets[0].uri)
-                    setLoading(false);
-                    alert("Profil fotoğrafı güncellendi");
-                    setModalVisible(false);
+                    await uriToBlob(response.assets[0].uri);
                 }
             },
         )
@@ -80,13 +137,14 @@ const UploadVideoScreen = (props) => {
             </TouchableOpacity>
             <TouchableOpacity style={styles.uploadVideoButton} onPress={uploadVideoFirebase}>
                 <FontAwesome5
-                    style={{marginRight: 10}}
+                    style={{ marginRight: 10 }}
                     name={"video"}
                     color={"#fff"}
                     size={15}>
                 </FontAwesome5>
                 <Text style={styles.buttonText}>YÜKLE</Text>
             </TouchableOpacity>
+            <Text>Progress:%{progress}</Text>
         </SafeAreaView>
     );
 }

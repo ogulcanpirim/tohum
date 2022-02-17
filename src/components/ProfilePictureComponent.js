@@ -1,9 +1,9 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { Modal, View, TouchableOpacity, ActivityIndicator, Dimensions, Text, StyleSheet, Alert } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { auth } from '../../Firebase/firebase';
-import { getDownloadURL,getStorage, uploadBytes, ref } from 'firebase/storage';
+import { getDownloadURL, getStorage, uploadBytes, ref } from 'firebase/storage';
 
 const styles = StyleSheet.create({
     centeredView: {
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
 
     touchOutside: {
-        flex: 1,    
+        flex: 1,
     },
 
     modalContainer: {
@@ -48,7 +48,7 @@ const ProfilePictureComponent = (props) => {
     const [loading, setLoading] = useState(false);
 
     const uriToBlob = async (uri) => {
-
+        setLoading(true);
         const blob = await new Promise((resolve, reject) => {
 
             const xhr = new XMLHttpRequest();
@@ -75,11 +75,12 @@ const ProfilePictureComponent = (props) => {
 
     }
 
-    uploadToFirebase = async(blob) => {
-        const fileRef = ref(storage, auth.currentUser?.uid + '.png');
+    uploadToFirebase = async (blob) => {
+        const fileRef = ref(storage, auth.currentUser?.uid + '/profile.png');
         await uploadBytes(fileRef, blob);
         const photoURL = await getDownloadURL(fileRef);
-        await auth.currentUser.updateProfile({photoURL});
+        await auth.currentUser.updateProfile({ photoURL });
+        setLoading(false);
     }
 
     const camera = () => {
@@ -111,11 +112,9 @@ const ProfilePictureComponent = (props) => {
             },
             async (response) => {
                 if (!response.hasOwnProperty("didCancel")) {
-                    setLoading(true);
                     await uriToBlob(response.assets[0].uri)
-                    setLoading(false);
-                    Alert.alert("Mesaj", "Profil fotoğrafı güncellendi");
                     setModalVisible(false);
+                    Alert.alert("Mesaj", "Profil fotoğrafı güncellendi");
                 }
             },
         )
@@ -123,11 +122,42 @@ const ProfilePictureComponent = (props) => {
 
     const { modalVisible, setModalVisible } = props;
 
-    if (loading) {
+    const LoadingScreen = () => {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <ActivityIndicator size="large" color="#26931e"></ActivityIndicator>
             </View>
+        );
+    }
+
+    const ModalComponent = () => {
+        return (
+            <TouchableOpacity style={styles.touchOutside} onPress={() => setModalVisible(false)}>
+                <View style={styles.modalContainer} onPress={(() => setModalVisible(false))}>
+                    <TouchableOpacity style={{ flex: 1 }} onPress={gallery}>
+                        <View style={styles.galleryContainer}>
+                            <FontAwesome5
+                                name={"photo-video"}
+                                size={30}
+                                style={{ marginLeft: 15 }}
+                            >
+                            </FontAwesome5>
+                            <Text style={{ position: 'absolute', left: '20%' }}>Galeri</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ flex: 1 }} onPress={camera}>
+                        <View style={styles.photoContainer}>
+                            <FontAwesome5
+                                name={"camera"}
+                                size={30}
+                                style={{ marginLeft: 15 }}
+                            >
+                            </FontAwesome5>
+                            <Text style={{ position: 'absolute', left: '20%' }}>Fotoğraf çek</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </TouchableOpacity>
         );
     }
 
@@ -141,32 +171,7 @@ const ProfilePictureComponent = (props) => {
                     setModalVisible(!modalVisible);
                 }}
             >
-                <TouchableOpacity style={styles.touchOutside} onPress={() => setModalVisible(false)}>
-                    <View style={styles.modalContainer} onPress={(() => setModalVisible(false))}>
-                        <TouchableOpacity style={{ flex: 1 }} onPress={gallery}>
-                            <View style={styles.galleryContainer}>
-                                <FontAwesome5
-                                    name={"photo-video"}
-                                    size={30}
-                                    style={{ marginLeft: 15 }}
-                                >
-                                </FontAwesome5>
-                                <Text style={{ position: 'absolute', left: '20%' }}>Galeri</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ flex: 1 }} onPress={camera}>
-                            <View style={styles.photoContainer}>
-                                <FontAwesome5
-                                    name={"camera"}
-                                    size={30}
-                                    style={{ marginLeft: 15 }}
-                                >
-                                </FontAwesome5>
-                                <Text style={{ position: 'absolute', left: '20%' }}>Fotoğraf çek</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                </TouchableOpacity>
+                {loading ? <LoadingScreen/> : <ModalComponent/>}
             </Modal>
         </View>
     );
