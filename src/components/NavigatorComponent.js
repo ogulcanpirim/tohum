@@ -22,6 +22,7 @@ import ForgotPasswordScreen from '../screens/ForgotPassword';
 import ChatScreen from '../screens/ChatScreen';
 import UploadVideoScreen from '../screens/UploadVideo';
 import VideoComponentScreen from '../screens/VideoScreen';
+import UserVideoScreen from '../screens/UserVideos';
 
 const Stack = createStackNavigator();
 
@@ -84,7 +85,7 @@ function ProfileScreens() {
 
 const ChatStack = createStackNavigator();
 
-function ChatScreens(){
+function ChatScreens() {
     return (
         <ChatStack.Navigator initialRouteName="Inbox" screenOptions={{
             headerShown: false
@@ -121,14 +122,15 @@ function MarketScreens() {
 }
 
 const VideoStack = createStackNavigator();
-function VideoScreens(){
+function VideoScreens() {
     return (
         <VideoStack.Navigator initialRouteName="Video_Entrance" screenOptions={{
             headerShown: false
         }}>
             <VideoStack.Screen name="Video_Entrance" component={VideoScreen} />
             <VideoStack.Screen name="UploadVideo" component={UploadVideoScreen} />
-            <VideoStack.Screen name="VideoComponent" component={VideoComponentScreen}/>
+            <VideoStack.Screen name="VideoComponent" component={VideoComponentScreen} />
+            <VideoStack.Screen name="UserVideos" component={UserVideoScreen} />
         </VideoStack.Navigator>
     );
 }
