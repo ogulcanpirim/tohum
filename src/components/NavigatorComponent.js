@@ -23,6 +23,7 @@ import ChatScreen from '../screens/ChatScreen';
 import UploadVideoScreen from '../screens/UploadVideo';
 import VideoComponentScreen from '../screens/VideoScreen';
 import UserVideoScreen from '../screens/UserVideos';
+import UserFormScreen from '../screens/UserForms';
 
 const Stack = createStackNavigator();
 
@@ -105,6 +106,7 @@ function FormScreens() {
         }}>
             <FormStack.Screen name="Form_Entrance" component={FormScreen} />
             <FormStack.Screen name="CreateForm" component={CreateFormScreen} />
+            <FormStack.Screen name="UserForms" component={UserFormScreen}/>
         </FormStack.Navigator>
     );
 }
