@@ -14,7 +14,7 @@ const CreateFormScreen = (props) => {
 
     const createForm = () => {
         if (title.length < 5){
-            Alert.alert("Hata", "Video ismi en az 5 karakter olmalıdır!")
+            Alert.alert("Hata", "Forum başlığı en az 5 karakter olmalıdır!")
         }
         else if (!message){
             Alert.alert("Hata", "Forum mesajı boş olamaz!");
