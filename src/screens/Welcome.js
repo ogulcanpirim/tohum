@@ -4,7 +4,7 @@ import styles from './styles';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { auth} from '../../Firebase/firebase';
 import SplashScreen from 'react-native-splash-screen';
-
+import { ImageBackground, Image , StyleSheet } from 'react-native';
 const WelcomeScreen = (props) => {
 
     const navigateToRegister = () => {
@@ -47,20 +47,38 @@ const WelcomeScreen = (props) => {
     return (
 
         <SafeAreaView>
-            <View style={styles.welcomeScreenView}>
-                <Text style={styles.welcomeLogoTitle}>
-                    tohum
-                </Text>
+        <View style={styles.welcomeScreenView}>
+            <View style={styles.WScontainer}>
+                <Image source={require('../assets/background.png')}
+                    resizeMode="cover"
+                    style={styles.WelcomScreenBackgroundImage}>
+                </Image>
             </View>
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <TouchableOpacity style={styles.welcomeSignInButton} onPress={navigateToSignIn}>
-                    <Text style={styles.buttonText}>GİRİŞ YAP</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.welcomeRegisterButton} onPress={navigateToRegister}>
-                    <Text style={styles.buttonText}>KAYIT OL</Text>
-                </TouchableOpacity>
+            <Text style={styles.welcomeLogoTitle}>
 
-            </View>
+            </Text>
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', backgroundColor: '#ababab'}}>
+            <TouchableOpacity style={styles.welcomeSignInButton} onPress={navigateToSignIn}>
+                <Text style={styles.buttonText}>GİRİŞ YAP</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.welcomeRegisterButton} onPress={navigateToRegister}>
+                <Text style={styles.buttonText}>KAYIT OL</Text>
+            </TouchableOpacity>
+        </View>
+        <View style={styles.WelcomeScreenlogo}>
+            <Image
+                style={styles.WelcomeScreenlogo}
+                source={require('../assets/logo.png'
+                )}
+            />
+
+
+
+
+
+        </View>
+
         </SafeAreaView>
     );
 }

@@ -114,7 +114,7 @@ const ProfilePictureComponent = (props) => {
                 if (!response.hasOwnProperty("didCancel")) {
                     await uriToBlob(response.assets[0].uri)
                     setModalVisible(false);
-                    Alert.alert("Mesaj", "Profil fotoğrafı güncellendi");
+                    Alert.alert("Mesaj", "KİRALADINIZ");
                 }
             },
         )

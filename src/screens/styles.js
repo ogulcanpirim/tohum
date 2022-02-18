@@ -22,6 +22,27 @@ export default StyleSheet.create({
       width: screenWidth / 2.3
    },
 
+   WelcomeScreenlogo: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 200,
+      height: 65,
+      marginBottom: 1000,
+      marginLeft:60,
+      marginTop : 50,
+      
+    },
+    WScontainer: {
+       backgroundColor: '#a70000',
+       opacity: 0.5
+    },
+
+    WelcomScreenBackgroundImage: {
+
+      justifyContent: "center"
+
+    },
+
    welcomeScreenView: {
       height: screenHeight * (Platform.OS == "ios" ? 0.83 : 0.90),
       backgroundColor: '#c2edda',
