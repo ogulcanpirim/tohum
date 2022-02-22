@@ -43,13 +43,6 @@ const UploadVideoScreen = (props) => {
 
         });
 
-        createThumbnail({
-            url: uri,
-            timeStamp: 10000,
-        })
-            .then(response => setThumbnail(response.path))
-            .catch(err => console.log({ err }));
-
         setVideoBlob(blob);
 
     }
@@ -65,14 +58,16 @@ const UploadVideoScreen = (props) => {
             Alert.alert("Hata", "Video açıklaması boş olamaz!");
             setLoading(false);
         }
+        else if (!videoBlob) {
+            Alert.alert("Hata", "Lütfen yüklemek için bir video seçiniz!");
+            setLoading(false);
+        }
         else {
             const metadata = {
                 customMetadata: {
                     'description': description
                 }
             };
-            console.log("metadata: " + JSON.stringify(metadata));
-
             const fileRef = ref(storage, auth.currentUser?.uid + '/videos/' + title + '.mp4');
 
             const uploadTask = uploadBytesResumable(fileRef, videoBlob, metadata);
@@ -99,6 +94,10 @@ const UploadVideoScreen = (props) => {
         }
     }
 
+    const getThumbnail = async(uri) => {
+        const response = await createThumbnail({url: uri});
+        setThumbnail(response.path);
+    }
 
     const goBack = () => {
         props.navigation.goBack();
@@ -116,8 +115,18 @@ const UploadVideoScreen = (props) => {
             async (response) => {
                 if (!response.hasOwnProperty("didCancel")) {
                     await uriToBlob(response.assets[0].uri);
+                    await getThumbnail(response.assets[0].uri);
                 }
             },
+        )
+    }
+
+    if (loading) {
+        return (
+            <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Progress.Circle showsText progress={parseFloat(progress)} size={Dimensions.get("window").height / 6} color="#26931e" />
+                <Text style={{color: "#26931e", fontSize: 20, marginTop: 15}}>Video Yükleniyor...</Text>
+            </SafeAreaView>
         )
     }
 
@@ -140,19 +149,23 @@ const UploadVideoScreen = (props) => {
                             <FontAwesome5 style={styles.uploadIcon} name={"upload"} color={"#000"} size={20} />
                         }
                     </View>
-                    {loading ?
-                        <Progress.Bar style={{position: 'absolute', left: '25%', width: '60%'}} progress={parseFloat(progress)} color={"#000"}/> :
-                        <Text style={styles.uploadText}>{thumbnail ? "Seçilen video yüklemeye hazır." : "Bir video seçmek için dokunun."}</Text>
-                    }
+                    <Text style={styles.uploadText}>{thumbnail ? "Seçilen video yüklemeye hazır." : "Bir video seçmek için dokunun."}</Text>
+
                 </View>
             </TouchableOpacity>
             <TouchableOpacity disabled={loading} style={styles.uploadVideoButton} onPress={uploadVideoFirebase}>
-                <FontAwesome5
-                    style={{ marginRight: 10 }}
-                    name={"video"}
-                    color={"#fff"}
-                    size={15}>
-                </FontAwesome5>
+                {loading ?
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator size="large" color="#26931e"></ActivityIndicator>
+                    </View>
+                    :
+                    <FontAwesome5
+                        style={{ marginRight: 10 }}
+                        name={"video"}
+                        color={"#fff"}
+                        size={15}>
+                    </FontAwesome5>
+                }
                 <Text style={styles.buttonText}>YÜKLE</Text>
             </TouchableOpacity>
 
