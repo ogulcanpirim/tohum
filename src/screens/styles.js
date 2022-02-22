@@ -28,20 +28,20 @@ export default StyleSheet.create({
       width: 200,
       height: 65,
       marginBottom: 1000,
-      marginLeft:60,
-      marginTop : 50,
-      
-    },
-    WScontainer: {
-       backgroundColor: '#a70000',
-       opacity: 0.5
-    },
+      marginLeft: 60,
+      marginTop: 50,
 
-    WelcomScreenBackgroundImage: {
+   },
+   WScontainer: {
+      backgroundColor: '#a70000',
+      opacity: 0.5
+   },
+
+   WelcomScreenBackgroundImage: {
 
       justifyContent: "center"
 
-    },
+   },
 
    welcomeScreenView: {
       height: screenHeight * (Platform.OS == "ios" ? 0.83 : 0.90),
@@ -382,6 +382,16 @@ export default StyleSheet.create({
       marginTop: 16,
    },
 
+   checkoutButton: {
+      height: screenHeight / 15,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: 8,
+      backgroundColor: '#39be37',
+      marginTop: 16,
+   },
+
    uploadContainer: {
       backgroundColor: '#e3e3e3',
       flexDirection: 'row',
@@ -411,8 +421,31 @@ export default StyleSheet.create({
    },
 
    uploadText: {
-     position: 'absolute',
-     left: '25%' 
-   }
+      position: 'absolute',
+      left: '25%'
+   },
+
+   rowBack: {
+      alignItems: 'center',
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingLeft: 15,
+   },
+   
+   backRightBtn: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'absolute',
+      height: screenHeight / 10,
+      top: 0,
+      borderTopRightRadius: 10,
+      borderBottomRightRadius: 10,
+      width: 75,
+   },
+   backRightBtnRight: {
+      right: 0,
+      backgroundColor: 'red',
+   },
 
 })
