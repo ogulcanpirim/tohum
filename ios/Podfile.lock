@@ -297,6 +297,8 @@ PODS:
   - React-jsinspector (0.66.0)
   - React-logger (0.66.0):
     - glog
+  - react-native-create-thumbnail (1.5.1):
+    - React-Core
   - react-native-encrypted-storage (4.0.2):
     - React-Core
   - react-native-image-picker (4.7.3):
@@ -383,6 +385,8 @@ PODS:
   - RNScreens (3.10.1):
     - React-Core
     - React-RCTImage
+  - RNSVG (12.1.1):
+    - React
   - RNVectorIcons (9.0.0):
     - React-Core
   - Yoga (1.14.0)
@@ -430,6 +434,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-create-thumbnail (from `../node_modules/react-native-create-thumbnail`)
   - react-native-encrypted-storage (from `../node_modules/react-native-encrypted-storage`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -450,6 +455,7 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -512,6 +518,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-create-thumbnail:
+    :path: "../node_modules/react-native-create-thumbnail"
   react-native-encrypted-storage:
     :path: "../node_modules/react-native-encrypted-storage"
   react-native-image-picker:
@@ -552,6 +560,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
@@ -595,6 +605,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 6a05173dc0142abc582bd4edd2d23146b8cc218a
   React-jsinspector: be95ad424ba9f7b817aff22732eb9b1b810a000a
   React-logger: 9a9cd87d4ea681ae929b32ef580638ff1b50fb24
+  react-native-create-thumbnail: dedcb7cd3d14a4b6cc2026563197242081edb52b
   react-native-encrypted-storage: e78d848ce0fb663c2ce306e37921d026809322e6
   react-native-image-picker: 4e6008ad8c2321622affa2c85432a5ebd02d480c
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
@@ -615,6 +626,7 @@ SPEC CHECKSUMS:
   RNFBApp: 1d553b3f201e9aaeba03d777b1dea51eaacc24cc
   RNGestureHandler: e5c7cab5f214503dcefd6b2b0cefb050e1f51c4a
   RNScreens: 522705f2e5c9d27efb17f24aceb2bf8335bc7b8e
+  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
   Yoga: c11abbf5809216c91fcd62f5571078b83d9b6720
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a

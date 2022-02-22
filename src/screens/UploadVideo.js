@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import styles from '../screens/styles';
-import { View, SafeAreaView, Dimensions, TouchableOpacity, Text, TextInput, Alert } from 'react-native';
+import { View, SafeAreaView, Dimensions, TouchableOpacity, Text, TextInput, Alert, Image } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { getStorage, getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { auth } from '../../Firebase/firebase';
+import * as Progress from 'react-native-progress'
+import { createThumbnail } from "react-native-create-thumbnail";
 
 const UploadVideoScreen = (props) => {
 
@@ -14,9 +16,11 @@ const UploadVideoScreen = (props) => {
     const [description, setDescription] = useState('');
     const [progress, setProgress] = useState("0");
     const [videoBlob, setVideoBlob] = useState(undefined);
+    const [thumbnail, setThumbnail] = useState(undefined);
+    const [loading, setLoading] = useState(false);
+
 
     const uriToBlob = async (uri) => {
-
         const blob = await new Promise((resolve, reject) => {
 
             const xhr = new XMLHttpRequest();
@@ -39,24 +43,34 @@ const UploadVideoScreen = (props) => {
 
         });
 
+        createThumbnail({
+            url: uri,
+            timeStamp: 10000,
+        })
+            .then(response => setThumbnail(response.path))
+            .catch(err => console.log({ err }));
+
         setVideoBlob(blob);
 
     }
 
     const uploadVideoFirebase = () => {
 
+        setLoading(true);
         if (title.length < 5) {
             Alert.alert("Hata", "Video ismi en az 5 karakter olmalıdır!")
+            setLoading(false);
         }
         else if (!description.length) {
             Alert.alert("Hata", "Video açıklaması boş olamaz!");
+            setLoading(false);
         }
         else {
             const metadata = {
                 customMetadata: {
-                  'description': description                
+                    'description': description
                 }
-              };
+            };
             console.log("metadata: " + JSON.stringify(metadata));
 
             const fileRef = ref(storage, auth.currentUser?.uid + '/videos/' + title + '.mp4');
@@ -65,23 +79,19 @@ const UploadVideoScreen = (props) => {
             uploadTask.on('state_changed',
                 (snapshot) => {
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    setProgress(progress.toString());
-                    switch (snapshot.state) {
-                        case 'paused':
-                            console.log('Upload is paused');
-                            break;
-                        case 'running':
-                            console.log('Upload is running');
-                            break;
-                    }
+                    setProgress(progress);
                 },
                 (error) => {
+                    console.log("error: " + error);
                     Alert.alert("Hata", "Video yüklenirken bir sorun oluştu");
                 },
                 () => {
+                    setLoading(false);
+                    /*
                     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                         console.log('File available at', downloadURL);
                     });
+                    */
                     Alert.alert("Mesaj", "Yükleme tamamlandı!");
                     goBack();
                 }
@@ -125,17 +135,18 @@ const UploadVideoScreen = (props) => {
             <TouchableOpacity onPress={gallery}>
                 <View style={styles.uploadContainer}>
                     <View style={styles.uploadDivider}>
-                        <FontAwesome5
-                            style={styles.uploadIcon}
-                            name={"upload"}
-                            color={"#000"}
-                            size={20}>
-                        </FontAwesome5>
+                        {thumbnail ?
+                            <Image source={{ uri: thumbnail }} style={{ flex: 1 }} /> :
+                            <FontAwesome5 style={styles.uploadIcon} name={"upload"} color={"#000"} size={20} />
+                        }
                     </View>
-                    <Text style={styles.uploadText}>Bir video yüklemek için dokunun.</Text>
+                    {loading ?
+                        <Progress.Bar style={{position: 'absolute', left: '25%', width: '60%'}} progress={parseFloat(progress)} color={"#000"}/> :
+                        <Text style={styles.uploadText}>{thumbnail ? "Seçilen video yüklemeye hazır." : "Bir video seçmek için dokunun."}</Text>
+                    }
                 </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.uploadVideoButton} onPress={uploadVideoFirebase}>
+            <TouchableOpacity disabled={loading} style={styles.uploadVideoButton} onPress={uploadVideoFirebase}>
                 <FontAwesome5
                     style={{ marginRight: 10 }}
                     name={"video"}
@@ -144,7 +155,7 @@ const UploadVideoScreen = (props) => {
                 </FontAwesome5>
                 <Text style={styles.buttonText}>YÜKLE</Text>
             </TouchableOpacity>
-            <Text>Progress:%{progress}</Text>
+
         </SafeAreaView>
     );
 }
