@@ -27,9 +27,6 @@ const ProfileScreen = (props) => {
 
     }, [])
 
-
-    const defaultAvatar = require('../assets/images/farmer_pp.png')
-
     const handleSignOut = async() => {
 
 

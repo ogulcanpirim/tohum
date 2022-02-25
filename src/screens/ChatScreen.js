@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
-import { View, StyleSheet, Platform, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Text} from 'react-native';
+import { ActivityIndicator, View, StyleSheet, Platform, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Text } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { db, auth } from '../../Firebase/firebase';
 import { useRoute } from '@react-navigation/native';
@@ -26,78 +26,82 @@ const styles = StyleSheet.create({
 
 const ChatScreen = (props) => {
 
-
+  /*
+    sort messages PARTIALLY CHAT USER MESSAGES COME LAST
+    earlier messages avatar problem
+    encounter same key DONE
+    chatUser DONE
+    earlierMessages DONE
+    loading
+    real-time message
+    append message to firebase DONE
+    append message to screen DONE
+  */
   const route = useRoute();
   const [chatUser, setChatUser] = useState(null);
   const [user, setUser] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   async function getUserData(uid) {
     const response = await db.collection("users").doc(uid).get();
     return response.data();
   }
 
-  //load earlier messages
   useEffect(() => {
+    setChatUser({ name: route.params.name, surname: route.params.surname });
     //load user
     (async () => {
       const user = await getUserData(auth.currentUser?.uid);
 
-      const selfUser = {
+      setUser({
         _id: auth.currentUser?.uid,
-        name: user.name + ' ' + user.surname
-        //add avatar
-      }
-      console.log(">>" + JSON.stringify(selfUser));
-      setChatUser(route.params.chatUser);
-      setUser(selfUser);
+        name: user.name + ' ' + user.surname,
+        avatar: auth.currentUser?.photoURL || require('../assets/images/farmer_pp.png')
+      });
     })();
-
-
-  }, [])
-
-  //load earlier messages
-  useEffect(() => {
-    (async () => {
-      const earlierMessages = route.params.messages;
-      console.log("earlierMessages: " + JSON.stringify(earlierMessages));
-      const writes = earlierMessages.sort((a, b) => new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime())
-      await Promise.all(writes);
-      console.log("writes: " + JSON.stringify(writes));
-      setMessages(earlierMessages);
-    })();
-  }, [route.params.messages])
-
-  /*
-  useEffect(() => {
-
-    readUser();
-    const unsubscribe = chatsRef.onSnapshot(querySnapshot => {
-      const messagesFirestore = querySnapshot
-      .docChanges()
-      .filter(({type}) => type === 'added')
-      .map(({doc}) => {
-        const message = doc.data();
-        return {...message, createdAt: message.createdAt.toDate()}
-      })
-      .sort((a,b) => b.createdAt.getTime() - a.createdAt.getTime())
-      appendMessages(messagesFirestore);
-    })
-    return unsubscribe; 
   }, []);
-  */
+
+  useEffect(() => {
+    console.log("id: " + route.params.id);
+    const unsubscribe = db.collection("chats")
+      .where("chatId", "==", route.params.id)
+      .orderBy("createdAt", "desc")
+      .onSnapshot(querySnapshot => {
+        const messagesFirestore = querySnapshot
+          .docChanges()          
+          .filter(({ type }) => type === 'added')
+          .map(({ doc }) => {
+            const { createdAt, user, ...message} = doc.data();
+            //encounter two children with same key on save
+            if (!messages.find(message => message._id === doc.id)) {
+              return {
+                _id: doc.id,
+                createdAt: createdAt.toDate(),
+                user: {avatar: user.avatar ? user.avatar : require('../assets/images/farmer_pp.png'), ...user},
+                ...message
+              }
+            }
+          })
+          //remove null
+          .filter(element => element)
+        console.log("messages firebase come: " + JSON.stringify(messagesFirestore));
+        appendMessages(messagesFirestore);
+        setLoading(false);
+      })
+
+    return () => unsubscribe();
+  }, []);
 
 
-
-
-  function handleSend(message) {
-    const newMessages = [...messages, ...message];
-    //aqil => date firebase timestamp to date && update function same key error
-    //db.collection("chats").doc(route.params.id).update({messages: newMessages});
-    appendMessages(message);
+  async function handleSend(messages) {
+    const writes = messages.map(({ _id, ...message }) => db.collection("chats").doc(_id).set({ chatId: route.params.id, ...message }));
+    await Promise.all(writes);
+    //appendMessages(messages); not necessary ?
   }
 
   const appendMessages = useCallback((messages) => {
+    console.log("append messages : " + JSON.stringify(messages));
     setMessages((previousMessages) => GiftedChat.append(previousMessages, messages));
   }, [messages]);
 
@@ -122,47 +126,56 @@ const ChatScreen = (props) => {
     );
   }
 
+  const LoadingScreen = () => {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#26931e"></ActivityIndicator>
+      </View>
+    );
+  }
+
 
 
   return (
 
     <SafeAreaView style={{ flex: 1 }}>
       <Header />
-      <GiftedChat
-        messages={messages}
-        onSend={handleSend}
-        renderUsernameOnMessage
-        showAvatarForEveryMessage
-        user={user}
-        inverted={true}
-        scrollToBottom
-        isAnimated
-        showUserAvatar
-        locale={tr.name}
-        renderBubble={props => {
-          return (
-            <Bubble
-              {...props}
+      {loading ? <LoadingScreen /> :
+        <GiftedChat
+          messages={messages}
+          onSend={handleSend}
+          renderUsernameOnMessage
+          showAvatarForEveryMessage
+          user={user}
+          inverted={true}
+          scrollToBottom
+          isAnimated
+          showUserAvatar
+          locale={tr.name}
+          renderBubble={props => {
+            return (
+              <Bubble
+                {...props}
 
-              wrapperStyle={{
-                left: {
-                  backgroundColor: '#1d6d17',
-                },
-                right: {
-                  backgroundColor: "#26931e",
-                },
-              }}
-              textStyle={{
-                left: {
-                  color: '#fff',
-                },
-                right: {
-                  color: '#fff',
-                },
-              }}
-            />
-          );
-        }} />
+                wrapperStyle={{
+                  left: {
+                    backgroundColor: '#1d6d17',
+                  },
+                  right: {
+                    backgroundColor: "#26931e",
+                  },
+                }}
+                textStyle={{
+                  left: {
+                    color: '#fff',
+                  },
+                  right: {
+                    color: '#fff',
+                  },
+                }}
+              />
+            );
+          }} />}
       {
         Platform.OS === 'android' && <KeyboardAvoidingView behavior="padding" />
       }
