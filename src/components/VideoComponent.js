@@ -5,16 +5,12 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Avatar } from 'react-native-elements';
 
 const VideoComponent = (props) => {
-
-    const avatarURL = "https://randomuser.me/api/portraits/men/36.jpg";
-
-
-
+    
     return (
         <View>
             <TouchableOpacity onPress={props.goVideo}>
                 <View style={styles.videoBoxStyle}>
-                    <Image style={styles.videoImageStyle} source={{ uri: props.uri }} />
+                    <Image style={styles.videoImageStyle} source={{ uri: props.thumbnail }} />
                     <View style={styles.videoLengthContainer}>
                         <Text style={styles.videoLengthStyle}>{props.length}</Text>
                     </View>
@@ -25,7 +21,7 @@ const VideoComponent = (props) => {
                     <Avatar
                         size={Dimensions.get('window').width / 10}
                         rounded
-                        source={{ uri: avatarURL }}
+                        source={{ uri: props.userAvatar}}
                     >
                     </Avatar>
                 </TouchableOpacity>

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useRoute } from '@react-navigation/native';
 import { View, Text, TouchableOpacity, SafeAreaView, StyleSheet, Dimensions } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Avatar } from 'react-native-elements';
 import Video from 'react-native-video';
 
@@ -77,7 +76,7 @@ const VideoComponentScreen = (props) => {
             <View style={styles.videoScreen}>
                 <Video
                     controls={true}
-                    source={{ uri: videoURL}}
+                    source={{ uri: route.params.videoUri || videoURL}}
                     style={styles.video}>
                 </Video>
             </View>
@@ -86,7 +85,7 @@ const VideoComponentScreen = (props) => {
                     <Avatar
                         size={Dimensions.get('window').width / 7}
                         rounded
-                        source={{ uri: avatarURL }}
+                        source={{ uri: route.params.userAvatar }}
                     >
                     </Avatar>
                 </TouchableOpacity>
@@ -95,7 +94,7 @@ const VideoComponentScreen = (props) => {
                     <Text style={styles.videoPublisher}>{route.params.videoPublisher}</Text>
                 </View>
             </View>
-            <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultrices aliquet risus quis gravida. Cras vel felis sapien. In tempus, lorem sit amet tincidunt bibendum, neque libero viverra nulla, eu auctor lacus felis fringilla ipsum. Integer hendrerit quis erat at consequat. In ultricies justo vitae finibus sagittis. Nullam nunc elit, auctor eleifend placerat quis, laoreet nec turpis. Proin consequat eros non ipsum viverra ornare. Curabitur ultricies ante enim. Etiam libero libero, ullamcorper eu ex ac, consequat tincidunt tortor. Sed non lectus congue ligula ultrices tempus.</Text>
+            <Text style={styles.description}>{route.params.videoDescription}</Text>
         </SafeAreaView>
     );
 }

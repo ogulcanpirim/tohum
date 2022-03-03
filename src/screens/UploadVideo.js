@@ -18,7 +18,7 @@ const UploadVideoScreen = (props) => {
     const [videoBlob, setVideoBlob] = useState(undefined);
     const [thumbnail, setThumbnail] = useState(undefined);
     const [loading, setLoading] = useState(false);
-
+    const [duration, setDuration] = useState();
 
     const uriToBlob = async (uri) => {
         const blob = await new Promise((resolve, reject) => {
@@ -65,7 +65,8 @@ const UploadVideoScreen = (props) => {
         else {
             const metadata = {
                 customMetadata: {
-                    'description': description
+                    'description': description,
+                    'duration': duration
                 }
             };
             const fileRef = ref(storage, auth.currentUser?.uid + '/videos/' + title + '.mp4');
@@ -113,8 +114,10 @@ const UploadVideoScreen = (props) => {
                 quality: 1,
             },
             async (response) => {
+                console.log("response: " + JSON.stringify(response));
                 if (!response.hasOwnProperty("didCancel")) {
                     await uriToBlob(response.assets[0].uri);
+                    setDuration(response.assets[0].duration);
                     await getThumbnail(response.assets[0].uri);
                 }
             },

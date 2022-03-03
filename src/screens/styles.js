@@ -448,4 +448,19 @@ export default StyleSheet.create({
       backgroundColor: 'red',
    },
 
+   userVideobackRightBtn: {
+      height: screenHeight / 4,
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'absolute',
+      top: 0,
+      borderTopRightRadius: 10,
+      borderBottomRightRadius: 10,
+      width: 75,
+   },
+   userVideobackRightBtnRight: {
+      right: 0,
+      backgroundColor: 'red',
+   }, 
+
 })
