@@ -14,7 +14,7 @@ const UploadVideoScreen = (props) => {
     const storage = getStorage();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [progress, setProgress] = useState("0");
+    const [progress, setProgress] = useState(0);
     const [videoBlob, setVideoBlob] = useState(undefined);
     const [thumbnail, setThumbnail] = useState(undefined);
     const [loading, setLoading] = useState(false);
@@ -75,7 +75,7 @@ const UploadVideoScreen = (props) => {
             uploadTask.on('state_changed',
                 (snapshot) => {
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    setProgress(progress);
+                    //setProgress(Math.round(progress));
                 },
                 (error) => {
                     console.log("error: " + error);
@@ -83,11 +83,6 @@ const UploadVideoScreen = (props) => {
                 },
                 () => {
                     setLoading(false);
-                    /*
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        console.log('File available at', downloadURL);
-                    });
-                    */
                     Alert.alert("Mesaj", "Yükleme tamamlandı!");
                     goBack();
                 }
@@ -113,12 +108,11 @@ const UploadVideoScreen = (props) => {
                 maxWidth: Dimensions.get('window').width,
                 quality: 1,
             },
-            async (response) => {
-                console.log("response: " + JSON.stringify(response));
+            async (response) => {            
                 if (!response.hasOwnProperty("didCancel")) {
                     await uriToBlob(response.assets[0].uri);
                     setDuration(response.assets[0].duration);
-                    await getThumbnail(response.assets[0].uri);
+                    await getThumbnail(response.assets[0].uri);                    
                 }
             },
         )

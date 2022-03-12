@@ -101,7 +101,6 @@ const UserVideoScreen = (props) => {
                 videoUri: videoUri,
                 videoThumbnail: await getThumbnail(videoUri),
             };
-            //console.log("video added: " + JSON.stringify(videoData));
             appendVideo(videoData);
         }));
     }
@@ -113,8 +112,8 @@ const UserVideoScreen = (props) => {
             const result = await listAll(videosRef);
             if (result.items.length !== videos.length) {
                 await pushVideos(result);
+                setLoading(false);
             }
-            setLoading(false);
         }
         getData();
     }, []);
@@ -147,8 +146,10 @@ const UserVideoScreen = (props) => {
         setLoading(true);
         if (item) {
             const fileRef = ref(storage, auth.currentUser?.uid + '/videos/' + item.videoName + '.mp4');
-            deleteObject(fileRef).then(() => {
-                setVideos(videos.filter(video => video.key !== item.key));
+            deleteObject(fileRef).then(async () => {
+                setVideoFilter(videoFilter.filter(video => video.key !== item.key));
+                setVideos(videoFilter.filter(video => video.key !== item.key));
+                setText("");
                 setLoading(false);
                 Alert.alert("Bildirim", "Video silindi.");
             }).catch((error) => {
