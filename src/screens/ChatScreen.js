@@ -26,17 +26,6 @@ const styles = StyleSheet.create({
 
 const ChatScreen = (props) => {
 
-  /*
-    sort messages PARTIALLY CHAT USER MESSAGES COME LAST
-    earlier messages avatar problem
-    encounter same key DONE
-    chatUser DONE
-    earlierMessages DONE
-    loading
-    real-time message
-    append message to firebase DONE
-    append message to screen DONE
-  */
   const route = useRoute();
   const [chatUser, setChatUser] = useState(null);
   const [user, setUser] = useState(null);
@@ -69,16 +58,17 @@ const ChatScreen = (props) => {
       .orderBy("createdAt", "desc")
       .onSnapshot(querySnapshot => {
         const messagesFirestore = querySnapshot
-          .docChanges()          
+          .docChanges()
           .filter(({ type }) => type === 'added')
           .map(({ doc }) => {
-            const { createdAt, user, ...message} = doc.data();
+            const { createdAt, user, ...message } = doc.data();
             //encounter two children with same key on save
             if (!messages.find(message => message._id === doc.id)) {
+              console.log("upcoming avatar: " + user.avatar.toString().includes('https'));
               return {
                 _id: doc.id,
                 createdAt: createdAt.toDate(),
-                user: {avatar: user.avatar ? user.avatar : require('../assets/images/farmer_pp.png'), ...user},
+                user: { avatar: (user.avatar.toString().includes('https') ? user.avatar : require('../assets/images/farmer_pp.png')), ...user },
                 ...message
               }
             }
@@ -134,7 +124,17 @@ const ChatScreen = (props) => {
     );
   }
 
-
+  const onAvatarPress = (user) => {
+    if (user._id == auth.currentUser?.uid) {
+      props.navigation.reset({
+        index: 0,
+        routes: [{ name: 'Profil_Entrance' }],
+      });
+    }
+    else {
+      props.navigation.navigate("UserScreen", { ...user })
+    }
+  }
 
   return (
 
@@ -151,6 +151,7 @@ const ChatScreen = (props) => {
           scrollToBottom
           isAnimated
           showUserAvatar
+          onPressAvatar={(user) => { onAvatarPress(user) }}
           locale={tr.name}
           renderBubble={props => {
             return (

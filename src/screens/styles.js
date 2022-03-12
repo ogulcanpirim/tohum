@@ -463,4 +463,25 @@ export default StyleSheet.create({
       backgroundColor: 'red',
    }, 
 
+   friendButton: {
+      justifyContent: 'flex-start',
+      flexDirection: 'row',
+      height: 52,
+      borderRadius: 8,
+      backgroundColor: '#1d6d17',
+      marginLeft: 15,
+      marginRight: 15,
+      marginTop: 16,
+   },
+
+   notFriendButton: {
+      justifyContent: 'flex-start',
+      flexDirection: 'row',
+      height: 52,
+      borderRadius: 8,
+      backgroundColor: '#a70000',
+      marginLeft: 15,
+      marginRight: 15,
+      marginTop: 16,
+   },
 })

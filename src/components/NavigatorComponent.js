@@ -24,6 +24,7 @@ import UploadVideoScreen from '../screens/UploadVideo';
 import VideoComponentScreen from '../screens/VideoScreen';
 import UserVideoScreen from '../screens/UserVideos';
 import UserFormScreen from '../screens/UserForms';
+import UserScreen from '../screens/UserScreen';
 
 const Stack = createStackNavigator();
 
@@ -93,6 +94,7 @@ function ChatScreens() {
         }}>
             <ChatStack.Screen name="Inbox" component={InboxScreen} />
             <ChatStack.Screen name="ChatScreen" component={ChatScreen} />
+            <ChatStack.Screen name="UserScreen" component={UserScreen} />
         </ChatStack.Navigator>
     );
 }
