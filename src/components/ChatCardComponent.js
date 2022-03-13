@@ -1,14 +1,14 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Dimensions } from "react-native";
 import { Avatar } from "react-native-elements";
-
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const ChatCard = (props) => {
 
     const avatarURL = "https://randomuser.me/api/portraits/men/22.jpg";
 
     return (
-        <TouchableOpacity onPress = {props.goChat}>
+        <TouchableOpacity onPress={props.goChat}>
             <View style={styles.chatCardContainer}>
 
                 <Avatar
@@ -26,6 +26,13 @@ const ChatCard = (props) => {
                         {props.lastMessage}
                     </Text>
                 </View>
+                <TouchableOpacity style={styles.trashLogo}>
+                    <FontAwesome5
+                        name={"trash-alt"}
+                        color={"#a70000"}
+                        size={25}>
+                    </FontAwesome5>
+                </TouchableOpacity>
             </View>
         </TouchableOpacity>
     );
@@ -48,6 +55,7 @@ const styles = StyleSheet.create({
         },
         flexDirection: 'row',
         marginBottom: 15,
+        alignItems: 'center',
     },
     avatarContainer: {
         marginLeft: 15,
@@ -57,7 +65,7 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         flex: 1,
         justifyContent: 'center',
-        
+
     },
     usernameStyle: {
         fontWeight: '700',
@@ -66,6 +74,10 @@ const styles = StyleSheet.create({
     lastTextStyle: {
         fontWeight: '300'
     },
+    trashLogo: {
+        position: 'absolute',
+        right: '10%'
+    }
 
 });
 

@@ -4,11 +4,10 @@ import styles from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ChatCard from '../components/ChatCardComponent';
 import { auth, db } from '../../Firebase/firebase';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { useFocusEffect } from '@react-navigation/native';
 
 const InboxScreen = (props) => {
 
-    const [modalVisible, setModalVisible] = useState(false);
     const [chats, setChats] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -39,37 +38,38 @@ const InboxScreen = (props) => {
             })
     }
 
-    //deneme
-    useEffect(() => {
-        setLoading(true);
-        const unsubscribe =
-            db.collection("chats")
-                .where("user._id", "==", auth.currentUser?.uid)
-                .onSnapshot(async (querySnapshot) => {
-                    const chatIds = [...new Set(querySnapshot.docs.map(item => item.data().chatId))];
+    useFocusEffect(
+        useCallback(() => {
+            setLoading(true);
+            const unsubscribe =
+                db.collection("chats")
+                    .where("user._id", "==", auth.currentUser?.uid)
+                    .onSnapshot(async (querySnapshot) => {
+                        const chatIds = [...new Set(querySnapshot.docs.map(item => item.data().chatId))];
 
-                    const requests = chatIds.map(async (chat) => {
-                        const user = await getChatUser(chat);
-                        const chatUser = user.split(' ');
-                        const lastMessage = await getLastMessage(chat);
+                        const requests = chatIds.map(async (chat) => {
+                            const user = await getChatUser(chat);
+                            const chatUser = user.split(' ');
+                            const lastMessage = await getLastMessage(chat);
 
-                        data = {
-                            id: chat,
-                            lastMessage: lastMessage,
-                            name: chatUser[0],
-                            surname: chatUser[1],
-                        }
-                        console.log("data: " + JSON.stringify(data));
-                        appendChats(data);
+                            data = {
+                                id: chat,
+                                lastMessage: lastMessage,
+                                name: chatUser[0],
+                                surname: chatUser[1],
+                            }
+                            appendChats(data);
 
+                        })
+                        await Promise.all(requests).then(() => {
+                            setLoading(false);
+                        });
                     })
-                    await Promise.all(requests).then(() => {
-                        setLoading(false);
-                    });
-                })
-        return () => unsubscribe();
-    }, [])
-
+            return () => {
+                unsubscribe();
+            };
+        }, [chats])
+    );
     const appendChats = useCallback((data) => {
         //encounter two children with same key
         if (!chats.filter(item => item.id === data.id).length) {
@@ -77,28 +77,6 @@ const InboxScreen = (props) => {
         }
     }, [chats]);
 
-
-    const ModalComponent = () => {
-        return (
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                }}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Yeni mesaj ekle!</Text>
-                        <TouchableOpacity onPress={() => { setModalVisible(false) }}>
-                            <Text>Kapat</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
-        );
-    }
 
     const goBack = () => {
         props.navigation.goBack();
@@ -113,7 +91,6 @@ const InboxScreen = (props) => {
     }
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ModalComponent />
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                     <AntDesign
@@ -121,27 +98,19 @@ const InboxScreen = (props) => {
                         size={35}>
                     </AntDesign>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.addFormButton} onPress={() => setModalVisible(true)}>
-                    <FontAwesome5
-                        name={"plus-circle"}
-                        size={35}
-                        color={"#26931e"}>
-                    </FontAwesome5>
-                </TouchableOpacity>
             </View>
             <Text style={styles.screenHeaderWithLogo}>Mesajlarım</Text>
             {loading ? <LoadingScreen /> :
                 <FlatList style={{ padding: 15 }}
                     data={chats}
                     renderItem={(chat) => {
-                        console.log("chat" + JSON.stringify(chat));
                         return (
                             <ChatCard
                                 key={chat.item.id}
                                 name={chat.item.name}
                                 surname={chat.item.surname}
                                 lastMessage={chat.item.lastMessage}
-                                goChat={() => { props.navigation.replace("ChatScreen", { ...chat.item }) }}
+                                goChat={() => { props.navigation.navigate("ChatScreen", { ...chat.item }) }}
                             />
                         )
                     }}
