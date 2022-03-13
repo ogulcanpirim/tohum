@@ -209,14 +209,6 @@ export default StyleSheet.create({
       marginRight: screenWidth / 20,
       marginTop: screenHeight / 75,
    },
-   signOutButton: {
-      marginRight: screenWidth / 25,
-      marginTop: screenHeight / 100,
-   },
-   inboxButton: {
-      marginTop: screenHeight / 100,
-      marginLeft: screenWidth / 3,
-   },
    shoppingButton: {
       marginRight: screenWidth / 20,
       marginTop: screenHeight / 75,

@@ -25,6 +25,8 @@ import VideoComponentScreen from '../screens/VideoScreen';
 import UserVideoScreen from '../screens/UserVideos';
 import UserFormScreen from '../screens/UserForms';
 import UserScreen from '../screens/UserScreen';
+import FriendRequestScreen from '../screens/FriendRequest';
+import FriendListScreen from '../screens/FriendList';
 
 const Stack = createStackNavigator();
 
@@ -81,6 +83,8 @@ function ProfileScreens() {
             <ProfileStack.Screen name="Profil_Entrance" component={ProfileScreen} />
             <ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen} />
             <ProfileStack.Screen name="ChatScreens" component={ChatScreens} />
+            <ProfileStack.Screen name="FriendRequestScreen" component={FriendRequestScreen} />
+            <ProfileStack.Screen name="FriendListScreen" component={FriendListScreen} />
         </ProfileStack.Navigator>
     );
 }

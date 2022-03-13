@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { SafeAreaView, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { Avatar } from 'react-native-elements';
 import { Dimensions } from 'react-native';
 import { auth, db } from '../../Firebase/firebase';
-import { doc } from "firebase/firestore";
 import EncryptedStorage from 'react-native-encrypted-storage';
 import ProfilePictureComponent from '../components/ProfilePictureComponent';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ProfileScreen = (props) => {
 
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
+    const [friendCount, setFriendCount] = useState(-1);
+    const [friendData, setFriendData] = useState([]);
+    const [friendRequestBadge, setFriendRequestBadge] = useState(0);
 
     useEffect(() => {
         const getUser = async () => {
@@ -25,11 +29,41 @@ const ProfileScreen = (props) => {
         }
         getUser();
 
-    }, [])
+    }, []);
 
-    const handleSignOut = async() => {
+    useFocusEffect(
+        useCallback(() => {
+            const unsubscribe = db.collection("friendships")
+                .doc(auth.currentUser.uid)
+                .onSnapshot(async (querySnapshot) => {
+                    const data = querySnapshot.data();
+                    const count = Object.values(data).filter(item => item == 1).length;
+                    await Promise.all(count);
+                    const requestCount = Object.values(data).length - count;
+                    setFriendRequestBadge(requestCount);
+                    setFriendCount(count);
+                    //send friend data to list
+                    if (count != friendData.length) {
+                        for (const key in data) {
+                            if (data[key] == 1) {
+                                const user = await getUserData(key);
+                                const item = {
+                                    id: key,
+                                    name: user.name + ' ' + user.surname
+                                };
+                                appendFriendData(item);
+                            }
+                        }
+                    }
+                    setLoading(false);
+                });
+            return () => {
+                unsubscribe();
+            };
+        }, [friendData])
+    );
 
-
+    const handleSignOut = async () => {
         //delete storage
         await EncryptedStorage.removeItem("USER_CREDENTIALS");
 
@@ -43,6 +77,16 @@ const ProfileScreen = (props) => {
             })
     }
 
+    async function getUserData(uid) {
+        const response = await db.collection("users").doc(uid).get();
+        return response.data();
+    }
+
+    const appendFriendData = useCallback((friendData) => {
+        setFriendData((previousData) => [friendData, ...previousData]);
+        console.log("added !");
+    }, [friendData]);
+
     const navigateChangePassword = () => {
         props.navigation.navigate("ChangePassword");
     }
@@ -51,6 +95,13 @@ const ProfileScreen = (props) => {
         props.navigation.navigate("ChatScreens");
     }
 
+    const navigateFriendRequest = () => {
+        props.navigation.navigate("FriendRequestScreen", { ...user });
+    }
+
+    const navigateFriendList = () => {
+        props.navigation.navigate("FriendListScreen", {friendData});
+    }
     if (loading) {
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -60,29 +111,40 @@ const ProfileScreen = (props) => {
     }
 
     return (
-        <SafeAreaView style={modalVisible ? {opacity: 0.1} : {}}>
+        <SafeAreaView style={modalVisible ? { opacity: 0.1 } : {}}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.screenHeader}>Profil</Text>
-                <TouchableOpacity style={styles.inboxButton} onPress={navigateInbox}>
-                    <FontAwesome5
-                        name={"inbox"}
-                        size={35}>
-                    </FontAwesome5>
-                    <View style={styles.badge}>
-                        <Text style={styles.badgeText}>3</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
-                    <FontAwesome5
-                        name={"sign-out-alt"}
-                        size={35}>
-                    </FontAwesome5>
-                </TouchableOpacity>
+                <View style={{ width: '35%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginRight: 15 }}>
+                    <TouchableOpacity onPress={navigateInbox}>
+                        <FontAwesome5
+                            name={"inbox"}
+                            size={32}>
+                        </FontAwesome5>
+                        <View style={styles.badge}>
+                            <Text style={styles.badgeText}>3</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={navigateFriendRequest}>
+                        <Ionicons
+                            name={"person-add"}
+                            size={32}>
+                        </Ionicons>
+                        {friendRequestBadge > 0 ? <View style={styles.badge}>
+                            <Text style={styles.badgeText}>{friendRequestBadge}</Text>
+                        </View> : undefined}
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleSignOut}>
+                        <FontAwesome5
+                            name={"sign-out-alt"}
+                            size={32}>
+                        </FontAwesome5>
+                    </TouchableOpacity>
+                </View>
             </View>
             <Avatar
                 size={Dimensions.get('window').width / 3}
                 rounded
-                source={auth.currentUser?.photoURL ? { uri: auth.currentUser?.photoURL} : require('../assets/images/farmer_pp.png')}
+                source={auth.currentUser?.photoURL ? { uri: auth.currentUser?.photoURL } : require('../assets/images/farmer_pp.png')}
                 containerStyle={{ alignSelf: 'center' }}
             >
                 <Avatar.Accessory
@@ -95,10 +157,12 @@ const ProfileScreen = (props) => {
             <Text style={styles.profileName}>{user?.name + ' ' + user?.surname}</Text>
             <View style={styles.profileLine} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', padding: Dimensions.get('window').height / 50 }}>
-                    <Text style={styles.profileTextVariable}>128</Text>
-                    <Text style={styles.profileTextConstant}>Takipçi</Text>
-                </View>
+                <TouchableOpacity onPress={navigateFriendList}>
+                    <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', padding: Dimensions.get('window').height / 50 }}>
+                        <Text style={styles.profileTextVariable}>{friendCount}</Text>
+                        <Text style={styles.profileTextConstant}>Takipçi</Text>
+                    </View>
+                </TouchableOpacity>
                 <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', padding: Dimensions.get('window').height / 50 }}>
                     <Text style={styles.profileTextVariable}>89</Text>
                     <Text style={styles.profileTextConstant}>Forum Cevabı</Text>
@@ -116,7 +180,7 @@ const ProfileScreen = (props) => {
                 <FontAwesome5 name={"unlock-alt"} style={styles.iconButtonStyle} size={25} color={"#ffffff"} />
                 <Text style={styles.profileButtonText}>Şifre değiştir</Text>
             </TouchableOpacity>
-            {modalVisible ? <ProfilePictureComponent modalVisible={modalVisible} setModalVisible={setModalVisible}/> : undefined}
+            {modalVisible ? <ProfilePictureComponent modalVisible={modalVisible} setModalVisible={setModalVisible} /> : undefined}
         </SafeAreaView >
     );
 
