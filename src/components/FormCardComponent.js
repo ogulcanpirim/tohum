@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Dimensions } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions, LogBox } from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 const styles = StyleSheet.create({
@@ -70,13 +70,15 @@ const styles = StyleSheet.create({
 
 const FormCardComponent = (props) => {
 
+    const date = new Date(props.createdAt);
+
     return (
         <TouchableOpacity>
             <View style={styles.formCardContainer}>
                 <View>
-                    <Text style={styles.forumHeader}>Rize Bölgesinde Yağmur</Text>
+                    <Text style={styles.forumHeader}>{props.formTitle}</Text>
                     <View style = {styles.headerLine}></View>
-                    <Text style = {styles.dateText}>21/10/2021</Text>
+                    <Text style = {styles.dateText}>{date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()}</Text>
                 </View>
                 
                 <View style={styles.iconInfoStyle}>
@@ -85,7 +87,7 @@ const FormCardComponent = (props) => {
                             name={"user-alt"}
                             size={30}
                         ></FontAwesome5>
-                        <Text style={styles.numberStyle}>412</Text>
+                        <Text style={styles.numberStyle}>{props.userCount}</Text>
                     </View>
                     <View style={styles.messageStyle}>
                         <FontAwesome
@@ -93,7 +95,7 @@ const FormCardComponent = (props) => {
                             size={30}
                             color="#26931e"
                         ></FontAwesome>
-                        <Text style={styles.numberStyle}>123</Text>
+                        <Text style={styles.numberStyle}>{props.messageCount}</Text>
                     </View>
                 </View>
                 

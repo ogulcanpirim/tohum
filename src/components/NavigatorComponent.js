@@ -48,7 +48,7 @@ function BottomNavigator() {
                     } else if (route.name == 'Forum') {
                         iconName = 'users';
                     } else if (route.name == 'Market') {
-                        iconName = 'shopping-basket';
+                        iconName = 'store';
                     } else if (route.name == 'İzle') {
                         iconName = 'video';
                     } else if (route.name == 'Profil') {

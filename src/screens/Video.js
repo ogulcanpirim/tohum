@@ -7,7 +7,7 @@ import VideoComponent from '../components/VideoComponent';
 import { data } from '../data/video_dummy';
 import SearchBarComponent from '../components/SearchBarComponent';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const VideoScreen = (props) => {
@@ -26,6 +26,12 @@ const VideoScreen = (props) => {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.screenHeader}>İzle</Text>
                 <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity style={styles.addFormButton}>
+                        <Ionicons
+                            name={"filter"}
+                            size={30}>
+                        </Ionicons>
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.addFormButton} onPress={goToUserVideo}>
                         <MaterialIcons
                             name={"video-collection"}

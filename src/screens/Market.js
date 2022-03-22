@@ -5,6 +5,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SearchBarComponent from '../components/SearchBarComponent';
 import { ScrollView } from 'react-native-gesture-handler';
 import ItemComponent from '../components/ItemComponent';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const MarketScreen = (props) => {
 
@@ -17,27 +18,35 @@ const MarketScreen = (props) => {
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.screenHeader}>Market</Text>
-                <TouchableOpacity style={styles.shoppingButton} onPress={navigateShoppingCart}>
-                    <FontAwesome5
-                        name={"shopping-cart"}
-                        size={30}>
-                    </FontAwesome5>
-                    <View style={styles.badge}>
-                        <Text style={styles.badgeText}>28</Text>
-                    </View>
-                </TouchableOpacity>
+                <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity style={styles.addFormButton}>
+                        <Ionicons
+                            name={"filter"}
+                            size={30}>
+                        </Ionicons>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.addFormButton} onPress={navigateShoppingCart}>
+                        <FontAwesome5
+                            name={"shopping-cart"}
+                            size={30}>
+                        </FontAwesome5>
+                        <View style={styles.badge}>
+                            <Text style={styles.badgeText}>28</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
             <SearchBarComponent />
             <ScrollView style={styles.marketItemStyle}>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                     <ItemComponent></ItemComponent>
                     <ItemComponent></ItemComponent>
                 </View>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                     <ItemComponent></ItemComponent>
                     <ItemComponent></ItemComponent>
                 </View>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                     <ItemComponent></ItemComponent>
                     <ItemComponent></ItemComponent>
                 </View>

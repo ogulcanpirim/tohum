@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useDebugValue, useState } from 'react';
 import styles from '../screens/styles';
 import { View, SafeAreaView, TouchableOpacity, Text, TextInput, Alert, ActivityIndicator} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -23,10 +23,13 @@ const CreateFormScreen = (props) => {
             Alert.alert("Hata", "Forum mesajı boş olamaz!");
         }
         else {
-            //TODO: check whether given entry exists with the same form name
-            //TODO: create new document in firebase/forums.
-            await db.collection("forms").doc().set({ createdUser: auth.currentUser?.uid, formTitle: title, messages: [message] })
+            const docRef = db.collection("forms").doc();
+            await docRef.set({ createdUser: auth.currentUser?.uid, formTitle: title, createdAt: new Date()})
+            await docRef.collection("messages").add({messages: [message]})
             Alert.alert("Success", '"' + title + '"' + " başlıklı forum başarıyla oluşturuldu.");
+            //clear fields
+            setTitle("");
+            setMessage("");
         }
         setLoading(false);
     }
