@@ -9,7 +9,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import ProfilePictureComponent from '../components/ProfilePictureComponent';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useFocusEffect } from '@react-navigation/native';
-import defaultPhoto from '../assets/images/farmer_pp.png';
+//import defaultPhoto from '../assets/images/farmer_pp.png';
 
 const ProfileScreen = (props) => {
 
@@ -150,7 +150,7 @@ const ProfileScreen = (props) => {
             <Avatar
                 size={Dimensions.get('window').width / 3}
                 rounded
-                source={auth.currentUser?.photoURL ? { uri: auth.currentUser?.photoURL } : defaultPhoto}
+                source={auth.currentUser?.photoURL ? { uri: auth.currentUser?.photoURL } : require('../assets/images/farmer_pp.png')}
                 containerStyle={{ alignSelf: 'center' }}
             >
                 <Avatar.Accessory
