@@ -27,6 +27,7 @@ import UserFormScreen from '../screens/UserForms';
 import UserScreen from '../screens/UserScreen';
 import FriendRequestScreen from '../screens/FriendRequest';
 import FriendListScreen from '../screens/FriendList';
+import FormChatScreen from '../screens/FormChatScreen';
 
 const Stack = createStackNavigator();
 
@@ -113,6 +114,7 @@ function FormScreens() {
             <FormStack.Screen name="Form_Entrance" component={FormScreen} />
             <FormStack.Screen name="CreateForm" component={CreateFormScreen} />
             <FormStack.Screen name="UserForms" component={UserFormScreen}/>
+            <FormStack.Screen name="FormChat" component={FormChatScreen}/>
         </FormStack.Navigator>
     );
 }

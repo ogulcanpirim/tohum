@@ -14,6 +14,12 @@ const CreateFormScreen = (props) => {
         props.navigation.goBack();
     }
 
+    const getUserName = async () => {
+        const res = await db.collection("users").doc(auth.currentUser?.uid).get();
+        const data = res.data();
+        return data.name + " " + data.surname;
+    }
+
     const createForm = async () => {
         setLoading(true);
         if (title.length < 5) {
@@ -24,8 +30,17 @@ const CreateFormScreen = (props) => {
         }
         else {
             const docRef = db.collection("forms").doc();
-            await docRef.set({ createdUser: auth.currentUser?.uid, formTitle: title, createdAt: new Date()})
-            await docRef.collection("messages").add({messages: [message]})
+            await docRef.set({ createdUser: auth.currentUser?.uid, formTitle: title, createdAt: new Date(), users: [auth.currentUser?.uid]})
+            const firstMessage = {
+                createdAt: new Date(),
+                text: message,
+                user: {
+                    _id: auth.currentUser?.uid,
+                    name: await getUserName(auth.currentUser?.uid),
+                    avatar: auth.currentUser?.photoURL
+                }
+            };
+            await docRef.collection("messages").add(firstMessage);
             Alert.alert("Success", '"' + title + '"' + " başlıklı forum başarıyla oluşturuldu.");
             //clear fields
             setTitle("");

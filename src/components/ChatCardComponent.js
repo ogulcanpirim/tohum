@@ -26,13 +26,6 @@ const ChatCard = (props) => {
                         {props.lastMessage}
                     </Text>
                 </View>
-                <TouchableOpacity style={styles.trashLogo}>
-                    <FontAwesome5
-                        name={"trash-alt"}
-                        color={"#a70000"}
-                        size={25}>
-                    </FontAwesome5>
-                </TouchableOpacity>
             </View>
         </TouchableOpacity>
     );
@@ -74,10 +67,6 @@ const styles = StyleSheet.create({
     lastTextStyle: {
         fontWeight: '300'
     },
-    trashLogo: {
-        position: 'absolute',
-        right: '10%'
-    }
 
 });
 

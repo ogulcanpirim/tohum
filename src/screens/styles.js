@@ -455,6 +455,21 @@ export default StyleSheet.create({
       backgroundColor: 'red',
    }, 
 
+   userFormRightBtn: {
+      height: screenHeight / 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'absolute',
+      top: 0,
+      borderTopRightRadius: 10,
+      borderBottomRightRadius: 10,
+      width: 75,
+   },
+   userFormRightBtnRight: {
+      right: 0,
+      backgroundColor: 'red',
+   },
+
    friendButton: {
       justifyContent: 'flex-start',
       flexDirection: 'row',

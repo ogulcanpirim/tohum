@@ -7,6 +7,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { db } from '../../Firebase/firebase';
 import { FlatList } from "react-native-gesture-handler";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 const FormScreen = (props) => {
 
@@ -15,45 +17,50 @@ const FormScreen = (props) => {
     const [formsFilter, setFormsFilter] = useState([]);
     const [text, setText] = useState("");
 
-    //get forms
+
     useEffect(() => {
-        const unsubscribe = db.collection("forms")
-            .onSnapshot(querySnaphot => {
-                const forms = querySnaphot
-                    .docChanges()
-                    .map(item => {
-                        const data = item.doc.data();
-                        return {
-                            key: item.doc.id,
-                            formTitle: data.formTitle,
-                            createdAt: data.createdAt.toDate(),
-                            messageCount: 1,
-                            userCount: 1,
-                        };
-                    })
-                appendForms(forms);
-                setLoading(false);
-            })
-        return () => { unsubscribe() };
-    }, []);
+        const timeout = setTimeout(() => {
+            setFormsFilter(forms.filter(f => text === "" || f.formTitle.toUpperCase().indexOf(text.toUpperCase()) !== -1));
+        }, 250);
+        return () => clearTimeout(timeout)
+    }, [text, forms])
 
-    //real-time search
-    const searchForms = async (text) => {
-        setLoading(true);
-        const searchPromise = formsFilter.filter(item => {
-            const name = item.formTitle.toUpperCase();
-            const textData = text.toUpperCase();
-            return name.indexOf(textData) > -1;
-        });
-        await Promise.all(searchPromise);
-        setForms(searchPromise);
-        setLoading(false);
+
+    useFocusEffect(
+        useCallback(() => {
+            const unsubscribe = db.collection("forms")
+                .onSnapshot(async (querySnaphot) => {
+                    const rforms = querySnaphot
+                        .docChanges()
+                        .map(async (item) => {
+                            const data = item.doc.data();
+                            if (!forms.filter(element => element.id == item.doc.id).length) {
+                                return {
+                                    key: item.doc.id,
+                                    formTitle: data.formTitle,
+                                    createdAt: data.createdAt.toDate(),
+                                    messageCount: await getMessageCount(item.doc.id),
+                                    userCount: data.users.length,
+                                };
+                            }
+                            return null;
+                        })
+                        .filter(e => e)
+                    Promise.all(rforms).then(rforms => {
+                        setForms(rforms);
+                        setLoading(false);
+                    });
+                })
+            return () => {
+                unsubscribe();
+            };
+        }, [])
+    );
+
+    const getMessageCount = async (formId) => {
+        const res = await db.collection("forms" + "/" + formId + "/messages").get();
+        return res.size;
     }
-
-    const appendForms = useCallback((forms) => {
-        setFormsFilter((previousForms) => previousForms.length ? [previousForms, ...forms] : [...forms]);
-        setForms((previousForms) => previousForms.length ? [previousForms, ...forms] : [...forms]);
-    }, [forms])
 
     const createForm = () => {
         props.navigation.navigate("CreateForm");
@@ -109,12 +116,12 @@ const FormScreen = (props) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <SearchBarComponent text={text} setText={setText} searchFunction={searchForms} />
+            <SearchBarComponent text={text} setText={setText} loading={loading} />
             {loading ? <LoadingScreen /> :
-                forms.length == 0 ? <EmptyListScreen /> :
+                formsFilter.length === 0 ? <EmptyListScreen /> :
                     <FlatList
                         style={{ padding: 15 }}
-                        data={forms}
+                        data={formsFilter}
                         renderItem={(data) => {
                             return (
                                 <FormCardComponent
@@ -123,6 +130,7 @@ const FormScreen = (props) => {
                                     messageCount={data.item.messageCount}
                                     userCount={data.item.userCount}
                                     createdAt={data.item.createdAt}
+                                    goChat={() => props.navigation.navigate("FormChat", { id: data.item.key, title: data.item.formTitle })}
                                 />
                             );
                         }}

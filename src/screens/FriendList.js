@@ -1,18 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { ActivityIndicator, Dimensions, SafeAreaView, View, TouchableOpacity, Text } from "react-native";
 import styles from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useRoute } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FriendListCard from "../components/FriendListCardComponent";
 import { FlatList } from "react-native-gesture-handler";
+import { db, auth } from "../../Firebase/firebase";
+
 
 const FriendListScreen = (props) => {
 
     const route = useRoute();
+    const [loading, setLoading] = useState(false);
+    const unsubscribe = useRef();
 
-    console.log("friendData: " + route.params.friendData);
 
+    useFocusEffect(useCallback(() => {
+
+        return () => {
+            console.log("unsubscribe");
+            unsubscribe.current instanceof Function && unsubscribe.current()
+        };
+    }, [unsubscribe]));
+
+    
 
     const goBack = () => {
         props.navigation.goBack();
@@ -30,6 +42,62 @@ const FriendListScreen = (props) => {
             </View>
         );
     }
+
+
+    const goChat = (user) => {
+
+        console.log("entered !");
+        setLoading(true);
+
+        const userName = user.name.split(" ");
+
+        unsubscribe.current = db.collection("chats")
+            .where("users", "array-contains", auth.currentUser?.uid)
+            .get()
+            .then(function (querySnapshot) {
+                let tag = false;
+                querySnapshot.forEach(function (doc) {
+                    if (doc.data().users.includes(user.id)) {
+                        setLoading(false);
+                        navigateScreen(doc.id, userName);
+                        props.navigation.navigate("ChatScreens",
+                            {
+                                screen: "ChatScreen",
+                                params: { id: doc.id, name: userName[0], surname: userName[1] }
+                            });
+                        tag = true;
+                        return;
+                    }
+                });
+                return tag;
+
+            }).then(async (tag) => {
+                //create chat
+                if (!tag) {
+                    const ref = await db.collection("chats").add({ users: [auth.currentUser?.uid, user.id] });
+                    setLoading(false);
+                    navigateScreen(ref.id, userName);
+                }
+
+            });
+
+    }
+
+    const navigateScreen = (paramId, userName) => {
+        props.navigation.navigate("ChatScreens",
+            {
+                screen: "ChatScreen",
+                params: { id: paramId, name: userName[0], surname: userName[1] }
+            });
+    }
+    if (loading) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" color="#26931e"></ActivityIndicator>
+            </View>
+        );
+    }
+
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -51,6 +119,7 @@ const FriendListScreen = (props) => {
                             <FriendListCard
                                 id={data.item.id}
                                 name={data.item.name}
+                                goChat={() => goChat(data.item)}
                             />
                         );
                     }}

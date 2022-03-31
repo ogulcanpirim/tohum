@@ -47,7 +47,7 @@ const FriendListCard = (props) => {
                     containerStyle={{ alignSelf: 'center' }}
                 />
                 <Text style={styles.userName}>{props.name}</Text>
-                <TouchableOpacity style={styles.chatLogo}>
+                <TouchableOpacity style={styles.chatLogo} onPress={props.goChat}>
                     <MaterialCommunityIcons
                         name={"chat-plus"}
                         size={30}

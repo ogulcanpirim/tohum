@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { SafeAreaView, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -15,53 +15,59 @@ const ProfileScreen = (props) => {
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
-    const [friendCount, setFriendCount] = useState(-1);
+    const [friendCount, setFriendCount] = useState(0);
     const [friendData, setFriendData] = useState([]);
     const [friendRequestBadge, setFriendRequestBadge] = useState(0);
-
+    const ref = useRef();
+    
+    
     useEffect(() => {
         const getUser = async () => {
-            return db.collection("users").doc(auth.currentUser?.uid).onSnapshot(doc => {
+            ref.current = db.collection("users").doc(auth.currentUser?.uid).onSnapshot(doc => {
                 const user = doc.data();
                 setUser(user);
-                setLoading(false);
             })
         }
         getUser();
 
     }, []);
-
+    
+    
     useFocusEffect(
         useCallback(() => {
-            const unsubscribe = db.collection("friendships")
+            ref.current = db.collection("friendships")
                 .doc(auth.currentUser.uid)
                 .onSnapshot(async (querySnapshot) => {
-                    const data = querySnapshot.data();
-                    const count = Object.values(data).filter(item => item == 1).length;
-                    await Promise.all(count);
-                    const requestCount = Object.values(data).length - count;
-                    setFriendRequestBadge(requestCount);
-                    setFriendCount(count);
-                    //send friend data to list
-                    if (count != friendData.length) {
-                        for (const key in data) {
-                            if (data[key] == 1) {
-                                const user = await getUserData(key);
-                                const item = {
-                                    id: key,
-                                    name: user.name + ' ' + user.surname
-                                };
-                                appendFriendData(item);
+                    if (querySnapshot.exists) {
+                        const data = querySnapshot.data();
+                        const count = Object.values(data).filter(item => item == 1).length;
+                        await Promise.all(count);
+                        const requestCount = Object.values(data).length - count;
+                        setFriendRequestBadge(requestCount);
+                        setFriendCount(count);
+                        //send friend data to list
+                        if (count != friendData.length) {
+                            for (const key in data) {
+                                if (data[key] == 1) {
+                                    const user = await getUserData(key);
+                                    const item = {
+                                        id: key,
+                                        name: user.name + ' ' + user.surname
+                                    };
+                                    appendFriendData(item);
+                                }
                             }
                         }
                     }
+
                     setLoading(false);
                 });
             return () => {
-                unsubscribe();
+                ref.current();
             };
         }, [friendData])
     );
+    
 
     const handleSignOut = async () => {
         //delete storage
@@ -84,7 +90,6 @@ const ProfileScreen = (props) => {
 
     const appendFriendData = useCallback((friendData) => {
         setFriendData((previousData) => [friendData, ...previousData]);
-        console.log("added !");
     }, [friendData]);
 
     const navigateChangePassword = () => {
@@ -100,7 +105,7 @@ const ProfileScreen = (props) => {
     }
 
     const navigateFriendList = () => {
-        props.navigation.navigate("FriendListScreen", {friendData});
+        props.navigation.navigate("FriendListScreen", { friendData });
     }
     if (loading) {
         return (

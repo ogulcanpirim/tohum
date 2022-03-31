@@ -73,7 +73,7 @@ const FormCardComponent = (props) => {
     const date = new Date(props.createdAt);
 
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={props.goChat}>
             <View style={styles.formCardContainer}>
                 <View>
                     <Text style={styles.forumHeader}>{props.formTitle}</Text>

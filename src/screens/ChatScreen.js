@@ -52,9 +52,7 @@ const ChatScreen = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("id: " + route.params.id);
-    const unsubscribe = db.collection("chats")
-      .where("chatId", "==", route.params.id)
+    const unsubscribe = db.collection("chats" + "/" + route.params.id + "/" + "messages")
       .orderBy("createdAt", "desc")
       .onSnapshot(querySnapshot => {
         const messagesFirestore = querySnapshot
@@ -64,34 +62,32 @@ const ChatScreen = (props) => {
             const { createdAt, user, ...message } = doc.data();
             //encounter two children with same key on save
             if (!messages.find(message => message._id === doc.id)) {
-              console.log("upcoming avatar: " + user.avatar.toString().includes('https'));
               return {
                 _id: doc.id,
                 createdAt: createdAt.toDate(),
-                user: { avatar: (user.avatar.toString().includes('https') ? user.avatar : require('../assets/images/farmer_pp.png')), ...user },
+                user: { avatar: (user.avatar?.toString().includes('https') ? user.avatar : require('../assets/images/farmer_pp.png')), ...user },
                 ...message
               }
             }
           })
           //remove null
           .filter(element => element)
-        console.log("messages firebase come: " + JSON.stringify(messagesFirestore));
         appendMessages(messagesFirestore);
         setLoading(false);
       })
 
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+    }
   }, []);
 
 
   async function handleSend(messages) {
-    const writes = messages.map(({ _id, ...message }) => db.collection("chats").doc(_id).set({ chatId: route.params.id, ...message }));
+    const writes = messages.map(({ _id, ...message }) => db.collection("chats" + "/" + route.params.id + "/messages").doc(_id).set({ ...message }));
     await Promise.all(writes);
-    //appendMessages(messages); not necessary ?
   }
 
   const appendMessages = useCallback((messages) => {
-    console.log("append messages : " + JSON.stringify(messages));
     setMessages((previousMessages) => GiftedChat.append(previousMessages, messages));
   }, [messages]);
 
@@ -145,7 +141,6 @@ const ChatScreen = (props) => {
           messages={messages}
           onSend={handleSend}
           renderUsernameOnMessage
-          showAvatarForEveryMessage
           user={user}
           inverted={true}
           scrollToBottom
