@@ -7,6 +7,9 @@ import { arrayUnion } from 'firebase/firestore';
 import { useRoute } from '@react-navigation/native';
 import tr from 'dayjs/locale/tr'
 
+
+
+
 const styles = StyleSheet.create({
 
     headerStyle: {
@@ -15,12 +18,11 @@ const styles = StyleSheet.create({
 
     nameText: {
         padding: 20,
-        fontSize: 25,
+        fontSize: 20,
         fontFamily: 'Comfortaa-Regular',
         fontWeight: '400',
         alignSelf: 'center',
         textAlign: 'center',
-
     }
 });
 
@@ -28,10 +30,10 @@ const styles = StyleSheet.create({
 const FormChatScreen = (props) => {
 
     const route = useRoute();
-    const [formTitle, setFormTitle] = useState(null);
     const [user, setUser] = useState(null);
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [formTitle, setFormTitle] = useState(null);
 
     async function getUserData(uid) {
         const response = await db.collection("users").doc(uid).get();
@@ -126,7 +128,7 @@ const FormChatScreen = (props) => {
 
     const onAvatarPress = (user) => {
         if (user._id == auth.currentUser?.uid) {
-            props.navigation.navigate("Profile_Entrance", {screen: "Profile_Entrance"});
+            props.navigation.navigate("Profile_Entrance", { screen: "Profile_Entrance" });
         }
         else {
             props.navigation.navigate("UserScreen", { ...user })

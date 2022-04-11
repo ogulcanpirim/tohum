@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '500',
         marginTop: '5%',
-        marginLeft: '5%'
+        marginLeft: '5%',
     },
 
     messageStyle: {
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         opacity: .2,
         width: '90%',
         alignSelf: 'center',
-        marginTop: '5%'
+        marginTop: '5%',
     },
 
     dateText: {
@@ -76,7 +76,7 @@ const FormCardComponent = (props) => {
         <TouchableOpacity onPress={props.goChat}>
             <View style={styles.formCardContainer}>
                 <View>
-                    <Text style={styles.forumHeader}>{props.formTitle}</Text>
+                    <Text style={styles.forumHeader}>{props.formTitle.length > 24 ? props.formTitle.slice(0,24) + "..." : props.formTitle}</Text>
                     <View style = {styles.headerLine}></View>
                     <Text style = {styles.dateText}>{date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()}</Text>
                 </View>
