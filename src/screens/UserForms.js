@@ -40,7 +40,7 @@ const UserFormScreen = (props) => {
         setLoading(true);
         unsubscribe.current = db.collection("forms")
             .where("createdUser", "==", auth.currentUser?.uid)
-            .onSnapshot(querySnapshot => {
+            .onSnapshot(async (querySnapshot) => {
                 const rforms = querySnapshot
                     .docChanges()
                     .filter(({ type }) => type != "removed")
@@ -54,8 +54,10 @@ const UserFormScreen = (props) => {
                             userCount: data.users.length,
                         };
                     })
-                Promise.all(rforms).then(rforms => {
-                    setForms(rforms);
+                await Promise.all(rforms).then(rforms => {
+                    if (rforms.length > 0) {
+                        setForms(rforms);
+                    }
                     setLoading(false);
                 });
             });
@@ -155,7 +157,8 @@ const UserFormScreen = (props) => {
 
     const deleteForm = async (item) => {
         await deleteMessages(item.key);
-        db.collection("forms").doc(item.key).delete();
+        await db.collection("forms").doc(item.key).delete();
+        setForms(prev => prev.filter(element => element.key !== item.key));
     }
 
     const deleteMessages = async (id) => {
