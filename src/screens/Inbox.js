@@ -8,13 +8,16 @@ import { useFocusEffect } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 
 const InboxScreen = (props) => {
 
     const [chats, setChats] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hiddenItemVisible, setHiddenItemVisible] = useState(false);
+
+    const storage = getStorage();
+
 
     //will do later...
     const getLastMessage = async (chatId) => {
@@ -26,7 +29,9 @@ const InboxScreen = (props) => {
 
     const getChatUser = async (chatId) => {
         const res = await db.collection("users").doc(chatId).get();
-        return res.data();
+        const userRef = ref(storage, chatId + '/profile.png');
+        const avatar = await getDownloadURL(userRef);
+        return {...res.data(), avatar};
     }
 
     useFocusEffect(
@@ -37,7 +42,7 @@ const InboxScreen = (props) => {
                     .where("users", "array-contains", auth.currentUser?.uid)
                     .onSnapshot(async (querySnapshot) => {
 
-                        querySnapshot.docs.map(async (doc) => {
+                        const promise = querySnapshot.docs.map(async (doc) => {
                             const chatUserId = doc.data().users.filter(item => item != auth.currentUser?.uid)[0];
                             const chatUser = await getChatUser(chatUserId);
 
@@ -46,13 +51,16 @@ const InboxScreen = (props) => {
                                 lastMessage: "blabla",
                                 name: chatUser.name,
                                 surname: chatUser.surname,
+                                avatar: chatUser.avatar,
                             };
 
                             appendChats(data);
 
                         });
-                        setLoading(false);
-
+                        await Promise.all(promise).then(() => {
+                            setLoading(false);
+                        });
+                    
                     });
             return () => {
                 unsubscribe();
@@ -101,7 +109,7 @@ const InboxScreen = (props) => {
                     size={50}
                     color={"#cad1d7"}
                 />
-                <Text style={{ fontSize: 18, color: "#cad1d7", marginTop: 15 }}>Forum listesi boş !</Text>
+                <Text style={{ fontSize: 18, color: "#cad1d7", marginTop: 15 }}>Mesaj kutusu boş !</Text>
             </View>
         );
     }
@@ -189,6 +197,7 @@ const InboxScreen = (props) => {
                             name={chat.item.name}
                             surname={chat.item.surname}
                             lastMessage={chat.item.lastMessage}
+                            avatar={chat.item.avatar}
                             goChat={() => { props.navigation.navigate("ChatScreen", { ...chat.item}) }}
                         />
                     )

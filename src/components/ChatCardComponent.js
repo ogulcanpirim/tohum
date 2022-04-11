@@ -5,8 +5,6 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const ChatCard = (props) => {
 
-    const avatarURL = "https://randomuser.me/api/portraits/men/22.jpg";
-
     return (
         <TouchableOpacity onPress={props.goChat}>
             <View style={styles.chatCardContainer}>
@@ -14,7 +12,7 @@ const ChatCard = (props) => {
                 <Avatar
                     size={Dimensions.get('window').height / 15}
                     rounded
-                    source={{ uri: avatarURL }}
+                    source={{uri: props.avatar}}
                     containerStyle={styles.avatarContainer}
                 >
                 </Avatar>
