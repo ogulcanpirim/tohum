@@ -91,8 +91,9 @@ const ProfilePictureComponent = (props) => {
                 maxHeight: Dimensions.get('window').height,
                 maxWidth: Dimensions.get('window').width,
             },
-            (response) => {
+            async(response) => {
                 if (!response.hasOwnProperty("didCancel")) {
+                    await uriToBlob(response.assets[0].uri)
                     setModalVisible(false);
                     console.log("response: " + JSON.stringify(response));
                 }
