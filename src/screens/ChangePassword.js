@@ -4,7 +4,7 @@ import { SafeAreaView, TouchableOpacity, Text, TextInput, ActivityIndicator, Vie
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { auth, firebaseAuth } from '../../Firebase/firebase';
 import { reauthenticateWithCredential } from 'firebase/auth';
-
+import { useTheme } from '@react-navigation/native';
 
 const ChangePasswordScreen = (props) => {
 
@@ -12,6 +12,7 @@ const ChangePasswordScreen = (props) => {
     const [NewPassword, setNewPassword] = useState('');
     const [SecondPassword, setSecondPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const theme = useTheme();
 
 
     const goBack = () => {
@@ -48,10 +49,6 @@ const ChangePasswordScreen = (props) => {
         const user = auth.currentUser;
         const credential = firebaseAuth.EmailAuthProvider.credential(user.email, OldPassword);
         //Reauthenticate user
-        console.log("changing user: " + JSON.stringify(user));
-        console.log("old password: " + OldPassword);
-        console.log("user.email: " + user.email);
-        console.log("credential created: " + JSON.stringify(credential));
         reauthenticateWithCredential(user, credential).then(() => {
 
             //reauthenticate succesfull
@@ -85,15 +82,16 @@ const ChangePasswordScreen = (props) => {
             <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                 <AntDesign
                     name={"back"}
+                    color={theme.colors.text}
                     size={35}>
                 </AntDesign>
             </TouchableOpacity>
-            <Text style={styles.screenHeaderWithLogo}>Şifreni Değiştir</Text>
-            <TextInput style={styles.inputFirst} secureTextEntry value={OldPassword} onChangeText={setOldPassword} placeholder='Eski Şifre'>
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Şifreni Değiştir</Text>
+            <TextInput style={{...styles.inputFirst, color: theme.colors.text, borderColor: theme.colors.border}} secureTextEntry value={OldPassword} onChangeText={setOldPassword} placeholder='Eski Şifre'>
             </TextInput>
-            <TextInput style={styles.inputs} secureTextEntry value={NewPassword} onChangeText={setNewPassword} placeholder='Şifre'>
+            <TextInput style={{...styles.inputs, color: theme.colors.text, borderColor: theme.colors.border}} secureTextEntry value={NewPassword} onChangeText={setNewPassword} placeholder='Şifre'>
             </TextInput>
-            <TextInput style={styles.inputs} secureTextEntry value={SecondPassword} onChangeText={setSecondPassword} placeholder='Şifre'>
+            <TextInput style={{...styles.inputs, color: theme.colors.text, borderColor: theme.colors.border}} secureTextEntry value={SecondPassword} onChangeText={setSecondPassword} placeholder='Şifre'>
             </TextInput>
             <TouchableOpacity style={styles.signinButton} onPress={changePassword}>
                 <Text style={styles.buttonText}>DEĞİŞTİR</Text>

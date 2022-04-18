@@ -9,7 +9,7 @@ import { db, auth } from '../../Firebase/firebase';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { useFocusEffect } from '@react-navigation/native';
-
+import { useTheme } from '@react-navigation/native';
 
 const UserFormScreen = (props) => {
 
@@ -19,6 +19,7 @@ const UserFormScreen = (props) => {
     const [text, setText] = useState("");
     const [hiddenItemVisible, setHiddenItemVisible] = useState(false);
     const unsubscribe = useRef();
+    const theme = useTheme();
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -174,10 +175,11 @@ const UserFormScreen = (props) => {
             <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                 <AntDesign
                     name={"back"}
+                    color={theme.colors.text}
                     size={35}>
                 </AntDesign>
             </TouchableOpacity>
-            <Text style={styles.screenHeaderWithLogo}>Forumlarım</Text>
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Forumlarım</Text>
             <SearchBarComponent text={text} setText={setText} loading={loading} />
             {loading ? <LoadingScreen /> :
                 (formsFilter.length > 0 ?
@@ -197,6 +199,7 @@ const UserFormScreen = (props) => {
                                 messageCount={data.item.messageCount}
                                 userCount={data.item.userCount}
                                 createdAt={data.item.createdAt}
+                                theme={theme}
                                 goChat={() => props.navigation.navigate("FormChat", { id: data.item.key, title: data.item.formTitle })}
                             />
                         )}

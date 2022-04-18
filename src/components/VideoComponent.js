@@ -5,6 +5,7 @@ import { Avatar } from 'react-native-elements';
 
 const VideoComponent = (props) => {
 
+    const {theme} = props;
     return (
         <TouchableHighlight onPress={props.goVideo} style={{borderRadius: 10}}>
             <View>
@@ -15,7 +16,7 @@ const VideoComponent = (props) => {
                     </View>
                 </View>
 
-                <View style={styles.videoInfoStyle}>
+                <View style={{...styles.videoInfoStyle, backgroundColor: theme.colors.cardBackground}}>
                     <TouchableOpacity>
                         <Avatar
                             size={Dimensions.get('window').width / 10}
@@ -26,7 +27,7 @@ const VideoComponent = (props) => {
                     </TouchableOpacity>
                     <View style={styles.videoTextContainer}>
                         <Text>
-                            <Text style={styles.videoHeader}>{props.name + '\n'}</Text>
+                            <Text style={{...styles.videoHeader, color: theme.colors.text}}>{props.name + '\n'}</Text>
                             <Text style={styles.videoPublisher}>{props.publisher}</Text>
                         </Text>
                     </View>

@@ -37,16 +37,17 @@ const styles = StyleSheet.create({
 
 const FriendListCard = (props) => {
 
+    const {theme} = props;
     return (
         <TouchableOpacity>
-            <View style={styles.container}>
+            <View style={{...styles.container, backgroundColor: theme.colors.cardBackground}}>
                 <Avatar
                     size={Dimensions.get('window').width / 7}
                     rounded
                     source={require('../assets/images/farmer_pp.png')}
                     containerStyle={{ alignSelf: 'center' }}
                 />
-                <Text style={styles.userName}>{props.name}</Text>
+                <Text style={{...styles.userName, color: theme.colors.text}}>{props.name}</Text>
                 <TouchableOpacity style={styles.chatLogo} onPress={props.goChat}>
                     <MaterialCommunityIcons
                         name={"chat-plus"}

@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, SafeAreaView, StyleSheet, Dimensions } fr
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Avatar } from 'react-native-elements';
 import Video from 'react-native-video';
+import { useTheme } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
 
@@ -59,17 +60,18 @@ const VideoComponentScreen = (props) => {
 
 
     const route = useRoute();
-    const avatarURL = "https://randomuser.me/api/portraits/men/36.jpg";
     const videoURL = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
     const goBack = () => {
         props.navigation.goBack();
     }
+    const theme = useTheme();
 
     return (
         <SafeAreaView>
             <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                 <AntDesign
                     name={"back"}
+                    color={theme.colors.text}
                     size={35}>
                 </AntDesign>
             </TouchableOpacity>
@@ -80,7 +82,7 @@ const VideoComponentScreen = (props) => {
                     style={styles.video}>
                 </Video>
             </View>
-            <View style={styles.videoInfo}>
+            <View style={{...styles.videoInfo, backgroundColor: theme.colors.cardBackground}}>
                 <TouchableOpacity>
                     <Avatar
                         size={Dimensions.get('window').width / 7}
@@ -90,11 +92,11 @@ const VideoComponentScreen = (props) => {
                     </Avatar>
                 </TouchableOpacity>
                 <View style={styles.videoInfoContainer}>
-                    <Text style={styles.videoHeader}>{route.params.videoName}</Text>
+                    <Text style={{...styles.videoHeader, color: theme.colors.text}}>{route.params.videoName}</Text>
                     <Text style={styles.videoPublisher}>{route.params.videoPublisher}</Text>
                 </View>
             </View>
-            <Text style={styles.description}>{route.params.videoDescription}</Text>
+            <Text style={{...styles.description, color: theme.colors.text}}>{route.params.videoDescription}</Text>
         </SafeAreaView>
     );
 }

@@ -1,4 +1,6 @@
-import { StyleSheet, Dimensions, Platform, ColorPropType } from "react-native";
+import { StyleSheet, Dimensions, Platform } from "react-native";
+import { useTheme } from '@react-navigation/native';
+
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -173,6 +175,7 @@ export default StyleSheet.create({
    },
 
    returnButton: {
+      color: '#fff',
       marginLeft: screenWidth / 20,
       marginTop: screenHeight / 100,
    },
@@ -491,4 +494,15 @@ export default StyleSheet.create({
       marginRight: 15,
       marginTop: 16,
    },
+
+   friendRequestButton: {
+      justifyContent: 'flex-start',
+      flexDirection: 'row',
+      height: 52,
+      borderRadius: 8,
+      backgroundColor: '#4a4b4a',
+      marginLeft: 15,
+      marginRight: 15,
+      marginTop: 16,
+   }
 })

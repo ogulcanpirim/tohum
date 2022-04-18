@@ -9,7 +9,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import ProfilePictureComponent from '../components/ProfilePictureComponent';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useFocusEffect } from '@react-navigation/native';
-//import defaultPhoto from '../assets/images/farmer_pp.png';
+import { useTheme } from '@react-navigation/native';
 
 const ProfileScreen = (props) => {
 
@@ -20,6 +20,7 @@ const ProfileScreen = (props) => {
     const [friendData, setFriendData] = useState([]);
     const [friendRequestBadge, setFriendRequestBadge] = useState(0);
     const ref = useRef();
+    const theme = useTheme();
     
     
     useEffect(() => {
@@ -119,11 +120,12 @@ const ProfileScreen = (props) => {
     return (
         <SafeAreaView style={modalVisible ? { opacity: 0.1 } : {}}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={styles.screenHeader}>Profil</Text>
+                <Text style={{...styles.screenHeader, color: theme.colors.text}}>Profil</Text>
                 <View style={{ width: '35%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginRight: 15 }}>
                     <TouchableOpacity onPress={navigateInbox}>
                         <FontAwesome5
                             name={"inbox"}
+                            color={theme.colors.text}
                             size={32}>
                         </FontAwesome5>
                         <View style={styles.badge}>
@@ -133,6 +135,7 @@ const ProfileScreen = (props) => {
                     <TouchableOpacity onPress={navigateFriendRequest}>
                         <Ionicons
                             name={"person-add"}
+                            color={theme.colors.text}
                             size={32}>
                         </Ionicons>
                         {friendRequestBadge > 0 ? <View style={styles.badge}>
@@ -142,6 +145,7 @@ const ProfileScreen = (props) => {
                     <TouchableOpacity onPress={handleSignOut}>
                         <FontAwesome5
                             name={"sign-out-alt"}
+                            color={theme.colors.text}
                             size={32}>
                         </FontAwesome5>
                     </TouchableOpacity>
@@ -160,33 +164,33 @@ const ProfileScreen = (props) => {
                     onPress={() => setModalVisible(true)}
                     size={32} />
             </Avatar>
-            <Text style={styles.profileName}>{user?.name + ' ' + user?.surname}</Text>
-            <View style={styles.profileLine} />
+            <Text style={{...styles.profileName, color: theme.colors.text}}>{user?.name + ' ' + user?.surname}</Text>
+            <View style={{...styles.profileLine, borderColor: theme.colors.text}} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <TouchableOpacity onPress={navigateFriendList}>
                     <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', padding: Dimensions.get('window').height / 50 }}>
-                        <Text style={styles.profileTextVariable}>{friendCount}</Text>
-                        <Text style={styles.profileTextConstant}>Takipçi</Text>
+                        <Text style={{...styles.profileTextVariable, color: theme.colors.text}}>{friendCount}</Text>
+                        <Text style={{...styles.profileTextConstant, color: theme.colors.text}}>Takipçi</Text>
                     </View>
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center', padding: Dimensions.get('window').height / 50 }}>
-                    <Text style={styles.profileTextVariable}>89</Text>
-                    <Text style={styles.profileTextConstant}>Forum Cevabı</Text>
+                    <Text style={{...styles.profileTextVariable, color: theme.colors.text}}>89</Text>
+                    <Text style={{...styles.profileTextConstant, color: theme.colors.text}}>Forum Cevabı</Text>
                 </View>
             </View>
-            <TouchableOpacity style={styles.profileContent} disabled>
-                <FontAwesome5 name={"user-circle"} style={styles.iconButtonStyle} size={30} />
-                <Text style={styles.profileText}>{auth.currentUser?.displayName}</Text>
+            <TouchableOpacity style={{...styles.profileContent, borderColor: theme.colors.border}} disabled>
+                <FontAwesome5 name={"user-circle"} color={theme.colors.text} style={styles.iconButtonStyle} size={30} />
+                <Text style={{...styles.profileText, color: theme.colors.text}}>{auth.currentUser?.displayName}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.profileContent} disabled>
-                <FontAwesome5 name={"envelope"} style={styles.iconButtonStyle} size={30} />
-                <Text style={styles.profileText}>{auth.currentUser?.email}</Text>
+            <TouchableOpacity style={{...styles.profileContent, borderColor: theme.colors.border}} disabled>
+                <FontAwesome5 name={"envelope"} color={theme.colors.text} style={styles.iconButtonStyle} size={30} />
+                <Text style={{...styles.profileText, color: theme.colors.text}}>{auth.currentUser?.email}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.passwordButton} onPress={navigateChangePassword}>
-                <FontAwesome5 name={"unlock-alt"} style={styles.iconButtonStyle} size={25} color={"#ffffff"} />
+                <FontAwesome5 name={"unlock-alt"} color={"#fff"} style={styles.iconButtonStyle} size={25} />
                 <Text style={styles.profileButtonText}>Şifre değiştir</Text>
             </TouchableOpacity>
-            {modalVisible ? <ProfilePictureComponent modalVisible={modalVisible} setModalVisible={setModalVisible} /> : undefined}
+            {modalVisible ? <ProfilePictureComponent theme={theme} modalVisible={modalVisible} setModalVisible={setModalVisible} /> : undefined}
         </SafeAreaView >
     );
 

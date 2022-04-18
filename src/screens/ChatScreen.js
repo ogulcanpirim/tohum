@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { GiftedChat, Bubble } from 'react-native-gifted-chat'
+import { GiftedChat, Bubble, InputToolbar, Send } from 'react-native-gifted-chat'
 import { ActivityIndicator, View, StyleSheet, Platform, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Text } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { db, auth } from '../../Firebase/firebase';
 import { useRoute } from '@react-navigation/native';
 import tr from 'dayjs/locale/tr'
+import { useTheme } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
 
@@ -31,11 +32,13 @@ const ChatScreen = (props) => {
   const [user, setUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
 
   async function getUserData(uid) {
     const response = await db.collection("users").doc(uid).get();
     return response.data();
   }
+
 
   useEffect(() => {
     setChatUser({ name: route.params.name, surname: route.params.surname });
@@ -100,14 +103,15 @@ const ChatScreen = (props) => {
   const Header = () => {
 
     return (
-      <View style={styles.headerStyle}>
+      <View style={{ ...styles.headerStyle, borderColor: theme.colors.border }}>
         <TouchableOpacity style={{ position: 'absolute', padding: 15 }} onPress={goBack}>
           <AntDesign
             name={"back"}
+            color={theme.colors.text}
             size={35}>
           </AntDesign>
         </TouchableOpacity>
-        <Text style={styles.nameText}>{chatUser?.name + ' ' + chatUser?.surname}</Text>
+        <Text style={{ ...styles.nameText, color: theme.colors.text }}>{chatUser?.name + ' ' + chatUser?.surname}</Text>
       </View>
     );
   }
@@ -132,6 +136,27 @@ const ChatScreen = (props) => {
     }
   }
 
+  const renderInputToolbar = (props) => {
+    return (
+      <InputToolbar
+        {...props}
+        primaryStyle={{ alignItems: 'center', backgroundColor: theme.colors.background, color: "#fff" }}
+      >
+      </InputToolbar>
+    );
+  }
+
+  const renderSend = (props) => {
+    return (
+      <Send
+        label="Gönder"
+        alwaysShowSend={false}
+        textStyle={{ color: "#26931e" }}
+        {...props}
+      >
+      </Send>
+    );
+  }
   return (
 
     <SafeAreaView style={{ flex: 1 }}>
@@ -146,8 +171,13 @@ const ChatScreen = (props) => {
           scrollToBottom
           isAnimated
           showUserAvatar
+          maxInputLength={200}
           onPressAvatar={(user) => { onAvatarPress(user) }}
           locale={tr.name}
+          renderInputToolbar={renderInputToolbar}
+          textInputProps={{ color: theme.colors.text }}
+          placeholder={'Mesajınızı yazınız...'}
+          renderSend={renderSend}
           renderBubble={props => {
             return (
               <Bubble
@@ -172,9 +202,6 @@ const ChatScreen = (props) => {
               />
             );
           }} />}
-      {
-        Platform.OS === 'android' && <KeyboardAvoidingView behavior="padding" />
-      }
     </SafeAreaView>
   );
 

@@ -8,7 +8,7 @@ import { db } from '../../Firebase/firebase';
 import { FlatList } from "react-native-gesture-handler";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useFocusEffect } from '@react-navigation/native';
-
+import { useTheme } from '@react-navigation/native';
 
 const FormScreen = (props) => {
 
@@ -16,6 +16,7 @@ const FormScreen = (props) => {
     const [forms, setForms] = useState([]);
     const [formsFilter, setFormsFilter] = useState([]);
     const [text, setText] = useState("");
+    const theme = useTheme();
 
 
     useEffect(() => {
@@ -94,23 +95,26 @@ const FormScreen = (props) => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={styles.screenHeader}>Forum</Text>
+                <Text style={{...styles.screenHeader, color: theme.colors.text}}>Forum</Text>
                 <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity style={styles.addFormButton}>
-                        <MaterialCommunityIcons
+                        <MaterialCommunityIcons                            
                             name={"text-box-search"}
+                            color={theme.colors.text}
                             size={30}>
                         </MaterialCommunityIcons>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.addFormButton} onPress={userForms}>
                         <MaterialIcons
                             name={"my-library-books"}
+                            color={theme.colors.text}
                             size={30}>
                         </MaterialIcons>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.addFormButton} onPress={createForm}>
                         <MaterialIcons
                             name={"library-add"}
+                            color={theme.colors.text}
                             size={30}>
                         </MaterialIcons>
                     </TouchableOpacity>
@@ -130,6 +134,7 @@ const FormScreen = (props) => {
                                     messageCount={data.item.messageCount}
                                     userCount={data.item.userCount}
                                     createdAt={data.item.createdAt}
+                                    theme={theme}
                                     goChat={() => props.navigation.navigate("FormChat", { id: data.item.key, title: data.item.formTitle })}
                                 />
                             );

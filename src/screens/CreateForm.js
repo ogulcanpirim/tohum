@@ -3,12 +3,14 @@ import styles from '../screens/styles';
 import { View, SafeAreaView, TouchableOpacity, Text, TextInput, Alert, ActivityIndicator} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { auth, db } from '../../Firebase/firebase';
+import { useTheme } from '@react-navigation/native';
 
 const CreateFormScreen = (props) => {
 
     const [title, setTitle] = useState('');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const theme = useTheme();
 
     const goBack = () => {
         props.navigation.goBack();
@@ -62,13 +64,14 @@ const CreateFormScreen = (props) => {
             <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                 <AntDesign
                     name={"back"}
+                    color={theme.colors.text}
                     size={35}>
                 </AntDesign>
             </TouchableOpacity>
-            <Text style={styles.screenHeaderWithLogo}>Forum Oluştur</Text>
-            <TextInput value={title} onChangeText={setTitle} style={styles.inputFirst} placeholder='Forum Başlığı'>
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Forum Oluştur</Text>
+            <TextInput value={title} onChangeText={setTitle} style={{...styles.inputFirst, borderColor: theme.colors.border, color: theme.colors.text}} placeholder='Forum Başlığı'>
             </TextInput>
-            <TextInput value={message} onChangeText={setMessage} style={styles.createFormInput} placeholder='Forum için ilk mesajı yazın...' multiline={true}>
+            <TextInput value={message} onChangeText={setMessage} style={{...styles.createFormInput, borderColor: theme.colors.border, color: theme.colors.text}} placeholder='Forum için ilk mesajı yazın...' multiline={true}>
             </TextInput>
 
             <TouchableOpacity disabled={loading} style={styles.createFormButton} onPress={createForm}>

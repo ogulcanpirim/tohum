@@ -8,6 +8,7 @@ import { getStorage, getDownloadURL, ref, uploadBytesResumable } from 'firebase/
 import { auth } from '../../Firebase/firebase';
 import * as Progress from 'react-native-progress'
 import { createThumbnail } from "react-native-create-thumbnail";
+import { useTheme } from '@react-navigation/native';
 
 const UploadVideoScreen = (props) => {
 
@@ -19,6 +20,7 @@ const UploadVideoScreen = (props) => {
     const [thumbnail, setThumbnail] = useState(undefined);
     const [loading, setLoading] = useState(false);
     const [duration, setDuration] = useState();
+    const theme = useTheme();
 
     const uriToBlob = async (uri) => {
         const blob = await new Promise((resolve, reject) => {
@@ -132,12 +134,13 @@ const UploadVideoScreen = (props) => {
             <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                 <AntDesign
                     name={"back"}
+                    color={theme.colors.text}
                     size={35}>
                 </AntDesign>
             </TouchableOpacity>
-            <Text style={styles.screenHeaderWithLogo}>Video Yükle</Text>
-            <TextInput value={title} onChangeText={setTitle} style={styles.inputFirst} placeholder='Video Başlığı' />
-            <TextInput value={description} onChangeText={setDescription} style={styles.createFormInput} placeholder='Video açıklaması yazın...' multiline={true} />
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Video Yükle</Text>
+            <TextInput value={title} onChangeText={setTitle} style={{...styles.inputFirst, borderColor: theme.colors.border, color: theme.colors.text}} placeholder='Video Başlığı' />
+            <TextInput value={description} onChangeText={setDescription} style={{...styles.createFormInput, borderColor: theme.colors.border, color: theme.colors.text}} placeholder='Video açıklaması yazın...' multiline={true} />
             <TouchableOpacity onPress={gallery}>
                 <View style={styles.uploadContainer}>
                     <View style={styles.uploadDivider}>

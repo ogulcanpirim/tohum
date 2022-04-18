@@ -7,14 +7,14 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FriendListCard from "../components/FriendListCardComponent";
 import { FlatList } from "react-native-gesture-handler";
 import { db, auth } from "../../Firebase/firebase";
-
+import {useTheme} from '@react-navigation/native';
 
 const FriendListScreen = (props) => {
 
     const route = useRoute();
     const [loading, setLoading] = useState(false);
     const unsubscribe = useRef();
-
+    const theme = useTheme();
 
     useFocusEffect(useCallback(() => {
 
@@ -105,11 +105,12 @@ const FriendListScreen = (props) => {
                 <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                     <AntDesign
                         name={"back"}
+                        color={theme.colors.text}
                         size={35}>
                     </AntDesign>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.screenHeaderWithLogo}>Takipçilerim</Text>
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Takipçilerim</Text>
             {route.params.friendData.length > 0 ?
                 <FlatList
                     style={{ padding: 15 }}
@@ -119,6 +120,7 @@ const FriendListScreen = (props) => {
                             <FriendListCard
                                 id={data.item.id}
                                 name={data.item.name}
+                                theme={theme}
                                 goChat={() => goChat(data.item)}
                             />
                         );

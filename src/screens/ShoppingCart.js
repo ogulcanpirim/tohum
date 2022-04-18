@@ -5,9 +5,12 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import ShopCardComponent from '../components/ShopCardComponent';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import { useTheme } from '@react-navigation/native';
 
 const ShoppingCartScreen = (props) => {
 
+
+    const theme = useTheme();
     const goBack = () => {
         props.navigation.goBack();
     }
@@ -85,16 +88,17 @@ const ShoppingCartScreen = (props) => {
                 <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                     <AntDesign
                         name={"back"}
+                        color={theme.colors.text}
                         size={35}>
                     </AntDesign>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.screenHeaderWithLogo}>Sepetim</Text>
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Sepetim</Text>
             <View style={{ padding: 15 }}>
                 <SwipeListView style={{ height: '70%' }}
                     data={listViewData}
                     renderItem={(data, rowMap) => (
-                        <ShopCardComponent />
+                        <ShopCardComponent theme={theme}/>
                     )}
                     renderHiddenItem={renderHiddenItem}
                     useNativeDriver={false}

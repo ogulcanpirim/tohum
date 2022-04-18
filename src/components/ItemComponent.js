@@ -64,7 +64,7 @@ const ItemComponent = (props) => {
     const [add, setAdd] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalText, setModalText] = useState("");
-
+    const {theme} = props;
     useEffect(() => {
         if (modalVisible) {
             setTimeout(() => setModalVisible(false), 5000);
@@ -86,24 +86,26 @@ const ItemComponent = (props) => {
     }
     const image = "https://picsum.photos/1200/600";
     return (
-        <View style={styles.container}>
+        <View style={{...styles.container, backgroundColor: theme.colors.cardBackground}}>
             <Image style={styles.imageContainer} source={{ uri: image }} />
-            <View style={styles.infoContainer}>
-                <Text style={styles.itemName}>Katı Gübre</Text>
-                <Text style={styles.priceStyle}>6.95 ₺</Text>
+            <View style={{...styles.infoContainer, borderColor: theme.colors.border}}>
+                <Text style={{...styles.itemName, color: theme.colors.text}}>Katı Gübre</Text>
+                <Text style={{...styles.priceStyle, color: theme.colors.text}}>6.95 ₺</Text>
             </View>
             <View style={styles.detailContainer}>
                 <View style={styles.unitContainer}>
                     <TouchableOpacity style={{ padding: '5%' }} onPress={() => count > 1 ? setCount(count - 1) : undefined}>
                         <FontAwesome5
                             name={"minus"}
+                            color={theme.colors.text}
                             size={18}>
                         </FontAwesome5>
                     </TouchableOpacity>
-                    <Text style={styles.unitStyle}>{count}</Text>
+                    <Text style={{...styles.unitStyle, color: theme.colors.text}}>{count}</Text>
                     <TouchableOpacity style={{ padding: '5%' }} onPress={() => setCount(count + 1)}>
                         <FontAwesome5
                             name={"plus"}
+                            color={theme.colors.text}
                             size={18}>
                         </FontAwesome5>
                     </TouchableOpacity>

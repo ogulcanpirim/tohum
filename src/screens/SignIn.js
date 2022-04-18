@@ -4,9 +4,11 @@ import styles from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { auth } from '../../Firebase/firebase';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import { useTheme } from '@react-navigation/native';
 
 const SignInScreen = (props) => {
     
+    const theme = useTheme();
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -87,16 +89,17 @@ const SignInScreen = (props) => {
         <SafeAreaView>
             <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                 <AntDesign
+                    color={theme.colors.text}
                     name={"back"}
                     size={35}>
                 </AntDesign>
             </TouchableOpacity>
-            <Text style={styles.screenHeaderWithLogo}>Giriş Yap</Text>
-            <TextInput style={styles.inputFirst} value={email} onChangeText={setEmail} placeholder='E-mail'>
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Giriş Yap</Text>
+            <TextInput style={{...styles.inputFirst,color: theme.colors.text, borderColor: theme.colors.border}} value={email} onChangeText={setEmail} placeholder='E-mail'>
             </TextInput>
-            <TextInput style={styles.inputs} secureTextEntry value={password} onChangeText={setPassword} placeholder='Şifre'>
+            <TextInput style={{...styles.inputs,color: theme.colors.text, borderColor: theme.colors.border}} secureTextEntry value={password} onChangeText={setPassword} placeholder='Şifre'>
             </TextInput>
-            <Text style={styles.forgotPasswordText} onPress={navigateToForgotPassword}>Şifremi unuttum</Text>
+            <Text style={{...styles.forgotPasswordText, color: theme.colors.text}} onPress={navigateToForgotPassword}>Şifremi unuttum</Text>
             <TouchableOpacity onPress={handleLogIn} style={styles.signinButton}>
                 <Text style={styles.buttonText}>GİRİŞ YAP</Text>
             </TouchableOpacity>

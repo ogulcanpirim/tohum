@@ -1,13 +1,12 @@
 import React from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Dimensions } from "react-native";
 import { Avatar } from "react-native-elements";
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const ChatCard = (props) => {
 
     return (
         <TouchableOpacity onPress={props.goChat}>
-            <View style={styles.chatCardContainer}>
+            <View style={{...styles.chatCardContainer, backgroundColor: props.theme.colors.cardBackground}}>
 
                 <Avatar
                     size={Dimensions.get('window').height / 15}
@@ -17,10 +16,10 @@ const ChatCard = (props) => {
                 >
                 </Avatar>
                 <View style={styles.textContainer}>
-                    <Text style={styles.usernameStyle}>
+                    <Text style={{...styles.usernameStyle, color: props.theme.colors.text}}>
                         {props.name + ' ' + props.surname}
                     </Text>
-                    <Text style={styles.lastTextStyle}>
+                    <Text style={{...styles.lastTextStyle, color: props.theme.colors.text}}>
                         {props.lastMessage}
                     </Text>
                 </View>

@@ -3,11 +3,13 @@ import { SafeAreaView, Text, TouchableOpacity, TextInput , View, ActivityIndicat
 import styles from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { auth } from '../../Firebase/firebase';
+import {useTheme} from '@react-navigation/native';
 
 const ForgotPasswordScreen = (props) => {
 
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
+    const theme = useTheme();
 
     useEffect(() => {
 
@@ -68,11 +70,12 @@ const ForgotPasswordScreen = (props) => {
             <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                 <AntDesign
                     name={"back"}
+                    color={theme.colors.text}
                     size={35}>
                 </AntDesign>
             </TouchableOpacity>
-            <Text style={styles.screenHeaderWithLogo}>Şifremi unuttum</Text>
-            <TextInput style={styles.inputFirst} value={email} onChangeText={setEmail} placeholder='E-mail' />
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Şifremi unuttum</Text>
+            <TextInput style={{...styles.inputFirst, color: theme.colors.text, borderColor: theme.colors.border}} value={email} onChangeText={setEmail} placeholder='E-mail' />
             <TouchableOpacity style={styles.signinButton} onPress={handleForgotPassword}>
                 <Text style={styles.buttonText}>E-MAIL GONDER</Text>
             </TouchableOpacity>

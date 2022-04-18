@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { GiftedChat, Bubble } from 'react-native-gifted-chat'
+import { GiftedChat, Bubble, InputToolbar, Send } from 'react-native-gifted-chat'
 import { ActivityIndicator, View, StyleSheet, Platform, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Text } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { db, auth } from '../../Firebase/firebase';
 import { arrayUnion } from 'firebase/firestore';
 import { useRoute } from '@react-navigation/native';
 import tr from 'dayjs/locale/tr'
-
+import { useTheme } from '@react-navigation/native';
 
 
 
@@ -34,6 +34,7 @@ const FormChatScreen = (props) => {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
     const [formTitle, setFormTitle] = useState(null);
+    const theme = useTheme();
 
     async function getUserData(uid) {
         const response = await db.collection("users").doc(uid).get();
@@ -106,14 +107,15 @@ const FormChatScreen = (props) => {
     const Header = () => {
 
         return (
-            <View style={styles.headerStyle}>
+            <View style={{ ...styles.headerStyle, borderColor: theme.colors.border }}>
                 <TouchableOpacity style={{ position: 'absolute', padding: 15 }} onPress={goBack}>
                     <AntDesign
                         name={"back"}
+                        color={theme.colors.text}
                         size={35}>
                     </AntDesign>
                 </TouchableOpacity>
-                <Text style={styles.nameText}>{formTitle}</Text>
+                <Text style={{ ...styles.nameText, color: theme.colors.text }}>{formTitle}</Text>
             </View>
         );
     }
@@ -128,11 +130,33 @@ const FormChatScreen = (props) => {
 
     const onAvatarPress = (user) => {
         if (user._id == auth.currentUser?.uid) {
-            props.navigation.navigate("Profile_Entrance", { screen: "Profile_Entrance" });
+            props.navigation.navigate("AppScreens", { screen: "Profil" });
         }
         else {
             props.navigation.navigate("UserScreen", { ...user })
         }
+    }
+
+    const renderInputToolbar = (props) => {
+        return (
+            <InputToolbar
+                {...props}
+                primaryStyle={{ alignItems: 'center', backgroundColor: theme.colors.background, color: "#fff" }}
+            >
+            </InputToolbar>
+        );
+    }
+
+    const renderSend = (props) => {
+        return (
+            <Send
+                label="Gönder"
+                alwaysShowSend={false}
+                textStyle={{ color: "#26931e" }}
+                {...props}
+            >
+            </Send>
+        );
     }
 
     return (
@@ -151,6 +175,10 @@ const FormChatScreen = (props) => {
                     showUserAvatar
                     onPressAvatar={(user) => { onAvatarPress(user) }}
                     locale={tr.name}
+                    renderInputToolbar={renderInputToolbar}
+                    textInputProps={{ color: theme.colors.text }}
+                    placeholder={'Mesajınızı yazınız...'}
+                    renderSend={renderSend}
                     renderBubble={props => {
                         return (
                             <Bubble

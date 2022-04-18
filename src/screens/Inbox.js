@@ -9,13 +9,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { SwipeListView } from 'react-native-swipe-list-view';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { useTheme } from '@react-navigation/native';
 
 const InboxScreen = (props) => {
 
     const [chats, setChats] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hiddenItemVisible, setHiddenItemVisible] = useState(false);
-
+    const theme = useTheme();
     const storage = getStorage();
 
 
@@ -182,11 +183,12 @@ const InboxScreen = (props) => {
                 <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                     <AntDesign
                         name={"back"}
+                        color={theme.colors.text}
                         size={35}>
                     </AntDesign>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.screenHeaderWithLogo}>Mesajlarım</Text>
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Mesajlarım</Text>
             {loading ? <LoadingScreen /> : (chats.length !== 0 ?
                 <SwipeListView
                     style={{ padding: 15 }}
@@ -198,6 +200,7 @@ const InboxScreen = (props) => {
                             surname={chat.item.surname}
                             lastMessage={chat.item.lastMessage}
                             avatar={chat.item.avatar}
+                            theme={theme}
                             goChat={() => { props.navigation.navigate("ChatScreen", { ...chat.item}) }}
                         />
                     )

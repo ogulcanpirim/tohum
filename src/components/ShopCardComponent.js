@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
 const ShopCardComponent = (props) => {
 
     const itemURL = "https://picsum.photos/1200/600";
-
+    const { theme } = props;
 
     return (
-        <View style={styles.container}>
+        <View style={{...styles.container, backgroundColor: theme.colors.cardBackground}}>
             <Avatar
                 size={Dimensions.get('window').height / 15}
                 rounded
@@ -64,14 +64,14 @@ const ShopCardComponent = (props) => {
             >
             </Avatar>
             <View style={styles.textContainer}>
-                <Text style={styles.usernameStyle}>
+                <Text style={{...styles.usernameStyle, color: theme.colors.text}}>
                     Katı Gübre
                 </Text>
-                <Text style={styles.lastTextStyle}>
+                <Text style={{...styles.lastTextStyle, color: theme.colors.text}}>
                     Adet: 2
                 </Text>
             </View>
-            <Text style={styles.priceText}>12.99₺</Text>
+            <Text style={{...styles.priceText, color: theme.colors.text}}>12.99₺</Text>
         </View>
     );
 }

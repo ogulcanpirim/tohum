@@ -4,11 +4,11 @@ import { SafeAreaView, View, TextInput, Text, TouchableOpacity, ActivityIndicato
 import { auth, db } from '../../Firebase/firebase';
 import styles from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import LogoComponent from '../components/LogoComponent';
-import { doc } from 'firebase/firestore';
+import {useTheme} from '@react-navigation/native';
 
 const RegisterScreen = (props) => {
 
+    const theme = useTheme();
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
@@ -126,29 +126,30 @@ const RegisterScreen = (props) => {
             <View>
                 <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                     <AntDesign
+                        color={theme.colors.text}
                         name={"back"}
                         size={35}>
                     </AntDesign>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.screenHeaderWithLogo}>Hesap Oluştur</Text>
-            <TextInput style={styles.inputFirst} value={name} onChangeText={setName} placeholder={'Ad'}>
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Hesap Oluştur</Text>
+            <TextInput style={{...styles.inputFirst, color: theme.colors.text, borderColor: theme.colors.border}} value={name} onChangeText={setName} placeholder={'Ad'}>
             </TextInput>
-            <TextInput style={styles.inputs} value={surname} onChangeText={setSurname} placeholder='Soyad'>
+            <TextInput style={{...styles.inputs, color: theme.colors.text, borderColor: theme.colors.border}} value={surname} onChangeText={setSurname} placeholder='Soyad'>
             </TextInput>
-            <TextInput style={styles.inputs} value={username} onChangeText={setUsername} placeholder='Kullanıcı Adı'>
+            <TextInput style={{...styles.inputs, color: theme.colors.text, borderColor: theme.colors.border}} value={username} onChangeText={setUsername} placeholder='Kullanıcı Adı'>
             </TextInput>
-            <TextInput style={styles.inputs} value={email} onChangeText={setEmail} placeholder='E-mail'>
+            <TextInput style={{...styles.inputs, color: theme.colors.text, borderColor: theme.colors.border}} value={email} onChangeText={setEmail} placeholder='E-mail'>
             </TextInput>
-            <TextInput style={styles.inputs} secureTextEntry value={password} onChangeText={setPassword} placeholder='Şifre'>
+            <TextInput style={{...styles.inputs, color: theme.colors.text, borderColor: theme.colors.border}} secureTextEntry value={password} onChangeText={setPassword} placeholder='Şifre'>
             </TextInput>
-            <TextInput style={styles.inputs} secureTextEntry value={secondPassword} onChangeText={setSecondPassword} placeholder='Şifre'>
+            <TextInput style={{...styles.inputs, color: theme.colors.text, borderColor: theme.colors.border}} secureTextEntry value={secondPassword} onChangeText={setSecondPassword} placeholder='Şifre'>
             </TextInput>
-            <Text style={styles.accountInfoText}>Hesap oluşturarak,                 
-                <Text onPress={navigateUserAgreement} style={styles.agreementText}>Kullanıcı Sözleşmesini</Text>
-                <Text> ve </Text>
-                <Text onPress={navigatePolicyAgreement} style={styles.agreementText}>Gizlilik Sözleşmesini</Text>
-                <Text> kabul etmiş olursunuz.</Text>
+            <Text style={{...styles.accountInfoText, color: theme.colors.text}}>Hesap oluşturarak,                 
+                <Text onPress={navigateUserAgreement} style={{...styles.agreementText, color: theme.colors.text}}>Kullanıcı Sözleşmesini</Text>
+                <Text style={{color: theme.colors.text}}> ve </Text>
+                <Text onPress={navigatePolicyAgreement} style={{...styles.agreementText, color: theme.colors.text}}>Gizlilik Sözleşmesini</Text>
+                <Text style={{color: theme.colors.text}}> kabul etmiş olursunuz. </Text>
             </Text>
             <TouchableOpacity onPress={handleRegister} style={styles.registerButton}>
                 <Text style={styles.buttonText}>OLUŞTUR</Text>

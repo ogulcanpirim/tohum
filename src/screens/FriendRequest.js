@@ -8,6 +8,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FriendRequestCard from "../components/FriendRequestComponent";
 import { auth, db } from "../../Firebase/firebase";
 import { deleteField } from "firebase/firestore";
+import { useTheme } from "@react-navigation/native";
 
 const FriendRequestScreen = (props) => {
 
@@ -17,6 +18,7 @@ const FriendRequestScreen = (props) => {
     */
     const [loading, setLoading] = useState(true);
     const [requests, setRequests] = useState([]);
+    const theme = useTheme();
 
     const goBack = () => {
         props.navigation.goBack();
@@ -101,10 +103,11 @@ const FriendRequestScreen = (props) => {
             <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                 <AntDesign
                     name={"back"}
+                    color={theme.colors.text}
                     size={35}>
                 </AntDesign>
             </TouchableOpacity>
-            <Text style={styles.screenHeaderWithLogo}>Arkadaş İstekleri</Text>
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Arkadaş İstekleri</Text>
             {loading ? <LoadingScreen /> : requests.length > 0 ?
                 <FlatList
                     style={{ padding: 15 }}
@@ -114,6 +117,7 @@ const FriendRequestScreen = (props) => {
                             <FriendRequestCard
                                 id={data.item.id}
                                 name={data.item.name}
+                                theme={theme}
                                 handleAccept={() => handleEvent(data.item.id, true)}
                                 handleReject={() => handleEvent(data.item.id, false)}
                             />

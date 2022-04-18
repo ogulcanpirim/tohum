@@ -71,15 +71,15 @@ const RentCardComponent = (props) => {
     const image = "https://picsum.photos/1200/600";
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={{...styles.container, backgroundColor: props.theme.colors.cardBackground}}>
             <Image style={styles.imageContainer} source={{ uri: image }} />
             <View style={styles.cardContainer}>
-                <View style={styles.header}>
-                    <Text style={styles.headerStyle}>New Holland CR - CX Marka Biçerdöver</Text>
+                <View style={{...styles.header, borderColor: props.theme.colors.line}}>
+                    <Text style={{...styles.headerStyle, color: props.theme.colors.text}}>New Holland CR - CX Marka Biçerdöver</Text>
                 </View>
                 <View style={styles.priceContainer}>
-                    <Text style={styles.price}>500₺</Text>
-                    <Text style={styles.priceText}>/ günlük</Text>
+                    <Text style={{...styles.price, color: props.theme.colors.text}}>500₺</Text>
+                    <Text style={{...styles.priceText, color: props.theme.colors.text}}>/ günlük</Text>
                 </View>
                 <Text style={styles.userText}onPress={() => { }}>Hasan Berkay Demircan</Text>
             </View>

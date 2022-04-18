@@ -9,6 +9,7 @@ import { auth, db } from '../../Firebase/firebase';
 import { createThumbnail } from "react-native-create-thumbnail";
 import { SwipeListView } from 'react-native-swipe-list-view';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { useTheme } from '@react-navigation/native';
 
 const UserVideoScreen = (props) => {
 
@@ -17,6 +18,7 @@ const UserVideoScreen = (props) => {
     const [videoFilter, setVideoFilter] = useState([]);
     const [text, setText] = useState("");
     const storage = getStorage();
+    const theme = useTheme();
 
     const goBack = () => {
         props.navigation.goBack();
@@ -200,10 +202,11 @@ const UserVideoScreen = (props) => {
             <TouchableOpacity style={styles.returnButton} onPress={goBack}>
                 <AntDesign
                     name={"back"}
+                    color={theme.colors.text}
                     size={35}>
                 </AntDesign>
             </TouchableOpacity>
-            <Text style={styles.screenHeaderWithLogo}>Videolarım</Text>
+            <Text style={{...styles.screenHeaderWithLogo, color: theme.colors.text}}>Videolarım</Text>
             <SearchBarComponent text={text} setText={setText} searchFunction={searchVideo} />
             {loading ? <LoadingScreen /> :
                 videos.length ? <SwipeListView
@@ -217,6 +220,7 @@ const UserVideoScreen = (props) => {
                             length={video.item.videoLength}
                             thumbnail={video.item.videoThumbnail}
                             userAvatar={auth.currentUser?.photoURL}
+                            theme={theme}
                             goVideo={() => props.navigation.navigate("VideoComponent", { ...video.item, userAvatar: auth.currentUser?.photoURL })}
                         />
                     )}

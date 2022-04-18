@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme, getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { useColorScheme } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import WelcomeScreen from '../screens/Welcome';
@@ -29,11 +29,40 @@ import FriendRequestScreen from '../screens/FriendRequest';
 import FriendListScreen from '../screens/FriendList';
 import FormChatScreen from '../screens/FormChatScreen';
 
+const MyDarkTheme = {
+    ...DarkTheme,
+    colors: {
+        ...DarkTheme.colors,
+        background: '#121212',
+        text: '#fff',
+        card: '#1c1c1c',
+        border: '#bababa',
+        line: '#fff',
+        cardBackground: '#212121',
+        notification: '#fff',
+    }
+};
+
+const MyLigthTheme = {
+    ...DefaultTheme,
+    colors: {
+        ...DefaultTheme.colors,
+        text: '#000',
+        card: '#fff',
+        line: '#000',
+        cardBackground: '#fff',
+        notification: '#000',
+    }
+};
+
+
+
 const Stack = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
 function BottomNavigator() {
+
     return (
         <Tab.Navigator initialRouteName="Home"
             screenOptions={({ route }) => ({
@@ -59,7 +88,6 @@ function BottomNavigator() {
 
                     return (
                         <FontAwesome5 name={iconName} size={size} color={color} style={{ paddingBottom: padding }}></FontAwesome5>
-
                     );
                 },
             })}>
@@ -77,6 +105,7 @@ function BottomNavigator() {
 const ProfileStack = createStackNavigator();
 
 function ProfileScreens() {
+
     return (
         <ProfileStack.Navigator initialRouteName="Profil_Entrance" screenOptions={{
             headerShown: false
@@ -92,10 +121,22 @@ function ProfileScreens() {
 
 const ChatStack = createStackNavigator();
 
-function ChatScreens() {
+function ChatScreens({ route, navigation }) {
+
+    useLayoutEffect(() => {
+        const parent = navigation.getParent();
+        const routeName = getFocusedRouteNameFromRoute(route);
+        if (routeName?.includes("ChatScreen")) {
+            parent.setOptions({ tabBarStyle: { display: 'none' } });
+        }
+        return () => {
+            parent.setOptions({ tabBarStyle: { display: 'flex' } });
+        }
+    }, [navigation, route]);
+
     return (
         <ChatStack.Navigator initialRouteName="Inbox" screenOptions={{
-            headerShown: false
+            headerShown: false,
         }}>
             <ChatStack.Screen name="Inbox" component={InboxScreen} />
             <ChatStack.Screen name="ChatScreen" component={ChatScreen} />
@@ -106,15 +147,28 @@ function ChatScreens() {
 
 const FormStack = createStackNavigator();
 
-function FormScreens() {
+function FormScreens({ navigation, route }) {
+
+    useLayoutEffect(() => {
+        const parent = navigation.getParent();
+        const routeName = getFocusedRouteNameFromRoute(route);
+        if (routeName?.includes("FormChat")) {
+            parent.setOptions({ tabBarStyle: { display: 'none' } });
+        }
+        return () => {
+            parent.setOptions({ tabBarStyle: { display: 'flex' } });
+        }
+    }, [navigation, route]);
+
     return (
         <FormStack.Navigator initialRouteName="Form_Entrance" screenOptions={{
             headerShown: false
         }}>
             <FormStack.Screen name="Form_Entrance" component={FormScreen} />
             <FormStack.Screen name="CreateForm" component={CreateFormScreen} />
-            <FormStack.Screen name="UserForms" component={UserFormScreen}/>
-            <FormStack.Screen name="FormChat" component={FormChatScreen}/>
+            <FormStack.Screen name="UserForms" component={UserFormScreen} />
+            <FormStack.Screen name="FormChat" component={FormChatScreen} />
+            <FormStack.Screen name="UserScreen" component={UserScreen} />
         </FormStack.Navigator>
     );
 }
@@ -146,8 +200,9 @@ function VideoScreens() {
 }
 
 export default function NavigatorComponent(props) {
+    const scheme = useColorScheme();
     return (
-        <NavigationContainer>
+        <NavigationContainer theme={scheme === 'dark' ? MyDarkTheme : MyLigthTheme}>
             <Stack.Navigator initialRouteName="Welcome" screenOptions={{
                 headerShown: false
             }}>

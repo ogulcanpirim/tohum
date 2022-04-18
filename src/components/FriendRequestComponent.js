@@ -43,16 +43,16 @@ const styles = StyleSheet.create({
 
 const FriendRequestCard = (props) => {
 
-    
+    const { theme } = props;
     return (
-        <View style={styles.container}>
+        <View style={{...styles.container, backgroundColor: theme.colors.cardBackground}}>
             <Avatar
                 size={Dimensions.get('window').width / 7}
                 rounded
                 source={require('../assets/images/farmer_pp.png')}
                 containerStyle={{ alignSelf: 'center' }}
             />
-            <Text style={styles.userName}>{props.name}</Text>
+            <Text style={{...styles.userName, color: theme.colors.text}}>{props.name}</Text>
             <View style={styles.choiceContainer}>                
                 <TouchableOpacity onPress={props.handleAccept}>
                     <Feather

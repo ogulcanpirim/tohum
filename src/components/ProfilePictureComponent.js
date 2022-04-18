@@ -46,6 +46,7 @@ const ProfilePictureComponent = (props) => {
 
     const storage = getStorage();
     const [loading, setLoading] = useState(false);
+    const { theme } = props;
 
     const uriToBlob = async (uri) => {
         setLoading(true);
@@ -91,7 +92,7 @@ const ProfilePictureComponent = (props) => {
                 maxHeight: Dimensions.get('window').height,
                 maxWidth: Dimensions.get('window').width,
             },
-            async(response) => {
+            async (response) => {
                 if (!response.hasOwnProperty("didCancel")) {
                     await uriToBlob(response.assets[0].uri)
                     setModalVisible(false);
@@ -132,29 +133,32 @@ const ProfilePictureComponent = (props) => {
     }
 
     const ModalComponent = () => {
+        const textColor = theme.colors.text;
         return (
             <TouchableOpacity style={styles.touchOutside} onPress={() => setModalVisible(false)}>
-                <View style={styles.modalContainer} onPress={(() => setModalVisible(false))}>
+                <View style={{...styles.modalContainer, borderColor: theme.colors.border}} onPress={(() => setModalVisible(false))}>
                     <TouchableOpacity style={{ flex: 1 }} onPress={gallery}>
-                        <View style={styles.galleryContainer}>
+                        <View style={{...styles.galleryContainer, borderColor: theme.colors.border}}>
                             <FontAwesome5
                                 name={"photo-video"}
                                 size={30}
+                                color={textColor}
                                 style={{ marginLeft: 15 }}
                             >
                             </FontAwesome5>
-                            <Text style={{ position: 'absolute', left: '20%' }}>Galeri</Text>
+                            <Text style={{ position: 'absolute', left: '20%', color: textColor }}>Galeri</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flex: 1 }} onPress={camera}>
                         <View style={styles.photoContainer}>
                             <FontAwesome5
                                 name={"camera"}
+                                color={textColor}
                                 size={30}
                                 style={{ marginLeft: 15 }}
                             >
                             </FontAwesome5>
-                            <Text style={{ position: 'absolute', left: '20%' }}>Fotoğraf çek</Text>
+                            <Text style={{ position: 'absolute', left: '20%', color: textColor }}>Fotoğraf çek</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -172,7 +176,7 @@ const ProfilePictureComponent = (props) => {
                     setModalVisible(!modalVisible);
                 }}
             >
-                {loading ? <LoadingScreen/> : <ModalComponent/>}
+                {loading ? <LoadingScreen /> : <ModalComponent />}
             </Modal>
         </View>
     );

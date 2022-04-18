@@ -71,23 +71,24 @@ const styles = StyleSheet.create({
 const FormCardComponent = (props) => {
 
     const date = new Date(props.createdAt);
-
+    const {theme} = props;
     return (
         <TouchableOpacity onPress={props.goChat}>
-            <View style={styles.formCardContainer}>
+            <View style={{...styles.formCardContainer, backgroundColor: theme.colors.cardBackground}}>
                 <View>
-                    <Text style={styles.forumHeader}>{props.formTitle.length > 24 ? props.formTitle.slice(0,24) + "..." : props.formTitle}</Text>
-                    <View style = {styles.headerLine}></View>
-                    <Text style = {styles.dateText}>{date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()}</Text>
+                    <Text style={{...styles.forumHeader, color: theme.colors.text}}>{props.formTitle.length > 24 ? props.formTitle.slice(0,24) + "..." : props.formTitle}</Text>
+                    <View style = {{...styles.headerLine, backgroundColor: theme.colors.line}}></View>
+                    <Text style = {{...styles.dateText, color: theme.colors.text}}>{date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear()}</Text>
                 </View>
                 
                 <View style={styles.iconInfoStyle}>
                     <View style={styles.personStyle}>
                         <FontAwesome5
                             name={"user-alt"}
+                            color={theme.colors.text}
                             size={30}
                         ></FontAwesome5>
-                        <Text style={styles.numberStyle}>{props.userCount}</Text>
+                        <Text style={{...styles.numberStyle, color: theme.colors.text}}>{props.userCount}</Text>
                     </View>
                     <View style={styles.messageStyle}>
                         <FontAwesome
@@ -95,7 +96,7 @@ const FormCardComponent = (props) => {
                             size={30}
                             color="#26931e"
                         ></FontAwesome>
-                        <Text style={styles.numberStyle}>{props.messageCount}</Text>
+                        <Text style={{...styles.numberStyle, color: theme.colors.text}}>{props.messageCount}</Text>
                     </View>
                 </View>
                 
