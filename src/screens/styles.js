@@ -427,7 +427,7 @@ export default StyleSheet.create({
       justifyContent: 'space-between',
       paddingLeft: 15,
    },
-   
+
    backRightBtn: {
       alignItems: 'center',
       justifyContent: 'center',
@@ -440,6 +440,21 @@ export default StyleSheet.create({
    },
    backRightBtnRight: {
       right: 0,
+      backgroundColor: 'red',
+   },
+   rentRightBtn: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'absolute',
+      height: screenHeight / 5,
+      top: 15,
+      borderTopRightRadius: 10,
+      borderBottomRightRadius: 10,
+      width: 75,
+   },
+
+   rentRightBtnRight: {
+      right: 15,
       backgroundColor: 'red',
    },
 
@@ -456,7 +471,7 @@ export default StyleSheet.create({
    userVideobackRightBtnRight: {
       right: 0,
       backgroundColor: 'red',
-   }, 
+   },
 
    userFormRightBtn: {
       height: screenHeight / 10,
@@ -504,5 +519,32 @@ export default StyleSheet.create({
       marginLeft: 15,
       marginRight: 15,
       marginTop: 16,
+   },
+
+   swiper: {
+      marginTop: 10,
+      backgroundColor: '#fff',
+      height: screenHeight / 4,
+
+   },
+   rentInfoContainer: {
+      padding: 10,
+   },
+
+   rentContainer: {
+      padding: 10,
+      flexDirection: 'row',
+      alignItems: 'center',
+   },
+
+   rentHeader: {
+      fontSize: 17,
+      fontWeight: '600'
+   },
+
+   rentPublisher: {
+      fontSize: 14,
+      color: '#5E72E4',
+      fontWeight: '600',
    }
 })

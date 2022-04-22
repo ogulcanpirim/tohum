@@ -28,6 +28,9 @@ import UserScreen from '../screens/UserScreen';
 import FriendRequestScreen from '../screens/FriendRequest';
 import FriendListScreen from '../screens/FriendList';
 import FormChatScreen from '../screens/FormChatScreen';
+import CreateRentScreen from '../screens/CreateRent';
+import UserRentScreen from '../screens/UserRent';
+import RentItemScreen from '../screens/RentItemScreen';
 
 const MyDarkTheme = {
     ...DarkTheme,
@@ -92,7 +95,7 @@ function BottomNavigator() {
                 },
             })}>
             <Tab.Screen name="Ev" component={HomeScreen} />
-            <Tab.Screen name="Kirala" component={RentScreen} />
+            <Tab.Screen name="Kirala" component={RentScreens} />
             <Tab.Screen name="Forum" component={FormScreens} />
             <Tab.Screen name="Market" component={MarketScreens} />
             <Tab.Screen name="İzle" component={VideoScreens} />
@@ -144,6 +147,23 @@ function ChatScreens({ route, navigation }) {
         </ChatStack.Navigator>
     );
 }
+
+const RentStack = createStackNavigator();
+
+function RentScreens(){
+    return (
+        <RentStack.Navigator initialRouteName="RentScreen" screenOptions={{
+            headerShown: false
+        }}>
+            <RentStack.Screen name="RentScreen" component={RentScreen} />
+            <RentStack.Screen name="CreateRent" component={CreateRentScreen} />
+            <RentStack.Screen name="UserRent" component={UserRentScreen} />
+            <RentStack.Screen name="RentItemScreen" component={RentItemScreen} />
+        </RentStack.Navigator>
+    );
+}
+
+
 
 const FormStack = createStackNavigator();
 

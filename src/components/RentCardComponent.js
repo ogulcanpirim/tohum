@@ -67,21 +67,18 @@ const styles = StyleSheet.create({
 
 const RentCardComponent = (props) => {
 
-
-    const image = "https://picsum.photos/1200/600";
-
     return (
-        <TouchableOpacity style={{...styles.container, backgroundColor: props.theme.colors.cardBackground}}>
-            <Image style={styles.imageContainer} source={{ uri: image }} />
+        <TouchableOpacity style={{...styles.container, backgroundColor: props.theme.colors.cardBackground}} onPress={props.goItem}>
+            <Image style={styles.imageContainer} source={{ uri: props.image }} />
             <View style={styles.cardContainer}>
                 <View style={{...styles.header, borderColor: props.theme.colors.line}}>
-                    <Text style={{...styles.headerStyle, color: props.theme.colors.text}}>New Holland CR - CX Marka Biçerdöver</Text>
+                    <Text style={{...styles.headerStyle, color: props.theme.colors.text}}>{props.title}</Text>
                 </View>
                 <View style={styles.priceContainer}>
-                    <Text style={{...styles.price, color: props.theme.colors.text}}>500₺</Text>
+                    <Text style={{...styles.price, color: props.theme.colors.text}}>{props.price + " ₺"}</Text>
                     <Text style={{...styles.priceText, color: props.theme.colors.text}}>/ günlük</Text>
                 </View>
-                <Text style={styles.userText}onPress={() => { }}>Hasan Berkay Demircan</Text>
+                <Text style={styles.userText}onPress={() => { }}>{props.user}</Text>
             </View>
         </TouchableOpacity>
     );
