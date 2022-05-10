@@ -11,7 +11,7 @@ const ChatCard = (props) => {
                 <Avatar
                     size={Dimensions.get('window').height / 15}
                     rounded
-                    source={{uri: props.avatar}}
+                    source={ props.avatar ? {uri: props.avatar} : require('../assets/images/farmer_pp.png')}
                     containerStyle={styles.avatarContainer}
                 >
                 </Avatar>

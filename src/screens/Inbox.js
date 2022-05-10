@@ -31,8 +31,13 @@ const InboxScreen = (props) => {
     const getChatUser = async (chatId) => {
         const res = await db.collection("users").doc(chatId).get();
         const userRef = ref(storage, chatId + '/profile.png');
-        const avatar = await getDownloadURL(userRef);
-        return {...res.data(), avatar};
+
+        let defaultAvatar = require('../assets/images/farmer_pp.png');
+        return getDownloadURL(userRef).then((avatar) => {
+            return {...res.data(), avatar};
+        }).catch((error) => {
+            return {...res.data(), avatar: null};
+        }); 
     }
 
     useFocusEffect(
@@ -54,6 +59,8 @@ const InboxScreen = (props) => {
                                 surname: chatUser.surname,
                                 avatar: chatUser.avatar,
                             };
+
+                            console.log("data", data);
 
                             appendChats(data);
 
